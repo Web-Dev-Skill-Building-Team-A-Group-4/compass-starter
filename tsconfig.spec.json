@@ -9,7 +9,7 @@
     "esModuleInterop": true,
     "allowJs": true,
     "allowSyntheticDefaultImports": true,
-    "types": ["jest", "node"],
+    "types": ["node"],
     "outDir": "./out-tsc/spec"
   },
   "include": [
