@@ -29,17 +29,22 @@ export class HomeComponent implements OnInit {
   currentUser: Signal<User> = this.authStore.user;
   
   curr_goal = (() => {
-    // 1. Find the raw goal item from the database array
-    const rawGoal = WEEKLYGOAL_DB.find(g => g.text === 'Apply to Microsoft');
-    if (!rawGoal) return null;
+    const rawGoalForExample = WEEKLYGOAL_DB.find(g => g.text === 'Apply to Microsoft');
+    if (!rawGoalForExample) return null;
+    const matchingHashtag = HASHTAG_DB.find(h => h.__id === rawGoalForExample.__hashtagId);
 
-    // 2. Look up the matching hashtag record from HASHTAG_DB using the goal's ID
-    const matchingHashtag = HASHTAG_DB.find(h => h.__id === rawGoal.__hashtagId);
-
-    // 3. Return the fully formed WeeklyGoalData object
-    return {
-      ...rawGoal,
-      hashtag: matchingHashtag
+  return {
+      __id: rawGoalForExample.__id,
+      __userId: rawGoalForExample.__userId,
+      __quarterlyGoalId: rawGoalForExample.__quarterlyGoalId,
+      __hashtagId: rawGoalForExample.__hashtagId,
+      text: rawGoalForExample.text,
+      order: rawGoalForExample.order,
+      completed: rawGoalForExample.completed,
+      _createdAt: rawGoalForExample._createdAt,
+      _updatedAt: rawGoalForExample._updatedAt,
+      _deleted: rawGoalForExample._deleted,
+      hashtag: matchingHashtag 
     };
   })();
   
