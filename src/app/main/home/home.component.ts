@@ -4,6 +4,9 @@ import { User } from 'src/app/core/store/user/user.model';
 import { AuthStore } from 'src/app/core/store/auth/auth.store';
 import { BatchWriteService, BATCH_WRITE_SERVICE } from 'src/app/core/store/batch-write.service';
 import { NavbarComponent } from 'src/app/shared/navbar/navbar.component';
+import { WEEKLYGOAL_DB } from 'src/app/core/store/weekly-goal/weekly-goal.mock';
+import { WeeklyGoalsItemComponent } from './weekly-goals/weekly-goals-item/weekly-goals-item.component';
+import { HASHTAG_DB } from 'src/app/core/store/hashtag/hashtag.mock';
 
 @Component({
   selector: 'app-home',
@@ -13,16 +16,37 @@ import { NavbarComponent } from 'src/app/shared/navbar/navbar.component';
   standalone: true,
   animations: HomeAnimations,
   imports: [
-    NavbarComponent,
+    NavbarComponent, 
+    WeeklyGoalsItemComponent,
   ]
 })
 export class HomeComponent implements OnInit {
   authStore = inject(AuthStore);
   
-  // --------------- INPUTS AND OUTPUTS ------------------
+// --------------- INPUTS AND OUTPUTS ------------------
 
   /** The currently signed in user. */
   currentUser: Signal<User> = this.authStore.user;
+  
+  curr_goal = (() => {
+    const rawGoalForExample = WEEKLYGOAL_DB.find(g => g.text === 'Apply to Microsoft');
+    if (!rawGoalForExample) return null;
+    const matchingHashtag = HASHTAG_DB.find(h => h.__id === rawGoalForExample.__hashtagId);
+
+  return {
+      __id: rawGoalForExample.__id,
+      __userId: rawGoalForExample.__userId,
+      __quarterlyGoalId: rawGoalForExample.__quarterlyGoalId,
+      __hashtagId: rawGoalForExample.__hashtagId,
+      text: rawGoalForExample.text,
+      order: rawGoalForExample.order,
+      completed: rawGoalForExample.completed,
+      _createdAt: rawGoalForExample._createdAt,
+      _updatedAt: rawGoalForExample._updatedAt,
+      _deleted: rawGoalForExample._deleted,
+      hashtag: matchingHashtag 
+    };
+  })();
   
   // --------------- LOCAL UI STATE ----------------------
 

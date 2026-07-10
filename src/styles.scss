@@ -1,4 +1,7 @@
+
+@use '@angular/material' as mat;
 /* You can add global styles to this file, and also import other style files */
+@import url('https://fonts.googleapis.com/css2?family=Oxygen:wght@300;400;700&display=swap');
 
 html, body, app-root {
   height: 100%;
@@ -14,4 +17,18 @@ html, body, app-root {
 
 body {
   background-color: #F2FFFE;
+}
+:root {
+  @include mat.checkbox-overrides((
+    selected-icon-color: #2DBDB1,
+    selected-focus-icon-color: #2DBDB1,
+    selected-hover-icon-color: #2DBDB1,
+    selected-focus-state-layer-color: #2DBDB1,
+    selected-hover-state-layer-color: #2DBDB1,
+    unselected-icon-color: #2DBDB1,
+  ));
+}
+.mat-mdc-checkbox .mdc-checkbox__background {
+  border-radius: 4.21px;
+  border-width: 1.69px;
 }

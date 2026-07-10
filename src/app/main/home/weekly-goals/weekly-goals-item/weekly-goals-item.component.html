@@ -1,3 +1,9 @@
 <div class="weekly-goals-item-container">
-  weekly-goals-item works!
+  <div class="item">
+    <mat-checkbox class="box" [checked]="completed()"></mat-checkbox>
+    <div class="goal-wrapper">
+      <div class = "goal">{{ text() }} </div>
+      <div class ="hashtag">{{ hashtag() }} </div>
+    </div>
+  </div>
 </div>
