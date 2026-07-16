@@ -26,6 +26,16 @@ html, body, app-root {
   box-sizing: inherit;
 }
 
+// Manipulate initial background color
+.mdc-text-field--filled:not(.mdc-text-field--disabled) {
+  background-color: white !important;
+}
+
+// Manipulate background color on hover and focus
+.mat-mdc-form-field-focus-overlay {
+  background-color: transparent !important;
+}
+
 body {
   background-color: #F2FFFE;
 }
