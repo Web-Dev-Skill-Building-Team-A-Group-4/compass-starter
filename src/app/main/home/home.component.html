@@ -3,7 +3,5 @@
   @if (currentUser()) {
     {{ currentUser().name }}
   }
-  @if (curr_goal) {
-    <app-weekly-goals-item [goal]="curr_goal" />
-  }
+  <app-date-time></app-date-time>
 </div>

@@ -1,3 +1,10 @@
 <div class="date-time-container">
-  date-time works!
+  <div class="time">
+    <div class="time-hour-min">{{ time() | date: 'h:mm' }}</div>
+    <div class="time-side">
+      <div class="time-midday">{{ time() | date: 'a' }}</div>
+      <div class="time-secs">{{ time() | date: 'ss' }}</div>
+    </div>
+  </div>
+  <div class="date"> {{ time() | date: 'MMMM d' }}{{ dateSuffix() }}{{ time() | date: ', y' }} </div>
 </div>
