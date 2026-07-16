@@ -6,11 +6,13 @@ import { QuarterlyGoal } from 'src/app/core/store/quarterly-goal/quarterly-goal.
 export interface WeeklyGoalData extends WeeklyGoal {
   hashtag: Hashtag;
 }
+
 export interface QuarterlyGoalData extends QuarterlyGoal {
   hashtag: Hashtag;
   weeklyGoalsTotal: number;
   weeklyGoalsComplete: number;
 }
+
 export interface WeeklyGoalInForm {
   text: string;
   __quarterlyGoalId: string;

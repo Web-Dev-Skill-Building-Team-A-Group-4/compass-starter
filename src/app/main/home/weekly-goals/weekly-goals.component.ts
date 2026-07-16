@@ -11,6 +11,8 @@ import { WeeklyGoal } from '../../../core/store/weekly-goal/weekly-goal.model';
 import { WEEKLYGOAL_DB } from 'src/app/core/store/weekly-goal/weekly-goal.mock';
 import { HASHTAG_DB } from 'src/app/core/store/hashtag/hashtag.mock';
 import { Hashtag } from 'src/app/core/store/hashtag/hashtag.model';
+import { WeeklyGoalsHeaderComponent } from './weekly-goals-header/weekly-goals-header.component';
+import { WeeklyGoalsItemComponent } from './weekly-goals-item/weekly-goals-item.component';}
 
 @Component({
   selector: 'app-weekly-goals',
@@ -19,11 +21,11 @@ import { Hashtag } from 'src/app/core/store/hashtag/hashtag.model';
   changeDetection: ChangeDetectionStrategy.OnPush,
   animations: WeeklyGoalsAnimations,
   standalone: true,
-  imports: [ WeeklyGoalsModalComponent,
-  ],
+  imports: [WeeklyGoalsHeaderComponent, WeeklyGoalsItemComponent, WeeklyGoalsModalComponent],
 })
 export class WeeklyGoalsComponent implements OnInit {
   readonly authStore = inject(AuthStore);
+  goal = signal(WEEKLYGOAL_DB);
   // --------------- INPUTS AND OUTPUTS ------------------
 
   /** The current signed in user. */

@@ -22,7 +22,7 @@ export const HASHTAG_DB = [
   {
     __id: 'ht2',
     __userId: USER_DB[0].__id,
-    name: 'apply',
+    name: 'apply-internships',
     color: '#2DBDB1',
     _createdAt: Timestamp.now(),
     _updatedAt: Timestamp.now(),

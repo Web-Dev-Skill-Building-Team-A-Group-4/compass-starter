@@ -1,7 +1,32 @@
 :host {
   display: block;
   .weekly-goals-item-container {
-    // REMOVE WHEN FINISHING LAYOUT STYLES
-    border: 1px solid black;
-  }
+    border: transparent;
+    background-color: white;
+    
+    .item {
+      display: flex;
+      flex-direction: row;
+      font-size: 15px;
+      
+      .goal-wrapper {
+        display: flex;
+        flex-direction: column;
+        padding-top: 10px;
+        padding-bottom: 10px;
+        
+        .goal {
+          font-family: Oxygen;
+          color: #5A5A5A;
+          font-size: 16.25px;
+        }
+        
+        .hashtag {
+          color: #2DBDB1;
+          font-family: Oxygen;
+          font-size: 15px;
+        } 
+      }
+    }
+  }  
 }
