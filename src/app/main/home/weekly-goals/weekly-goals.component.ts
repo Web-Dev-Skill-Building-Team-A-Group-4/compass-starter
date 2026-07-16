@@ -4,6 +4,8 @@ import { User } from 'src/app/core/store/user/user.model';
 import { AuthStore } from 'src/app/core/store/auth/auth.store';
 import { BatchWriteService, BATCH_WRITE_SERVICE } from 'src/app/core/store/batch-write.service';
 import { WeeklyGoalsHeaderComponent } from './weekly-goals-header/weekly-goals-header.component';
+import { WEEKLYGOAL_DB } from 'src/app/core/store/weekly-goal/weekly-goal.mock';
+import { WeeklyGoalsItemComponent } from './weekly-goals-item/weekly-goals-item.component';}
 
 @Component({
   selector: 'app-weekly-goals',
@@ -12,11 +14,11 @@ import { WeeklyGoalsHeaderComponent } from './weekly-goals-header/weekly-goals-h
   changeDetection: ChangeDetectionStrategy.OnPush,
   animations: WeeklyGoalsAnimations,
   standalone: true,
-  imports: [ WeeklyGoalsHeaderComponent
-  ],
+  imports: [WeeklyGoalsHeaderComponent, WeeklyGoalsItemComponent],
 })
 export class WeeklyGoalsComponent implements OnInit {
   readonly authStore = inject(AuthStore);
+  goal = signal(WEEKLYGOAL_DB);
   // --------------- INPUTS AND OUTPUTS ------------------
 
   /** The current signed in user. */
