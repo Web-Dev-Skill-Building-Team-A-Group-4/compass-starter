@@ -1,7 +1,125 @@
 :host {
   display: block;
+  
   .weekly-goals-modal-container {
-    // REMOVE WHEN FINISHING LAYOUT STYLES
-    border: 1px solid black;
+    background-color: white;
+    width: 800px;
+    height: 630px; 
+    padding: 40px;
+    border-radius: 12.5px 12.5px 0 0;
+    display: flex;
+    flex-direction: column;
+    
+    .top{
+      display: flex;
+      justify-content: space-between;
+      
+      .top-text{
+        display: flex;
+        flex-direction: column;
+        margin-bottom: 45px;
+
+        .top-title{
+          margin-top: 0px;
+          color: #4B5853;
+          font-family: Oxygen;
+          font-size: 30px;
+          font-style: normal;
+          font-weight: 400;
+          line-height: normal;
+        }
+        
+        .top-date{
+          margin-top: -10px;
+          color: #4B5853;
+          font-family: Oxygen;
+          font-size: 25px;
+          font-style: normal;
+          font-weight: 700;
+          line-height: normal;
+        }
+      }
+      
+      .close-button{
+        transform: scale(1.4);
+      }
+    }
+
+    .content{
+      .content-item{
+        display: flex;
+        flex-direction: column;
+        
+        .field-select{
+          border: 0px;
+          display: flex;
+          height: 70px;
+          margin-left: -5px;
+          padding: 0px;
+          margin-bottom: 10px;
+          cursor: pointer;
+
+          mat-icon{
+            margin-right: 10px;
+            margin-top: 15px;
+            height: 30px;
+            font-size: 30px;
+            color: #2dbdb1;
+          }
+          
+          .goal-input{
+            padding: -10px;
+            color: #2dbdb1;
+            width: 423.75px;
+            color: #4B5853;
+            font-family: Oxygen;
+            font-size: 19.095px;
+            font-style: normal;
+            font-weight: 300;
+            line-height: normal;
+            margin-right: 40px;
+            --mdc-filled-text-field-focus-active-indicator-color: #2dbdb1;
+          }
+
+          .goal-dropdown{
+            width: 210px;
+            --mdc-filled-text-field-active-indicator-color: var(--underline-color);
+            --mdc-filled-text-field-focus-active-indicator-color: var(--underline-color);
+            //--mdc-filled-text-field-hover-active-indicator-color: var(--underline-color);
+
+            mat-select{
+              font-family: Oxygen;
+              font-size: 19.095px;
+              font-style: normal;
+              font-weight: 300;
+              line-height: normal;
+            }
+          }
+        }
+      }
+    }
+  
+    .button{
+      display: flex;
+      justify-content: flex-end;
+      margin-top: auto;
+      align-items: flex-end;
+    
+      .save-button{
+        background: #2dbdb1;
+        color: #ffffff;
+        width: 138px;
+        height: 42px;
+        border: none;
+        border-radius: 12.5px;
+        cursor: pointer;
+        text-align: center;
+        font-family: Oxygen;
+        font-size: 22.5px;
+        font-style: normal;
+        font-weight: 400;
+        line-height: normal;
+      }
+    }
   }
 }

@@ -1,3 +1,50 @@
 <div class="weekly-goals-modal-container">
-  weekly-goals-modal works!
+  <div class="top">
+    <div class="top-text">
+      <h1 class="top-title">Weekly Goals</h1>
+      <time class="top-date">
+        {{ startOfWeek() }} - {{ endOfWeek() }}
+      </time>
+    </div>
+    <button mat-icon-button class="close-button" (click)="onClose()">
+      <mat-icon>close</mat-icon>
+    </button>
+  </div>
+  <div class="content">
+    <div class="content-item">
+      <div cdkDropList (cdkDropListDropped)="drop($event)">
+      @for (item of task(); track item.__id) {
+      <fieldset class="field-select" cdkDrag>
+        <mat-icon cdkDragHandle>drag_indicator</mat-icon>
+        <mat-form-field class="goal-input"> 
+          <input matInput 
+            placeholder="Enter your goal..."
+            [value]="item.text"/>
+        </mat-form-field>
+        <mat-form-field class="goal-dropdown"
+          [style.--underline-color]="htgIdMap[item.__hashtagId].color"
+          [style.--dropdown-color]="htgIdMap[item.__hashtagId]?.color">
+          <mat-select 
+            placeholder="quarterly goal..."
+            [value]="htgIdMap[item.__hashtagId]"
+            [style.color]="htgIdMap[item.__hashtagId].color">
+            @for(tag of htg; track tag){
+              <mat-option 
+                [value]="tag"
+                [style.color]="tag.color"> 
+                #{{ tag.name }} 
+              </mat-option>
+            }
+          </mat-select>
+        </mat-form-field>
+      </fieldset>
+      }
+      </div>
+    </div>
+  </div>
+  <div class="button">
+    <button class="save-button" (click)="save()">
+      Save
+    </button>
+  </div>
 </div>
