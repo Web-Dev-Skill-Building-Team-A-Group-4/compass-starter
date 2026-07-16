@@ -8,6 +8,7 @@ import { WeeklyGoalsComponent } from './weekly-goals/weekly-goals.component';
 import { WEEKLYGOAL_DB } from 'src/app/core/store/weekly-goal/weekly-goal.mock';
 import { WeeklyGoalsItemComponent } from './weekly-goals/weekly-goals-item/weekly-goals-item.component';
 import { HASHTAG_DB } from 'src/app/core/store/hashtag/hashtag.mock';
+import { DateTimeComponent } from './date-time/date-time.component';
 import { LongTermGoalsComponent } from './long-term-goals/long-term-goals.component';
 import { QuarterlyGoalsComponent } from './quarterly-goals/quarterly-goals.component';
 
@@ -22,6 +23,7 @@ import { QuarterlyGoalsComponent } from './quarterly-goals/quarterly-goals.compo
     NavbarComponent, 
     WeeklyGoalsComponent,
     WeeklyGoalsItemComponent,
+    DateTimeComponent,
     LongTermGoalsComponent,
     QuarterlyGoalsComponent,
   ]
