@@ -1,4 +1,26 @@
 /* You can add global styles to this file, and also import other style files */
+@use "@angular/material" as mat;
+@import url("https://fonts.googleapis.com/css2?family=Oxygen:wght@300;400;700&display=swap");
+
+@include mat.core();
+$compass-theme: mat.define-theme(
+  (
+    typography: (
+      plain-family: "Oxygen",
+      brand-family: "Oxygen",
+    ),
+  )
+);
+
+// Manipulate initial background color
+.mdc-text-field--filled:not(.mdc-text-field--disabled) {
+  background-color: white !important;
+}
+
+// Manipulate background color on hover and focus
+.mat-mdc-form-field-focus-overlay {
+  background-color: transparent !important;
+}
 
 html, body, app-root {
   height: 100%;
