@@ -20,6 +20,7 @@ export class LongTermGoalsHeaderComponent implements OnInit {
 
   /** The current signed in user. */
   currentUser: Signal<User> = this.authStore.user;
+  editClicked = output<boolean>();
 
   // --------------- LOCAL UI STATE ----------------------
 
@@ -30,11 +31,13 @@ export class LongTermGoalsHeaderComponent implements OnInit {
 
   // --------------- EVENT HANDLING ----------------------
 
-  // --------------- OTHER -------------------------------
+  editGoals() {
+    this.editClicked.emit(true);
+  }
 
+  // --------------- OTHER -------------------------------
+  
   constructor(
-    private injector: Injector,
-    @Inject(BATCH_WRITE_SERVICE) private batch: BatchWriteService,
   ) { }
 
   // --------------- LOAD AND CLEANUP --------------------

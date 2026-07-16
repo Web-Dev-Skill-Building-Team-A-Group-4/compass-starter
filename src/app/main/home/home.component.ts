@@ -7,6 +7,7 @@ import { NavbarComponent } from 'src/app/shared/navbar/navbar.component';
 import { WEEKLYGOAL_DB } from 'src/app/core/store/weekly-goal/weekly-goal.mock';
 import { WeeklyGoalsItemComponent } from './weekly-goals/weekly-goals-item/weekly-goals-item.component';
 import { HASHTAG_DB } from 'src/app/core/store/hashtag/hashtag.mock';
+import { LongTermGoalsComponent } from './long-term-goals/long-term-goals.component';
 
 @Component({
   selector: 'app-home',
@@ -18,6 +19,7 @@ import { HASHTAG_DB } from 'src/app/core/store/hashtag/hashtag.mock';
   imports: [
     NavbarComponent, 
     WeeklyGoalsItemComponent,
+    LongTermGoalsComponent,
   ]
 })
 export class HomeComponent implements OnInit {
