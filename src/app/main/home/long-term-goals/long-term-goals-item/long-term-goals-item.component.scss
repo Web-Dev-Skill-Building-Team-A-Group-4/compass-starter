@@ -1,7 +1,21 @@
-:host {
-  display: block;
-  .long-term-goals-item-container {
-    // REMOVE WHEN FINISHING LAYOUT STYLES
-    border: 1px solid black;
+.long-term-goals-item-container {
+  background-color: white;
+  width: 35vw;
+  .item {
+    display: flex;
+    flex-direction: column;
+    .goal-wrapper {
+      font-family: Oxygen;
+      color: #4B5853;
+      font-size: 16.25px;
+      padding: 10px 34px 10px 34px;
+      .year {
+        font-weight: 700;
+      }
+      .goal {
+        padding-top: 0.4px;
+      }
+    }
   }
-}
+}  
+
