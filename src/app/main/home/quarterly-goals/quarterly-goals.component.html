@@ -1,6 +1,4 @@
 <div class="quarterly-goals-container">
-  <button (click)="openModal(true)">
-    open modal
-  </button>
+  <app-quarterly-goals-header (editClicked)="openModal($event)"/>
   <app-quarterly-goals-item [goal]="sampleData"></app-quarterly-goals-item>
 </div>
