@@ -1,3 +1,12 @@
 <div class="quarterly-goals-item-container">
-  quarterly-goals-item works!
+  <div class="goal-item">
+    <mat-checkbox class="checkbox" [aria-label]="goal().text" [checked]="completed()"></mat-checkbox>
+    <div class="goal-text">
+      <div class= "goal-title"> {{ goal().text }} </div>
+      <div class="goal-hashtag"> #{{ goal().hashtag.name }} </div>
+    </div>
+    <div class="completed-goals">
+      {{ goal().weeklyGoalsComplete }} / {{ goal().weeklyGoalsTotal }}
+    </div>
+  </div>
 </div>
