@@ -9,10 +9,10 @@ import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { Timestamp } from '@angular/fire/firestore';
 import { WeeklyGoal } from '../../../core/store/weekly-goal/weekly-goal.model';
 import { WEEKLYGOAL_DB } from 'src/app/core/store/weekly-goal/weekly-goal.mock';
+import { WeeklyGoalsItemComponent } from './weekly-goals-item/weekly-goals-item.component';
 import { HASHTAG_DB } from 'src/app/core/store/hashtag/hashtag.mock';
 import { Hashtag } from 'src/app/core/store/hashtag/hashtag.model';
 import { WeeklyGoalsHeaderComponent } from './weekly-goals-header/weekly-goals-header.component';
-import { WeeklyGoalsItemComponent } from './weekly-goals-item/weekly-goals-item.component';}
 
 @Component({
   selector: 'app-weekly-goals',
@@ -53,7 +53,6 @@ export class WeeklyGoalsComponent implements OnInit {
   // --------------- OTHER -------------------------------
 
   constructor(
-    // private injector: Injector,
     @Inject(BATCH_WRITE_SERVICE) private batch: BatchWriteService,
     private dialog: MatDialog,
   ) { }

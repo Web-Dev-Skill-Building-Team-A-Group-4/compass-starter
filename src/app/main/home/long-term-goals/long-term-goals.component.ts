@@ -4,10 +4,11 @@ import { User } from 'src/app/core/store/user/user.model';
 import { AuthStore } from 'src/app/core/store/auth/auth.store';
 import { BatchWriteService, BATCH_WRITE_SERVICE } from 'src/app/core/store/batch-write.service';
 import { LongTermGoalsHeaderComponent } from './long-term-goals-header/long-term-goals-header.component';
-import { MatSnackBar } from '@angular/material/snack-bar';
+import { LongTermGoalsModalComponent } from './long-term-goals-modal/long-term-goals-modal.component';
+import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { LongTermGoalsItemComponent } from './long-term-goals-item/long-term-goals-item.component';
-import { LongTermGoalsData } from '../home.model';
 import { Timestamp } from '@angular/fire/firestore';
+import { LongTermGoal } from 'src/app/core/store/long-term-goal/long-term-goal.model';
 
 @Component({
   selector: 'app-long-term-goals',
@@ -16,8 +17,9 @@ import { Timestamp } from '@angular/fire/firestore';
   changeDetection: ChangeDetectionStrategy.OnPush,
   animations: LongTermGoalsAnimations,
   standalone: true,
-  imports: [
+  imports: [ 
     LongTermGoalsHeaderComponent,
+    LongTermGoalsModalComponent,    
     LongTermGoalsItemComponent,
   ],
 })
@@ -33,7 +35,10 @@ export class LongTermGoalsComponent implements OnInit {
   /** Loading icon. */
   loading: WritableSignal<boolean> = signal(false);
 
-  sampleData: LongTermGoalsData = {
+  /** For storing the dialogRef in the opened modal. */
+  dialogRef: MatDialogRef<any>;
+
+  sampleData: LongTermGoal = {
     __id: 'ltg',
     __userId: 'test-user',
     oneYear: 'Secure SWE or UX Engineering Internship',
@@ -48,17 +53,19 @@ export class LongTermGoalsComponent implements OnInit {
   // --------------- EVENT HANDLING ----------------------
 
   openModal(editClicked: boolean) {
-    this.snackBar.open('Pencil icon clicked!', '', {
-      duration: 1000,
-      verticalPosition: 'bottom',
-      horizontalPosition: 'center',
+    this.dialogRef = this.dialog.open(LongTermGoalsModalComponent, {
+      height: '90%',
+      width: '90%',
+      position: { bottom: '0' },
+      panelClass: 'goal-modal-panel',
+      data: { goals: this.sampleData },
     });
   }
 
   // --------------- OTHER -------------------------------
 
   constructor(
-    private snackBar: MatSnackBar,
+    private dialog: MatDialog,
   ) { }
 
   // --------------- LOAD AND CLEANUP --------------------

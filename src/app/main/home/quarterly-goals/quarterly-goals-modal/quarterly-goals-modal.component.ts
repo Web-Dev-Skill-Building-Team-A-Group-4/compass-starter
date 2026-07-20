@@ -3,7 +3,6 @@ import { QuarterlyGoalsModalAnimations } from './quarterly-goals-modal.animation
 import { User } from 'src/app/core/store/user/user.model';
 import { AuthStore } from 'src/app/core/store/auth/auth.store';
 import { BatchWriteService, BATCH_WRITE_SERVICE } from 'src/app/core/store/batch-write.service';
-import { QuarterlyGoal } from '../../home.model';
 import { CdkDragDrop, CdkDrag, CdkDragHandle, CdkDropList, moveItemInArray } from '@angular/cdk/drag-drop';
 import { QUARTERLYGOAL_DB } from '../../../../core/store/quarterly-goal/quarterly-goal.mock';
 import { HASHTAG_DB } from 'src/app/core/store/hashtag/hashtag.mock';
@@ -15,6 +14,7 @@ import { MatInput } from '@angular/material/input';
 import { MatSelect } from '@angular/material/select';
 import { MatOption } from '@angular/material/core';
 import { MatDialogRef, MatDialogModule } from '@angular/material/dialog';
+import { QuarterlyGoal } from 'src/app/core/store/quarterly-goal/quarterly-goal.model';
 
 @Component({
   selector: 'app-quarterly-goals-modal',

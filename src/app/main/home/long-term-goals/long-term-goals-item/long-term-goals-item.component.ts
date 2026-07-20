@@ -3,7 +3,7 @@ import { LongTermGoalsItemAnimations } from './long-term-goals-item.animations';
 import { User } from 'src/app/core/store/user/user.model';
 import { AuthStore } from 'src/app/core/store/auth/auth.store';
 import { BatchWriteService, BATCH_WRITE_SERVICE } from 'src/app/core/store/batch-write.service';
-import { LongTermGoalsData } from '../../home.model';
+import { LongTermGoal } from 'src/app/core/store/long-term-goal/long-term-goal.model';
 
 @Component({
   selector: 'app-long-term-goals-item',
@@ -28,7 +28,7 @@ export class LongTermGoalsItemComponent implements OnInit {
   loading: WritableSignal<boolean> = signal(false);
 
   /** Goal object from parent */
-  goal = input<LongTermGoalsData>();
+  goal = input<LongTermGoal>();
 
   // --------------- COMPUTED DATA -----------------------
 
