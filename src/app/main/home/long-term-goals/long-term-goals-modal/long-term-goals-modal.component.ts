@@ -7,9 +7,7 @@ import { MAT_DIALOG_DATA, MatDialogClose, MatDialogRef, MatDialogModule } from '
 import { MatIconButton } from '@angular/material/button';
 import { MatIcon } from '@angular/material/icon';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
-import { LongTermGoal } from '../../../../core/store/long-term-goal/long-term-goal.model';
-import { LONGTERMGOAL_DB } from '../../../../core/store/long-term-goal/long-term-goal.mock';
-import { LongTermGoalsData } from '../../home.model';
+import { LongTermGoal } from 'src/app/core/store/long-term-goal/long-term-goal.model';
 
 @Component({
   selector: 'app-long-term-goals-modal',
@@ -62,7 +60,7 @@ export class LongTermGoalsModalComponent implements OnInit {
 
   constructor(
     private dialogRef: MatDialogRef<LongTermGoalsModalComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: {goals: LongTermGoalsData},
+    @Inject(MAT_DIALOG_DATA) public data: {goals: LongTermGoal},
     private injector: Injector,
     @Inject(BATCH_WRITE_SERVICE) private batch: BatchWriteService,
   ) { }

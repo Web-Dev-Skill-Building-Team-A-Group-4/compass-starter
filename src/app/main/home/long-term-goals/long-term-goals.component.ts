@@ -4,11 +4,11 @@ import { User } from 'src/app/core/store/user/user.model';
 import { AuthStore } from 'src/app/core/store/auth/auth.store';
 import { BatchWriteService, BATCH_WRITE_SERVICE } from 'src/app/core/store/batch-write.service';
 import { LongTermGoalsHeaderComponent } from './long-term-goals-header/long-term-goals-header.component';
-import { MatSnackBar } from '@angular/material/snack-bar';
 import { LongTermGoalsModalComponent } from './long-term-goals-modal/long-term-goals-modal.component';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
-import { LongTermGoalsData } from '../home.model';
+import { LongTermGoalsItemComponent } from './long-term-goals-item/long-term-goals-item.component';
 import { Timestamp } from '@angular/fire/firestore';
+import { LongTermGoal } from 'src/app/core/store/long-term-goal/long-term-goal.model';
 
 @Component({
   selector: 'app-long-term-goals',
@@ -20,6 +20,7 @@ import { Timestamp } from '@angular/fire/firestore';
   imports: [ 
     LongTermGoalsHeaderComponent,
     LongTermGoalsModalComponent,    
+    LongTermGoalsItemComponent,
   ],
 })
 export class LongTermGoalsComponent implements OnInit {
@@ -37,7 +38,7 @@ export class LongTermGoalsComponent implements OnInit {
   /** For storing the dialogRef in the opened modal. */
   dialogRef: MatDialogRef<any>;
 
-  sampleData: LongTermGoalsData = {
+  sampleData: LongTermGoal = {
     __id: 'ltg',
     __userId: 'test-user',
     oneYear: 'Secure SWE or UX Engineering Internship',

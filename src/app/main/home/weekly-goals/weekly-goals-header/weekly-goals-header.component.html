@@ -1,3 +1,10 @@
 <div class="weekly-goals-header-container">
-  weekly-goals-header works!
+  <span class="weekly-goals-header">Weekly Goals
+    <button class="edit-icon" (click)="onEditClicked()" aria-label="Edit weekly goals">
+      <img src="/images/edit.svg" alt="Edit"/>
+    </button>
+  </span>
+  <div class="date-time">
+    {{ startDate() }} - {{ endDate() }}
+  </div>
 </div>

@@ -3,8 +3,16 @@ import { WeeklyGoalsAnimations } from './weekly-goals.animations';
 import { User } from 'src/app/core/store/user/user.model';
 import { AuthStore } from 'src/app/core/store/auth/auth.store';
 import { BatchWriteService, BATCH_WRITE_SERVICE } from 'src/app/core/store/batch-write.service';
+import { WeeklyGoalsModalComponent } from './weekly-goals-modal/weekly-goals-modal.component';
+import { QuarterlyGoalData, WeeklyGoalData } from 'src/app/main/home/home.model';
+import { MatDialog, MatDialogRef } from '@angular/material/dialog';
+import { Timestamp } from '@angular/fire/firestore';
+import { WeeklyGoal } from '../../../core/store/weekly-goal/weekly-goal.model';
 import { WEEKLYGOAL_DB } from 'src/app/core/store/weekly-goal/weekly-goal.mock';
 import { WeeklyGoalsItemComponent } from './weekly-goals-item/weekly-goals-item.component';
+import { HASHTAG_DB } from 'src/app/core/store/hashtag/hashtag.mock';
+import { Hashtag } from 'src/app/core/store/hashtag/hashtag.model';
+import { WeeklyGoalsHeaderComponent } from './weekly-goals-header/weekly-goals-header.component';
 
 @Component({
   selector: 'app-weekly-goals',
@@ -13,8 +21,7 @@ import { WeeklyGoalsItemComponent } from './weekly-goals-item/weekly-goals-item.
   changeDetection: ChangeDetectionStrategy.OnPush,
   animations: WeeklyGoalsAnimations,
   standalone: true,
-  imports: [ WeeklyGoalsItemComponent
-  ],
+  imports: [WeeklyGoalsHeaderComponent, WeeklyGoalsItemComponent, WeeklyGoalsModalComponent],
 })
 export class WeeklyGoalsComponent implements OnInit {
   readonly authStore = inject(AuthStore);
@@ -29,15 +36,25 @@ export class WeeklyGoalsComponent implements OnInit {
   /** Loading icon. */
   loading: WritableSignal<boolean> = signal(false);
 
+  /** For storing the dialogRef in the opened modal. */
+  dialogRef: MatDialogRef<any>;
+
   // --------------- COMPUTED DATA -----------------------
 
   // --------------- EVENT HANDLING ----------------------
+  openModal(editClicked: boolean) {
+    this.dialogRef = this.dialog.open(WeeklyGoalsModalComponent, {
+      height: '90%',
+      position: { bottom: '0' },
+      panelClass: 'goal-modal-panel',
+    });
+  }
 
   // --------------- OTHER -------------------------------
 
   constructor(
-    private injector: Injector,
     @Inject(BATCH_WRITE_SERVICE) private batch: BatchWriteService,
+    private dialog: MatDialog,
   ) { }
 
   // --------------- LOAD AND CLEANUP --------------------

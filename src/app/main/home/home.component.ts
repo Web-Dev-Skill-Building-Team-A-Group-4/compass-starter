@@ -32,7 +32,7 @@ import { QuarterlyGoalsComponent } from './quarterly-goals/quarterly-goals.compo
 export class HomeComponent implements OnInit {
   authStore = inject(AuthStore);
   
-// --------------- INPUTS AND OUTPUTS ------------------
+  // --------------- INPUTS AND OUTPUTS ------------------
 
   /** The currently signed in user. */
   currentUser: Signal<User> = this.authStore.user;
