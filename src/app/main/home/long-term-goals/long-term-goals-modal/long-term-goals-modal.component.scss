@@ -1,7 +1,90 @@
 :host {
   display: block;
+  height: 100%;
   .long-term-goals-modal-container {
-    // REMOVE WHEN FINISHING LAYOUT STYLES
-    border: 1px solid black;
+    border-radius: 12.5px 12.5px 0 0;
+    background: #FFF;
+    padding: 35px 40px 40px 60px;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+
+    .top {
+      display: flex;
+      justify-content: space-between;
+      
+      .top-text{
+        h1 {
+          color: #4B5853;
+          font-family: Oxygen;
+          font-size: 30px;
+          font-weight: 400;
+          padding: 0px;
+          margin: 0px;
+        }
+        
+        h2 {
+          color: #4B5853;
+          font-family: Oxygen;
+          font-size: 25px;
+          font-weight: 700;
+          padding: 0px;
+        }
+      }
+      
+      .close-button {
+        margin-right: -10px;
+        transform: scale(1.4);
+      }
+    }
+
+    .content {
+      display: flex;
+      flex-direction: column;
+      gap: 30px;
+      margin-top: 30px;
+
+      h3 {
+        color: #4B5853;
+        font-family: Oxygen;
+        font-size: 25px;
+        font-weight: 400;
+        margin: 5px 0px; 
+      }
+
+      input {
+        color: #4B5853;
+        font-family: Oxygen;
+        font-size: 20px;
+        font-weight: 300;
+        width: 100%;
+        outline: none;
+        border: none;
+        border-bottom: 1px solid #4B5853;
+        background-color: transparent;
+      }
+    }
+  
+    .button {
+      display: flex;
+      justify-content: flex-end;
+      margin-top: auto;
+      align-items: flex-end;
+      
+      .save-button {
+        background: #2dbdb1;
+        color: #ffffff;
+        width: 138px;
+        height: 42px;
+        border: none;
+        border-radius: 12.5px;
+        cursor: pointer;
+        text-align: center;
+        font-family: Oxygen;
+        font-size: 22.5px;
+        font-weight: 400;
+        margin: 5px;
+      }
+    }
   }
 }

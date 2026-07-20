@@ -4,11 +4,14 @@ import { User } from 'src/app/core/store/user/user.model';
 import { AuthStore } from 'src/app/core/store/auth/auth.store';
 import { BatchWriteService, BATCH_WRITE_SERVICE } from 'src/app/core/store/batch-write.service';
 import { NavbarComponent } from 'src/app/shared/navbar/navbar.component';
+import { WeeklyGoalsComponent } from './weekly-goals/weekly-goals.component';
 import { WEEKLYGOAL_DB } from 'src/app/core/store/weekly-goal/weekly-goal.mock';
 import { WeeklyGoalsItemComponent } from './weekly-goals/weekly-goals-item/weekly-goals-item.component';
 import { HASHTAG_DB } from 'src/app/core/store/hashtag/hashtag.mock';
+import { DateTimeComponent } from './date-time/date-time.component';
 import { LongTermGoalsComponent } from './long-term-goals/long-term-goals.component';
 import { QuarterlyGoalsComponent } from './quarterly-goals/quarterly-goals.component';
+
 
 @Component({
   selector: 'app-home',
@@ -19,7 +22,9 @@ import { QuarterlyGoalsComponent } from './quarterly-goals/quarterly-goals.compo
   animations: HomeAnimations,
   imports: [
     NavbarComponent, 
+    WeeklyGoalsComponent,
     WeeklyGoalsItemComponent,
+    DateTimeComponent,
     LongTermGoalsComponent,
     QuarterlyGoalsComponent,
   ]

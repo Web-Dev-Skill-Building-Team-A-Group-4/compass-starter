@@ -1,3 +1,26 @@
 <div class="long-term-goals-modal-container">
-  long-term-goals-modal works!
+  <div class="top">
+    <div class="top-text">
+      <h1>Long-term Goals</h1>
+      <h2>Plan your future</h2>
+    </div>
+    <button mat-icon-button class="close-button" (click)="onClose()">
+      <mat-icon>close</mat-icon>
+    </button>
+  </div>
+  <div class="content">
+    <div class="one-year">
+      <h3>1 year</h3>
+      <input [formControl]="oneYearGoal"/>
+    </div>
+    <div class="five-year">
+      <h3>5 year</h3>
+      <input [formControl]="fiveYearGoal"/>
+    </div>
+  </div>
+  <div class="button">
+    <button class="save-button" (click)="save()">
+      Save
+    </button>
+  </div>
 </div>

@@ -4,7 +4,7 @@ import { User } from 'src/app/core/store/user/user.model';
 import { AuthStore } from 'src/app/core/store/auth/auth.store';
 import { BatchWriteService, BATCH_WRITE_SERVICE } from 'src/app/core/store/batch-write.service';
 import { WEEKLYGOAL_DB } from 'src/app/core/store/weekly-goal/weekly-goal.mock';
-import { WeeklyGoalsItemComponent } from './weekly-goals-item/weekly-goals-item.component';}
+import { WeeklyGoalsItemComponent } from './weekly-goals-item/weekly-goals-item.component';
 
 @Component({
   selector: 'app-weekly-goals',
