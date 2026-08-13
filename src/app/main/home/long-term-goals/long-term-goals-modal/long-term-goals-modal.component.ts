@@ -48,11 +48,10 @@ export class LongTermGoalsModalComponent implements OnInit {
   }
 
   /** function supposedly saves changes made from editing goals */
-  save(){
-    this.dialogRef.close({
-      ...this.data,
-      oneYear: this.oneYearGoal.value,
-      fiveYear: this.fiveYearGoal.value,
+  async save() {
+    await this.data.updateGoal({
+      oneYear: this.oneYearGoal.value ?? '',
+      fiveYear: this.fiveYearGoal.value ?? '',
     });
   }
 
@@ -60,7 +59,14 @@ export class LongTermGoalsModalComponent implements OnInit {
 
   constructor(
     private dialogRef: MatDialogRef<LongTermGoalsModalComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: {goals: LongTermGoal},
+    @Inject(MAT_DIALOG_DATA) 
+    public data: {
+      goals: LongTermGoal;
+      updateGoal: (result: {
+        oneYear: string;
+        fiveYear: string;
+      }) => Promise<void>;
+    },
     private injector: Injector,
     @Inject(BATCH_WRITE_SERVICE) private batch: BatchWriteService,
   ) { }
