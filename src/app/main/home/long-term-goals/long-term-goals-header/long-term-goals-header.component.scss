@@ -1,9 +1,15 @@
+:host {
+  display: block;
+  width: 100%
+}
+
 .long-term-goals-header-container {
   display: flex;
   justify-content: space-between;
+  align-items: flex-start;
   background-color: #FFFFFF;
-  width: 30vw;
-  padding: 32px;
+  width: 100%;
+  padding-top: 30px;
   .header-text {
     font-family: Oxygen;
     align-items: center;
@@ -13,10 +19,14 @@
   }
   .edit-button {
     display: flex;
+    margin-left: auto;
+    margin-right: 12px;
+    margin-top: 8px;
     background-color: transparent;
     flex-direction: column;
     cursor: pointer;
     border: none;
+
     .edit-icon {
       width: 19.97px;
       height: 19.99px;

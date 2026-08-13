@@ -1,5 +1,28 @@
-:host {
-  display: block;
-  .long-term-goals-container {
+$card-background-color: white;
+$card-border-color: #E1FBF9;
+$card-max-width: max(280px, 30vw);
+.long-term-goals-container {
+  border-radius: 10px 10px 0px 0px;
+  background-color: $card-background-color;
+  border: 3px solid $card-border-color;
+  width: $card-max-width;
+  height: 100%;
+  min-height: 420px;
+  .card-body {
+    padding-left: 30px;
+    padding-right: 5px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    .goals-list {
+      display: flex;
+      flex-direction: column;
+      width: calc(100% - 16px);
+      padding-top: 50px;
+      overflow-y: auto;
+      overflow-x: hidden;
+      max-height: calc(100% - 420px)
+    }
   }
 }
+

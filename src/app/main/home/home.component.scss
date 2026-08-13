@@ -2,5 +2,11 @@
   display: block;
   .home-container {
     height: calc(100% - 70px);
+    .goals { 
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      gap: 48px;
+    }
   }
 }

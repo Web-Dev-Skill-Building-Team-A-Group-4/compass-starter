@@ -1,6 +1,8 @@
+$divider-color: rgba(0, 0, 0, 0.15);
 .long-term-goals-item-container {
   background-color: white;
-  width: 35vw;
+  width: 100%;
+ 
   .item {
     display: flex;
     flex-direction: column;
@@ -8,12 +10,15 @@
       font-family: Oxygen;
       color: #4B5853;
       font-size: 16.25px;
-      padding: 10px 34px 10px 34px;
+      padding-top: 10px;
+      border-bottom: 1px solid $divider-color;
       .year {
         font-weight: 700;
+        padding-bottom: 5px;
       }
       .goal {
-        padding-top: 0.4px;
+        text-wrap: wrap;
+        padding-bottom: 10px; 
       }
     }
   }
