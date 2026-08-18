@@ -1,7 +1,26 @@
-:host {
-  display: block;
-  .long-term-goals-item-container {
-    // REMOVE WHEN FINISHING LAYOUT STYLES
-    border: 1px solid black;
+$divider-color: rgba(0, 0, 0, 0.15);
+.long-term-goals-item-container {
+  background-color: white;
+  width: 100%;
+ 
+  .item {
+    display: flex;
+    flex-direction: column;
+    .goal-wrapper {
+      font-family: Oxygen;
+      color: #4B5853;
+      font-size: 16.25px;
+      padding-top: 10px;
+      border-bottom: 1px solid $divider-color;
+      .year {
+        font-weight: 700;
+        padding-bottom: 5px;
+      }
+      .goal {
+        text-wrap: wrap;
+        padding-bottom: 10px; 
+      }
+    }
   }
-}
+}  
+

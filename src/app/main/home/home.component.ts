@@ -12,6 +12,7 @@ import { DateTimeComponent } from './date-time/date-time.component';
 import { LongTermGoalsComponent } from './long-term-goals/long-term-goals.component';
 import { QuarterlyGoalsComponent } from './quarterly-goals/quarterly-goals.component';
 
+
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
@@ -31,7 +32,7 @@ import { QuarterlyGoalsComponent } from './quarterly-goals/quarterly-goals.compo
 export class HomeComponent implements OnInit {
   authStore = inject(AuthStore);
   
-// --------------- INPUTS AND OUTPUTS ------------------
+  // --------------- INPUTS AND OUTPUTS ------------------
 
   /** The currently signed in user. */
   currentUser: Signal<User> = this.authStore.user;

@@ -1,7 +1,9 @@
 <app-navbar></app-navbar>
 <div class="home-container">
-  @if (currentUser()) {
-    {{ currentUser().name }}
-  }
-  <app-quarterly-goals></app-quarterly-goals>
+  <app-date-time></app-date-time>
+  <div class="goals">
+    <app-weekly-goals></app-weekly-goals>
+    <app-quarterly-goals></app-quarterly-goals>
+    <app-long-term-goals></app-long-term-goals>
+  </div>
 </div>

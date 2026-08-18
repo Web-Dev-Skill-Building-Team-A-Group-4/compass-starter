@@ -1,3 +1,8 @@
 <div class="long-term-goals-container">
-  <app-long-term-goals-header (editClicked)="openModal($event)" />
+  <div class="card-body">
+    <app-long-term-goals-header (editClicked)="openModal($event)" />
+    <div class="goals-list">
+      <app-long-term-goals-item [goal]='longTermGoals()'></app-long-term-goals-item>
+    </div>
+  </div>
 </div>

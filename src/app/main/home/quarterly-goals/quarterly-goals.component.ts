@@ -111,8 +111,8 @@ export class QuarterlyGoalsComponent implements OnInit {
     ], {});
   });
 
-  // --------------- EVENT HANDLING ----------------------
-  
+  // --------------- EVENT HANDLING ----------------------  
+
   openModal(editClicked: boolean) {
     this.dialogRef = this.dialog.open(QuarterlyGoalsModalComponent, {
       height: '90%',
