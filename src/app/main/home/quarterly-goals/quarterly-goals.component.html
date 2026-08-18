@@ -1,4 +1,10 @@
 <div class="quarterly-goals-container">
   <app-quarterly-goals-header (editClicked)="openModal($event)"/>
-  <app-quarterly-goals-item [goal]="sampleData"></app-quarterly-goals-item>
+  @for (goal of incompleteQuarterlyGoals(); track goal.__id) {
+    <app-quarterly-goals-item [goal]="goal" (checked)="checkGoal($event)"/>
+  }
+  @for (goal of completeQuarterlyGoals(); track goal.__id) {
+    <app-quarterly-goals-item [goal]="goal" (checked)="checkGoal($event)"/>
+  }
+  <div class="add-goal" (click)="openModal(true)"> + Add a quarter goal</div>
 </div>

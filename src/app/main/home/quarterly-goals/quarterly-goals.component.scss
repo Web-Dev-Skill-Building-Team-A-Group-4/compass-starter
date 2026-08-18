@@ -1,7 +1,25 @@
 :host {
   display: block;
   .quarterly-goals-container {
-    // REMOVE WHEN FINISHING LAYOUT STYLES
-    // border: 1px solid black;
+    width: 30vw;
+    min-height: 100vh;
+    border-radius: 12.5px 12.5px 0 0;
+    border-top: 3.75px solid #CCEFEC;
+    border-right: 3.75px solid #CCEFEC;
+    border-left: 3.75px solid #CCEFEC;
+    background: #FFF;
+    box-shadow: 0 8.75px 8.75px 0 rgba(0, 0, 0, 0.10);
+
+    app-quarterly-goals-header {
+      padding: 15px 10px;
+    }
+    
+    .add-goal {
+      padding: 15px 25px;
+      color: #5A5A5A;
+      font-family: Oxygen;
+      font-size: 17.5px;
+      cursor: pointer;
+    }
   }
 }

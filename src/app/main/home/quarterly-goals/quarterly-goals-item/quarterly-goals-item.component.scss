@@ -4,14 +4,25 @@
   .quarterly-goals-item-container {
     font-family: Oxygen;
     height: 65px; 
-    width: 387px; 
     background-color: white; 
+    display: flex;
+    flex-direction: column;
+
+    &:hover{
+      background-color: #CCEFEC40;
+    }
     
     .goal-item{
-      display: flex; 
+      display: flex;
+      margin-left: 10px;
+      padding-top: 3px;
+
+      .checkbox{
+        transform: scale(1.1);
+      }
 
       .goal-text{
-        padding-top: 10px;
+        padding-top: 9px;
         
         .goal-title{
           overflow: hidden;
@@ -23,6 +34,9 @@
           font-style: normal;
           font-weight: 400;
           line-height: normal;
+        }
+        .goal-title.completed {
+          text-decoration: line-through;
         }
         
         .goal-hashtag{
@@ -37,7 +51,7 @@
       
       .completed-goals{
         display: flex;
-        margin-left: auto; 
+        margin-left: auto;
         justify-content: flex-end;
         align-items: flex-end;
         padding-right: 25px;
@@ -45,6 +59,14 @@
         font-family: Oxygen;
         font-size: 15px;
       }
+    }
+
+    mat-divider{
+      display: flex;
+      margin-top: auto;
+      align-items: flex-end;
+      margin-right: 20px;
+      margin-left: 20px;
     }
   }
 }
