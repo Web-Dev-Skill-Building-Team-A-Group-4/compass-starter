@@ -1,13 +1,3 @@
-import { Hashtag } from '../../core/store/hashtag/hashtag.model';
-import { QuarterlyGoal as CoreQuarterlyGoal } from 'src/app/core/store/quarterly-goal/quarterly-goal.model';
-
-// database structure
-export interface QuarterlyGoal extends CoreQuarterlyGoal {}
-
-// displaying populated fields UI components
-export interface QuarterlyGoalData extends CoreQuarterlyGoal {
-  hashtag: Hashtag;
-}
 // Add any extra data types you'll need here!
 import { Hashtag } from '../../core/store/hashtag/hashtag.model';
 import { WeeklyGoal } from '../../core/store/weekly-goal/weekly-goal.model';
@@ -31,5 +21,18 @@ export interface WeeklyGoalInForm {
   __weeklyGoalId?: string;
   originalOrder?: number;
   originalQuarterlyGoalId?: string;
+  _new: boolean;
+}
+
+export interface QuarterlyGoalInForm {
+  text: string;
+  hashtagName: string;
+  weeklyGoalsTotal: number;
+  _deleted: boolean;
+  __quarterlyGoalId?: string;
+  __hashtagId?: string;
+  originalOrder?: number;
+  originalText?: string;
+  originalHashtagName?: string;
   _new: boolean;
 }
