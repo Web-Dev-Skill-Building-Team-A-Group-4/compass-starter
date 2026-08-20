@@ -3,6 +3,9 @@ import { NotesAndResourcesAnimations } from './notes-and-resources.animations';
 import { User } from 'src/app/core/store/user/user.model';
 import { AuthStore } from 'src/app/core/store/auth/auth.store';
 import { BatchWriteService, BATCH_WRITE_SERVICE } from 'src/app/core/store/batch-write.service';
+import { LongTermGoalsSidebarComponent } from './long-term-goals-sidebar/long-term-goals-sidebar.component';
+import { LongTermGoalStore } from '../../core/store/long-term-goal/long-term-goal.store';
+import { LongTermGoal } from '../../core/store/long-term-goal/long-term-goal.model';
 
 @Component({
   selector: 'app-notes-and-resources',
@@ -12,10 +15,12 @@ import { BatchWriteService, BATCH_WRITE_SERVICE } from 'src/app/core/store/batch
   animations: NotesAndResourcesAnimations,
   standalone: true,
   imports: [
+    LongTermGoalsSidebarComponent,
   ],
 })
 export class NotesAndResourcesComponent implements OnInit {
   readonly authStore = inject(AuthStore);
+  readonly longTermGoalStore = inject(LongTermGoalStore);
   // --------------- INPUTS AND OUTPUTS ------------------
 
   /** 
@@ -35,6 +40,13 @@ export class NotesAndResourcesComponent implements OnInit {
 
   // --------------- COMPUTED DATA -----------------------
 
+  /** data for long term goals. */
+  longTermGoals: Signal<LongTermGoal | undefined> = computed(() => {
+    return this.longTermGoalStore.selectFirst([
+      ['__userId', '==', this.currentUser()?.__id],
+    ], {});
+  });
+
   // --------------- EVENT HANDLING ----------------------
 
   // --------------- OTHER -------------------------------
@@ -47,5 +59,9 @@ export class NotesAndResourcesComponent implements OnInit {
   // --------------- LOAD AND CLEANUP --------------------
   
   ngOnInit(): void {
+    //load long term goals
+    this.longTermGoalStore.load([
+      ['__userId', '==', this.currentUser()?.__id],
+    ], {});
   }
 }

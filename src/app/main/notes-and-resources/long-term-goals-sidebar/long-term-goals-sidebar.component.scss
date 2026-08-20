@@ -1,7 +1,33 @@
 :host {
   display: block;
   .long-term-goals-sidebar-container {
-    // REMOVE WHEN FINISHING LAYOUT STYLES
-    border: 1px solid black;
+    padding: 20px 15px;
+    width: 35vw;
+
+    h1 {
+      color: #5A5A5A;
+      font-family: Oxygen;
+      font-size: 19px;
+      font-weight: 700;
+      margin: 0px;
+    }
+
+    p {
+      color: #5A5A5A;
+      font-family: Oxygen;
+      font-size: 16px;
+      font-weight: 400;
+      margin: 0px;
+      width: 30vw;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    mat-divider {
+      margin: 15px 0px;
+      --mat-divider-width: 1px;
+      --mat-divider-color: #00000026;
+    }
   }
 }
