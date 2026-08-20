@@ -1,0 +1,44 @@
+# Label definitions for PR autolabeling
+
+# Core module changes
+core:
+  - "src/app/core/**"
+
+# Landing + onboarding flow
+first-time:
+  - "src/app/first-time/**"
+
+# Dashboard + notes and resources
+"main":
+  - "src/app/main/**"
+
+
+shared:
+  - "src/app/shared/**"
+
+# Type of changes
+docs:
+  - "contributing-docs/**"
+  - "**/*.md"
+  - "CODE_OF_CONDUCT.md"
+  - "CONTRIBUTING.md"
+  - "README.md"
+
+styles:
+  - "styles/**"
+  - "**/*.scss"
+  - "**/*.css"
+
+ci:
+  - ".github/**"
+
+build:
+  - "package.json"
+  - "package-lock.json"
+  - "angular.json"
+  - "tsconfig.json"
+  - ".nvmrc"
+  - "scripts/**"
+
+public:
+  - "public/**"

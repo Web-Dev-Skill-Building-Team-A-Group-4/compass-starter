@@ -1,0 +1,43 @@
+name: 'Epic'
+description: Track a larger feature or initiative that spans multiple issues
+
+labels:
+  - "type: Epic"
+
+body:
+  - type: input
+    id: title
+    attributes:
+      label: Epic Title
+      description: A short descriptive title for the epic.
+      placeholder: "Dark Mode"
+
+  - type: textarea
+    id: goal
+    attributes:
+      label: Goal
+      description: A clear, concise description of the outcome or feature this epic is meant to deliver.
+      placeholder: |
+        Add dark mode to the app so users can choose between light and dark themes.
+    validations:
+      required: true
+
+  - type: textarea
+    id: child-issues
+    attributes:
+      label: Child Issues
+      description: Link related issues here as a checklist.
+      placeholder: |
+        - [ ] #132 Dark mode scaffolding
+        - [ ] #133 Dark mode UI toggle
+        - [ ] #134 Dark mode user settings
+
+  - type: textarea
+    id: resources
+    attributes:
+      label: Related Resources
+      description: Add any design docs, PRDs, research notes, or external references.
+      placeholder: |
+        - Link to design doc
+        - Link to mockups
+        - Link to external references
