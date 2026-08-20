@@ -8,7 +8,8 @@
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
     "lint": "ng lint",
-    "lintfix": "ng lint --fix"
+    "lintfix": "ng lint --fix",
+    "prepare": "husky"
   },
   "private": true,
   "dependencies": {
@@ -23,16 +24,22 @@
     "@angular/platform-browser": "^18.0.0",
     "@angular/platform-browser-dynamic": "^18.0.0",
     "@angular/router": "^18.0.0",
+    "@commitlint/cli": "^21.2.2",
+    "@commitlint/config-conventional": "^21.2.2",
     "@ngrx/signals": "^18.0.0",
-    "rxjs": "~7.8.0",
+    "@tech4good/angular-schematics": "^18.0.0",
     "core-js": "^3.37.1",
     "cross-fetch": "^4.0.0",
     "crypto-es": "^2.1.0",
+    "eslint-config-google": "^0.14.0",
+    "eslint-plugin-import": "^2.32.0",
     "globalthis": "^1.0.4",
+    "husky": "^9.1.7",
+    "lint-staged": "^17.3.0",
     "proxy-polyfill": "^0.3.2",
+    "rxjs": "~7.8.0",
     "tslib": "^2.3.0",
-    "zone.js": "~0.14.3",
-    "@tech4good/angular-schematics": "^18.0.0"
+    "zone.js": "~0.14.3"
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "^18.0.7",
@@ -47,6 +54,10 @@
     "karma-jasmine": "~5.1.0",
     "karma-jasmine-html-reporter": "~2.1.0",
     "typescript": "~5.4.2"
+  },
+  "lint-staged": {
+    "src/**/*.{ts,html}": [
+      "eslint --fix"
+    ]
   }
 }
-
