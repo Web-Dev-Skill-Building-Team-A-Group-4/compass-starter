@@ -1,9 +1,9 @@
 <div class="weekly-goals-item-container">
   <div class="item">
-    <mat-checkbox class="box" [checked]="completed()"></mat-checkbox>
+    <mat-checkbox class="box" [checked]="completed()" (change)="toggleGoal()"></mat-checkbox>
     <div class="goal-wrapper">
-      <div class = "goal">{{ text() }} </div>
-      <div class ="hashtag">{{ hashtag() }} </div>
+      <div class="goal" [class.completed]="completed()">{{ text() }}</div>
+      <div class="hashtag" [class.completed]="completed()" [style.color]="hashtagColor()">{{ hashtag() }} </div>
     </div>
   </div>
 </div>

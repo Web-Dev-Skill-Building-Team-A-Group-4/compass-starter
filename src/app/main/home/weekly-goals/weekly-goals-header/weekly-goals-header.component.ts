@@ -19,39 +19,41 @@ import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 })
 export class WeeklyGoalsHeaderComponent implements OnInit {
   readonly authStore = inject(AuthStore);
-  private snackBar = inject(MatSnackBar); 
+  private snackBar = inject(MatSnackBar);
   // --------------- INPUTS AND OUTPUTS ------------------
 
   /** The current signed in user. */
   currentUser: Signal<User> = this.authStore.user;
 
+  /** Output to see if edit was clicked */
+  editClicked = output<boolean>();
+
   // --------------- LOCAL UI STATE ----------------------
 
   startDate = startOfWeek;
   endDate = endOfWeek;
-  
+
   /** Loading icon. */
   loading: WritableSignal<boolean> = signal(false);
 
   // --------------- COMPUTED DATA -----------------------
 
   // --------------- EVENT HANDLING ----------------------
-  onEditClicked() {
-    this.snackBar.open('pencil clicked', 'Close', {
-      duration: 3000, // Disappears after 3 seconds
-      horizontalPosition: 'center',
-      verticalPosition: 'bottom'
-    });
+
+  /** Handles the event when the edit icon is clicked. */
+  onEditClicked(): void {
+    this.editClicked.emit(true);
   }
+
   // --------------- OTHER -------------------------------
-  
+
   constructor(
     private injector: Injector,
     @Inject(BATCH_WRITE_SERVICE) private batch: BatchWriteService,
   ) { }
 
   // --------------- LOAD AND CLEANUP --------------------
-  
+
   ngOnInit(): void {
   }
 }

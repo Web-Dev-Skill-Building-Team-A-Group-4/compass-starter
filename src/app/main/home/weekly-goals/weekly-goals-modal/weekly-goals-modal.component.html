@@ -11,40 +11,94 @@
     </button>
   </div>
   <div class="content">
-    <div class="content-item">
-      <div cdkDropList (cdkDropListDropped)="drop($event)">
-      @for (item of task(); track item.__id) {
-      <fieldset class="field-select" cdkDrag>
-        <mat-icon cdkDragHandle>drag_indicator</mat-icon>
-        <mat-form-field class="goal-input"> 
-          <input matInput 
-            placeholder="Enter your goal..."
-            [value]="item.text"/>
-        </mat-form-field>
-        <mat-form-field class="goal-dropdown"
-          [style.--underline-color]="htgIdMap[item.__hashtagId].color"
-          [style.--dropdown-color]="htgIdMap[item.__hashtagId]?.color">
-          <mat-select 
-            placeholder="quarterly goal..."
-            [value]="htgIdMap[item.__hashtagId]"
-            [style.color]="htgIdMap[item.__hashtagId].color">
-            @for(tag of htg; track tag){
-              <mat-option 
-                [value]="tag"
-                [style.color]="tag.color"> 
-                #{{ tag.name }} 
-              </mat-option>
-            }
-          </mat-select>
-        </mat-form-field>
-      </fieldset>
-      }
+    <form [formGroup]="weeklyGoalsForm" (ngSubmit)="save()">
+      <div class="content-item" cdkDropList (cdkDropListDropped)="drop($event)">
+        <div formArrayName="allGoals">
+          @for (item of allGoals.controls; track item; let i = $index) {
+            <div class="goal-item" cdkDrag cdkDragPreviewContainer="parent">
+              <div class="goals-box" [formGroupName]="i">
+                <fieldset class="field-select">
+                  <mat-icon cdkDragHandle>drag_indicator</mat-icon>
+                  <mat-form-field class="goal-input" subscriptSizing="dynamic">
+                    <input matInput placeholder="Enter your goal..." formControlName="text"/>
+                  </mat-form-field>
+                  <mat-form-field 
+                    class="goal-dropdown" 
+                    subscriptSizing="dynamic"
+                    [style.--underline-color]="getHashtag(item.get('__quarterlyGoalId')?.value)?.color || '#2dbdb1'">
+                    
+                    <mat-select placeholder="Select hashtag..." formControlName="__quarterlyGoalId">
+                      <mat-select-trigger>
+                        @if (getHashtag(item.get('__quarterlyGoalId')?.value); as hashtag) {
+                          <span [style.color]="hashtag.color">
+                            #{{ hashtag.name }}
+                          </span>
+                        }
+                      </mat-select-trigger>
+                      @for (qGoal of quarterlyGoals; track qGoal.__id) {
+                        <mat-option [value]="qGoal.__id">
+                          @if (getHashtag(qGoal.__id); as hashtag) {
+                            <span [style.color]="hashtag.color">
+                              #{{ hashtag.name }}
+                            </span>
+                          }
+                        </mat-option>
+                      }
+                    </mat-select>
+                  </mat-form-field>
+                </fieldset>
+                <div
+                  [matTooltip]="item.get('_new')?.value ? '' : 'Deletion is confirmed on Save.'"
+                  [matTooltipDisabled]="item.get('_new')?.value">
+                  <fieldset class="trash-box">
+                    <input
+                      id="trash-{{ i }}"
+                      type="checkbox"
+                      [checked]="weeklyGoalsForm.get(['allGoals', i, '_deleted'])"
+                      formControlName="_deleted"
+                      (change)="fullDelete($event, i)"
+                    />
+                    <label for="trash-{{ i }}" class="trash-label">
+                      <mat-icon class="delete" aria-hidden="false" aria-label="delete goal" fontIcon="delete">
+                      </mat-icon>
+                      <mat-icon class="restore" aria-hidden="false" aria-label="restore goal" 
+                        fontIcon="restore_from_trash"></mat-icon>
+                    </label>
+                  </fieldset>
+                </div>
+              </div>
+            </div>
+          }
+        </div>
       </div>
-    </div>
+
+      <div class="add-goal-button" mat-button aria-label="Add goal">
+        <div mat-button class="add-goal" (click)="addGoalToForm()">+ Add a weekly goal</div>
+      </div>
+    </form>
   </div>
-  <div class="button">
-    <button class="save-button" (click)="save()">
-      Save
-    </button>
+
+      <div class="bottom">
+    <div class="added-goals">
+      @if (addedGoalsCount !== 0 || editedGoalsCount !== 0 || deletedGoalsCount !== 0) {
+        <div class="tracking-counts">
+          <p class="pending">Pending Changes</p>
+          @if (addedGoalsCount !== 0) {
+            <span>Adding {{ addedGoalsCount }}</span>
+            @if (editedGoalsCount !== 0 || deletedGoalsCount !== 0) { <span>, </span> }
+          }
+          @if (editedGoalsCount !== 0) {
+            <span>Editing {{ editedGoalsCount }}</span>
+            @if (deletedGoalsCount !== 0) { <span>, </span> }
+          }
+          @if (deletedGoalsCount !== 0) {
+            <span>Deleting {{ deletedGoalsCount }}</span>
+          }
+        </div>
+      }
+    </div>
+    <div class="button">
+      <button class="save-button" (click)="save()" [disabled]="!weeklyGoalsForm.valid">Save</button>
+    </div>
   </div>
 </div>
