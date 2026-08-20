@@ -1,6 +1,6 @@
 import { Inject, inject, Injectable } from '@angular/core';
 import { ActivatedRouteSnapshot, RouterStateSnapshot, Router } from '@angular/router';
-import { User } from '../store/user/user.model';
+import { OnboardingState, User } from '../store/user/user.model';
 import { AuthStore } from '../store/auth/auth.store';
 import { filter, switchMap, take } from 'rxjs/operators';
 import { of, Observable } from 'rxjs';
@@ -52,7 +52,16 @@ export class AuthGuard {
           return of(false);
         }
 
-        // PLACEHOLDER: Add similar logic to waitlist states if there is an app-specific walkthrough process
+        const onboardingStates = [OnboardingState.WELCOME, OnboardingState.STEP_1, OnboardingState.STEP_2, OnboardingState.STEP_3, OnboardingState.STEP_4, OnboardingState.STEP_5, OnboardingState.STEP_6, OnboardingState.STEP_7];
+        if (onboardingStates.includes(dbUser.onboardingState) && state.url !== '/onboarding') {
+          this.router.navigate(['/onboarding'], { queryParams: next.queryParams });
+          return of(false);
+        } else if (onboardingStates.includes(dbUser.onboardingState) && state.url === '/onboarding') {
+          return of(true);
+        } else if (!onboardingStates.includes(dbUser.onboardingState) && state.url === '/onboarding') {
+          this.router.navigate(['/home'], { queryParams: next.queryParams });
+          return of(false);
+        }
 
         // For anything else, return true
         return of(true);
