@@ -1,3 +1,19 @@
 <div class="quarterly-goals-sidebar-container">
-  quarterly-goals-sidebar works!
+  <h1>{{ quarterlyGoal().text }}</h1>
+  <div class="list">
+    @for (goal of incompleteWeeklyGoals(); track goal.__id) {
+      <app-quarterly-sidebar-item 
+        [goal]="goal" 
+        (checked)="checkGoal($event)"/>
+    }
+    @for (goal of completeWeeklyGoals(); track goal.__id) {
+      <app-quarterly-sidebar-item 
+        [goal]="goal" 
+        (checked)="checkGoal($event)"/>
+    }
+    <mat-divider></mat-divider>
+  </div>
+  <div class="add-goal" (click)="openModal(true)">
+    + Add a weekly goal
+  </div>
 </div>

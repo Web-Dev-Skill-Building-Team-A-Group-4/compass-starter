@@ -1,7 +1,26 @@
 :host {
   display: block;
   .quarterly-goals-sidebar-container {
-    // REMOVE WHEN FINISHING LAYOUT STYLES
-    border: 1px solid black;
+    width: 35vw;
+    padding: 20px;
+    font-family: Oxygen;
+    
+    h1 {
+      margin: 0px 0px 15px 0px;
+      color: #5A5A5A;
+      font-size: 19px;
+    }
+
+    mat-divider {
+      --mat-divider-width: 1px;
+      --mat-divider-color: #00000026;
+    }
+
+    .add-goal {
+      margin: 15px 0px 0px 0px;
+      color: #5A5A5A;
+      font-size: 17px;
+      cursor: pointer;
+    }
   }
 }

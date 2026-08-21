@@ -1,5 +1,8 @@
 <div class="notes-and-resources-container">
-  notes-and-resources works!
+  @if (quarterlyGoal()) {
+    <app-quarterly-goals-sidebar 
+      [quarterlyGoal]="quarterlyGoal()"/>
+  }
   <!--
   Some psuedocode logic to think through...
 
