@@ -3,6 +3,11 @@ import { NotesAndResourcesAnimations } from './notes-and-resources.animations';
 import { User } from 'src/app/core/store/user/user.model';
 import { AuthStore } from 'src/app/core/store/auth/auth.store';
 import { BatchWriteService, BATCH_WRITE_SERVICE } from 'src/app/core/store/batch-write.service';
+import { QuarterlyGoalsSidebarComponent } from './quarterly-goals-sidebar/quarterly-goals-sidebar.component';
+import { QuarterlyGoalStore } from '../../core/store/quarterly-goal/quarterly-goal.store';
+import { QuarterlyGoal } from '../../core/store/quarterly-goal/quarterly-goal.model';
+import { WeeklyGoalStore } from '../../core/store/weekly-goal/weekly-goal.store';
+import { Timestamp } from '@angular/fire/firestore';
 
 @Component({
   selector: 'app-notes-and-resources',
@@ -12,10 +17,14 @@ import { BatchWriteService, BATCH_WRITE_SERVICE } from 'src/app/core/store/batch
   animations: NotesAndResourcesAnimations,
   standalone: true,
   imports: [
+    QuarterlyGoalsSidebarComponent,
   ],
 })
+
 export class NotesAndResourcesComponent implements OnInit {
   readonly authStore = inject(AuthStore);
+  readonly quarterlyGoalStore = inject(QuarterlyGoalStore);
+  readonly weeklyGoalStore = inject(WeeklyGoalStore);
   // --------------- INPUTS AND OUTPUTS ------------------
 
   /** 
@@ -30,10 +39,11 @@ export class NotesAndResourcesComponent implements OnInit {
 
   // --------------- LOCAL UI STATE ----------------------
 
-  /** Loading icon. */
-  loading: WritableSignal<boolean> = signal(false);
-
   // --------------- COMPUTED DATA -----------------------
+  /** Data for quarterly goals. */
+  quarterlyGoal: Signal<QuarterlyGoal> = computed(() => {
+    return this.quarterlyGoalStore.selectEntity(this.goalId());
+  });
 
   // --------------- EVENT HANDLING ----------------------
 
@@ -47,5 +57,16 @@ export class NotesAndResourcesComponent implements OnInit {
   // --------------- LOAD AND CLEANUP --------------------
   
   ngOnInit(): void {
+    // load quarterly goals   
+    this.quarterlyGoalStore.load([
+      ['__userId', '==', this.currentUser()?.__id],
+      ['__id', '==', this.goalId()],
+    ], {});
+
+    // load weekly goals
+    this.weeklyGoalStore.load([
+      ['__userId', '==', this.currentUser()?.__id],
+      ['__quarterlyGoalId', '==', this.goalId()],
+    ], {});
   }
 }

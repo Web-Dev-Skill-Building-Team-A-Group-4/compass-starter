@@ -1,8 +1,10 @@
-import { Component, OnInit, ChangeDetectionStrategy, input, output, inject, WritableSignal, Signal, signal, computed, Inject, Injector } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy, OutputEmitterRef, input, output, inject, WritableSignal, Signal, signal, computed, Inject } from '@angular/core';
 import { QuarterlySidebarItemAnimations } from './quarterly-sidebar-item.animations';
 import { User } from 'src/app/core/store/user/user.model';
 import { AuthStore } from 'src/app/core/store/auth/auth.store';
-import { BatchWriteService, BATCH_WRITE_SERVICE } from 'src/app/core/store/batch-write.service';
+import { MatDividerModule } from '@angular/material/divider';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { WeeklyGoalData } from '../../../home/home.model';
 
 @Component({
   selector: 'app-quarterly-sidebar-item',
@@ -12,6 +14,8 @@ import { BatchWriteService, BATCH_WRITE_SERVICE } from 'src/app/core/store/batch
   animations: QuarterlySidebarItemAnimations,
   standalone: true,
   imports: [
+    MatDividerModule,
+    MatCheckboxModule,
   ],
 })
 export class QuarterlySidebarItemComponent implements OnInit {
@@ -20,21 +24,24 @@ export class QuarterlySidebarItemComponent implements OnInit {
 
   /** The current signed in user. */
   currentUser: Signal<User> = this.authStore.user;
+  /** Checked signal to determine complete goals. */
+  checked: OutputEmitterRef<WeeklyGoalData> = output<WeeklyGoalData>();
+  /** Weekly goal input. */
+  goal = input<WeeklyGoalData>();
 
   // --------------- LOCAL UI STATE ----------------------
 
-  /** Loading icon. */
-  loading: WritableSignal<boolean> = signal(false);
-
   // --------------- COMPUTED DATA -----------------------
+
+  checkGoal(goal: WeeklyGoalData) {
+    this.checked.emit(goal);
+  }
 
   // --------------- EVENT HANDLING ----------------------
 
   // --------------- OTHER -------------------------------
 
   constructor(
-    private injector: Injector,
-    @Inject(BATCH_WRITE_SERVICE) private batch: BatchWriteService,
   ) { }
 
   // --------------- LOAD AND CLEANUP --------------------
