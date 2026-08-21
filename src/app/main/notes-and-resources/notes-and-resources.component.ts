@@ -35,9 +35,6 @@ export class NotesAndResourcesComponent implements OnInit {
 
   // --------------- LOCAL UI STATE ----------------------
 
-  /** Loading icon. */
-  loading: WritableSignal<boolean> = signal(false);
-
   // --------------- COMPUTED DATA -----------------------
 
   /** data for long term goals. */

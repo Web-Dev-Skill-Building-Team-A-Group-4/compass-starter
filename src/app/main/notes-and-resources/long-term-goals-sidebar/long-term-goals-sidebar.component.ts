@@ -28,9 +28,6 @@ export class LongTermGoalsSidebarComponent implements OnInit {
 
   // --------------- LOCAL UI STATE ----------------------
 
-  /** Loading icon. */
-  loading: WritableSignal<boolean> = signal(false);
-
   // --------------- COMPUTED DATA -----------------------
 
   // --------------- EVENT HANDLING ----------------------
