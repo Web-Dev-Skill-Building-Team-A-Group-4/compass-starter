@@ -1,8 +1,10 @@
 import { Component, OnInit, ChangeDetectionStrategy, input, output, inject, WritableSignal, Signal, signal, computed, Inject, Injector } from '@angular/core';
+import { RouterLink } from '@angular/router';
 import { OnboardingAnimations } from './onboarding.animations';
 import { User } from 'src/app/core/store/user/user.model';
 import { AuthStore } from 'src/app/core/store/auth/auth.store';
 import { BatchWriteService, BATCH_WRITE_SERVICE } from 'src/app/core/store/batch-write.service';
+import { OnboardWeeklyGoalsComponent } from './step-pages/onboard-weekly-goals/onboard-weekly-goals.component';
 
 @Component({
   selector: 'app-onboarding',
@@ -10,6 +12,7 @@ import { BatchWriteService, BATCH_WRITE_SERVICE } from 'src/app/core/store/batch
   styleUrls: ['./onboarding.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
+  imports: [OnboardWeeklyGoalsComponent, RouterLink],
   animations: OnboardingAnimations,
 })
 export class OnboardingComponent implements OnInit {
