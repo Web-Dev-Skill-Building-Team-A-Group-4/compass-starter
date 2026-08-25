@@ -8,7 +8,7 @@
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
     "lint": "ng lint",
-    "lintfix": "ng lint --fix",
+    "lintfix": "ng lint --fix"
   },
   "private": true,
   "dependencies": {
