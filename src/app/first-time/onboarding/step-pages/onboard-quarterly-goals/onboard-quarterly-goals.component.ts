@@ -1,4 +1,4 @@
-import { Component, OnInit, ChangeDetectionStrategy, input, output, inject, WritableSignal, Signal, signal, computed, Inject, Injector, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy, output, inject, WritableSignal, Signal, signal, Inject, Injector, ChangeDetectorRef } from '@angular/core';
 import { OnboardQuarterlyGoalsAnimations } from './onboard-quarterly-goals.animations';
 import { User, OnboardingState } from 'src/app/core/store/user/user.model';
 import { AuthStore } from 'src/app/core/store/auth/auth.store';
@@ -205,34 +205,10 @@ export class OnboardQuarterlyGoalsComponent implements OnInit {
 
   // --------------- OTHER -------------------------------
 
-  private isLoaded = false;
-
   constructor(
     private injector: Injector,
     @Inject(BATCH_WRITE_SERVICE) private batchService: BatchWriteService,
   ) {}
-
-  async loadGoalsForUser(userId: string): Promise<void> {
-    if (this.isLoaded) return;
-    this.isLoaded = true;
-
-    try {
-      await this.quarterlyGoalStore.load(
-        [
-          ['__userId', '==', userId],
-          ['completed', '==', false],
-        ],
-        { orderBy: 'order' },
-        (goal) => [
-          LoadHashtag.create(this.hashtagStore, [['__id', '==', goal.__hashtagId]], {})
-        ]
-      );
-    } catch (e) {
-      console.error(e);
-    } finally {
-      this.populateForm();
-    }
-  }
 
   // --------------- LOAD AND CLEANUP --------------------
   

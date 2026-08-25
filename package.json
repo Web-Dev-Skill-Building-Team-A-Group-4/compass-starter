@@ -8,7 +8,7 @@
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
     "lint": "ng lint",
-    "lintfix": "ng lint --fix",
+    "lintfix": "ng lint --fix"
   },
   "private": true,
   "dependencies": {
@@ -42,6 +42,7 @@
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "^18.0.7",
+    "@angular-eslint/builder": "^18.4.3",
     "@angular-eslint/eslint-plugin": "^22.1.0",
     "@angular/cli": "^18.0.7",
     "@angular/compiler-cli": "^18.0.0",

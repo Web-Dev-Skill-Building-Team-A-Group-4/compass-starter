@@ -1,9 +1,13 @@
 :host {
   display: block;
-  width: 100%;
   min-height: 100vh;
-  background-color: #f3faf8; // Soft, premium background color matching the design screenshot
-  font-family: 'Oxygen', 'Outfit', sans-serif;
+  background-color: #F2FFFE;
+  font-family: 'Oxygen', sans-serif;
+
+  input,
+  button {
+    font-family: inherit;
+  }
 
   .onboard-quarterly-goals-container {
     display: flex;
@@ -11,200 +15,182 @@
     align-items: center;
     padding: 20px;
     min-height: 100vh;
-    box-sizing: border-box;
+  }
 
-    .goals-card {
-      background-color: #ffffff;
-      border-radius: 12.5px;
-      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
-      width: 100%;
-      max-width: 860px; // More rectangular shape
-      padding: 40px;
-      box-sizing: border-box;
+  .goals-card {
+    background-color: #ffffff;
+    border-radius: 12.5px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+    width: 100%;
+    max-width: 860px;
+    padding: 40px;
+  }
 
-      .goals-card-header {
-        text-align: center;
-        margin-bottom: 40px;
+  .goals-card-header {
+    text-align: center;
+    margin-bottom: 40px;
+  }
 
-        .title {
-          color: #2bbdb1;
-          font-family: 'Oxygen', sans-serif;
-          font-size: 28px;
-          font-weight: 700;
-          margin: 0 0 12px 0;
-        }
+  .title {
+    color: #2bbdb1;
+    font-size: 28px;
+    font-weight: 700;
+    margin: 0 0 12px 0;
+  }
 
-        .subtitle {
-          color: #6a7873;
-          font-family: 'Oxygen', sans-serif;
-          font-size: 21px; // Slightly larger subtitle
-          font-weight: 300;
-          margin: 0;
-        }
+  .subtitle {
+    color: #6a7873;
+    font-size: 21px;
+    font-weight: 300;
+    margin: 0;
+  }
+
+  .goals-form {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+  }
+
+  .goals-list {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .goal-row {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 8px;
+    background: #ffffff;
+    border-radius: 8px;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+
+    &.cdk-drag-preview {
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.15);
+      background: #ffffff;
+    }
+
+    &.cdk-drag-placeholder {
+      opacity: 0.3;
+    }
+  }
+
+  .drag-handle {
+    font-family: 'Material Icons' !important;
+    color: #2bbdb1;
+    cursor: grab;
+    user-select: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+    height: 24px;
+    width: 24px;
+
+    &:active {
+      cursor: grabbing;
+    }
+  }
+
+  .inputs-container {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    flex: 1;
+
+    @media (min-width: 768px) {
+      flex-direction: row;
+      gap: 30px;
+    }
+  }
+
+  .goal-text-field,
+  .goal-hashtag-field {
+    width: 100%;
+    --mdc-filled-text-field-container-color: transparent;
+  }
+
+  .goal-text-field {
+    flex: 2;
+    --mdc-filled-text-field-focus-active-indicator-color: #2bbdb1;
+    --mdc-filled-text-field-active-indicator-color: #60867d;
+  }
+
+  .goal-hashtag-field {
+    flex: 1;
+    --mdc-filled-text-field-active-indicator-color: var(--underline-color, #2bbdb1);
+    --mdc-filled-text-field-focus-active-indicator-color: var(--underline-color, #2bbdb1);
+  }
+
+  .hashtag-prefix {
+    font-size: 16px;
+    font-weight: 300;
+    margin-right: 4px;
+  }
+
+  input,
+  .hashtag-input {
+    font-size: 16px;
+    color: #1d2421;
+    font-weight: 300;
+
+    &::placeholder {
+      color: #aebdb9 !important;
+      opacity: 1 !important;
+    }
+  }
+
+  .actions {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 24px;
+    gap: 16px;
+  }
+
+  button {
+    border-radius: 10px;
+    font-size: 16px;
+    padding: 10px 24px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    outline: none;
+    min-width: 110px;
+    border: 1px solid #2bbdb1;
+
+    &[disabled] {
+      opacity: 0.5;
+      cursor: not-allowed;
+      border: none;
+      background-color: #f0f0f0;
+      color: #999;
+    }
+
+    &.btn-back {
+      background-color: transparent;
+      color: #2bbdb1;
+
+      &:hover:not([disabled]) {
+        background-color: #edf7f5;
+        color: #12736a;
+        border-color: #12736a;
+      }
+    }
+
+    &.btn-next {
+      background-color: #2bbdb1;
+      color: #ffffff;
+
+      &:hover:not([disabled]) {
+        background-color: #1f9e91;
+        border-color: #1f9e91;
       }
 
-      .goals-form {
-        display: flex;
-        flex-direction: column;
-        gap: 30px;
-
-        .goals-list {
-          display: flex;
-          flex-direction: column;
-          gap: 16px; // Slightly smaller gap
-        }
-
-        .goal-row {
-          display: flex;
-          align-items: center;
-          gap: 16px;
-          padding: 8px;
-          background: #ffffff;
-          border-radius: 8px;
-          transition: transform 0.2s ease, box-shadow 0.2s ease;
-
-          &.cdk-drag-preview {
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.15);
-            background: #ffffff;
-          }
-
-          &.cdk-drag-placeholder {
-            opacity: 0.3;
-          }
-
-          .drag-handle {
-            font-family: 'Material Icons' !important;
-            color: #2bbdb1;
-            cursor: grab;
-            user-select: none;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 24px;
-            height: 24px;
-            width: 24px;
-
-            &:active {
-              cursor: grabbing;
-            }
-          }
-
-          .inputs-container {
-            display: flex;
-            flex-direction: column;
-            gap: 8px;
-            flex: 1;
-
-            @media (min-width: 768px) {
-              flex-direction: row;
-              gap: 30px;
-            }
-
-            .goal-text-field {
-              flex: 2;
-              width: 100%;
-              --mdc-filled-text-field-container-color: transparent;
-              --mdc-filled-text-field-focus-active-indicator-color: #2bbdb1;
-              --mdc-filled-text-field-active-indicator-color: #60867d; // Even darker underline color for maximum contrast
-
-              input {
-                font-family: 'Oxygen', sans-serif;
-                font-size: 16px;
-                color: #1d2421; // Darker charcoal goal text color
-                font-weight: 300; // Aligned font weight
-
-                &::placeholder {
-                  color: #aebdb9 !important; // Grayed out placeholder
-                  opacity: 1 !important;
-                }
-              }
-            }
-
-            .goal-hashtag-field {
-              flex: 1;
-              width: 100%;
-              --mdc-filled-text-field-container-color: transparent;
-              --mdc-filled-text-field-active-indicator-color: var(--underline-color, #2bbdb1);
-              --mdc-filled-text-field-focus-active-indicator-color: var(--underline-color, #2bbdb1);
-
-              .hashtag-prefix {
-                font-family: 'Oxygen', sans-serif;
-                font-size: 16px;
-                font-weight: 300; // Aligned font weight
-                margin-right: 4px;
-              }
-
-              .hashtag-input {
-                font-family: 'Oxygen', sans-serif;
-                font-size: 16px;
-                color: #1d2421; // Darker charcoal goal text color
-                font-weight: 300; // Aligned font weight
-
-                &::placeholder {
-                  color: #aebdb9 !important; // Grayed out placeholder
-                  opacity: 1 !important;
-                }
-              }
-            }
-          }
-        }
-
-        .actions {
-          display: flex;
-          justify-content: flex-end; // Position both buttons on the bottom right
-          margin-top: 24px;
-          gap: 16px;
-
-          button {
-            border-radius: 10px; // Match mockup button rounding
-            font-family: 'Oxygen', sans-serif;
-            font-size: 16px; // Match mockup button font size
-            font-weight: 400; // Not bolded
-            padding: 10px 24px; // Match mockup button height and padding
-            cursor: pointer;
-            transition: all 0.2s ease;
-            outline: none;
-            min-width: 110px; // Match mockup button width
-
-            &[disabled] {
-              opacity: 0.5;
-              cursor: not-allowed;
-              border: none;
-              background-color: #f0f0f0;
-              color: #999;
-            }
-
-            &.btn-back {
-              background-color: transparent;
-              border: 1px solid #2bbdb1;
-              color: #2bbdb1;
-
-              &:hover:not([disabled]) {
-                background-color: #d1ebe6; // Deeper back button hover background
-                color: #12736a; // Darker hover text color
-                border-color: #12736a; // Darker hover border color
-              }
-            }
-
-            &.btn-next {
-              background-color: #2bbdb1;
-              border: 1px solid #2bbdb1;
-              color: #ffffff;
-
-              &:hover:not([disabled]) {
-                background-color: #1f9e91;
-                border-color: #1f9e91;
-              }
-
-              &[disabled] {
-                background-color: #7fa098 !important; // Darker muted disabled Next button color
-                color: #ffffff !important;
-                opacity: 0.8 !important;
-                border: none !important;
-              }
-            }
-          }
-        }
+      &[disabled] {
+        background-color: #e0e0e0 !important;
+        color: #999999 !important;
+        opacity: 1 !important;
+        border: none !important;
       }
     }
   }
