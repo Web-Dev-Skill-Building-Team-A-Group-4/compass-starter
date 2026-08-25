@@ -3,7 +3,7 @@
     <div class="top-text">
       <h1 class="top-title">Quarterly Goals</h1>
       <time class="top-date">
-        Fall 2020
+        {{ getQuarterAndYear() }}
       </time>
     </div>
     <button mat-icon-button class="close-button" (click)="onClose()">
@@ -11,34 +11,101 @@
     </button>
   </div>
   <div class="content">
-    <div class="content-item">
-      <div cdkDropList (cdkDropListDropped)="drop($event)">
-        @for (item of task(); track item.__id) {
-          <fieldset class="field-select" cdkDrag>
-            <mat-icon cdkDragHandle>drag_indicator</mat-icon>
-            <mat-form-field class="goal-input" subscriptSizing="dynamic">
-              <input matInput
-                placeholder="Enter your goal..."
-                [value]="item.text"
-                (input)="onTextChange(item, $event)"/>
-            </mat-form-field>
-            <mat-form-field class="goal-hashtag" subscriptSizing="dynamic"
-              [style.--underline-color]="htgIdMap[item.__hashtagId]?.color">
-              <input matInput
-                class="hashtag-input"
-                placeholder="#hashtag..."
-                [style.color]="htgIdMap[item.__hashtagId]?.color"
-                [value]="'#' + (htgIdMap[item.__hashtagId]?.name ?? '')"
-                (input)="onHashtagTextChange(item, $event)"/>
-            </mat-form-field>
-          </fieldset>
+  <form [formGroup]="quarterlyGoalsForm" (ngSubmit)="save()">
+    <div class="content-item" cdkDropList (cdkDropListDropped)="drop($event)">
+      <div class="goal-container" formArrayName="allGoals">
+        @for (item of allGoals.controls; track item; let i = $index){
+        <div
+          class="goal-item"
+          cdkDrag
+          cdkDragPreviewContainer="parent" >
+          <div class="goals-box" [formGroupName]="i">
+            <fieldset class="field-select">
+              <mat-icon cdkDragHandle>drag_indicator</mat-icon>
+              <mat-form-field class="goal-input" subscriptSizing="dynamic">
+                <input matInput
+                  placeholder="Enter your goal..."
+                  formControlName="text">
+              </mat-form-field>
+              <mat-form-field class="goal-hashtag" subscriptSizing="dynamic"
+                [style.--underline-color]="item.get('hashtagColor')?.value">
+                <input matInput
+                  class="hashtag-input"
+                  placeholder="hashtag..."
+                  formControlName="hashtagName"
+                  [style.color]="item.get('hashtagColor')?.value">
+              </mat-form-field>
+            </fieldset>
+            <div [matTooltip]="allGoals.at(i).value.weeklyGoalsTotal !== 0 ? 
+              'This goal cannot be deleted because it has some attached weekly goals.' : '' "
+              [matTooltipDisabled]="allGoals.at(i).value.weeklyGoalsTotal === 0">
+              <fieldset class="trash-box"
+                [disabled]="allGoals.at(i).value.weeklyGoalsTotal !== 0">
+                <input
+                  id="trash-{{ i }}"
+                  type="checkbox"
+                  [checked]="quarterlyGoalsForm.get(['allGoals', i, '_deleted'])"
+                  formControlName="_deleted"
+                  (change)="fullDelete($event, i)"
+                />
+                <label for="trash-{{ i }}" class="trash-label">
+                  <mat-icon
+                    class="delete"
+                    aria-hidden="false"
+                    aria-label="trash icon"
+                    fontIcon="delete"
+                  ></mat-icon>
+                  <mat-icon
+                    class="restore"
+                    aria-hidden="false"
+                    aria-label="trash icon"
+                    fontIcon="restore_from_trash"
+                  ></mat-icon>
+                </label>
+              </fieldset>
+            </div>
+          </div>
+        </div>
         }
       </div>
     </div>
+    <div class="add-goal-button" mat-button aria-label="Add goal">
+      <div mat-button class="add-goal" (click)="addGoalToForm(null)">
+        + Add a quarterly goal</div>
+    </div>
+  </form>
   </div>
-  <div class="button">
-    <button class="save-button" (click)="save()">
-      Save
-    </button>
+  <div class="bottom">
+    <div class="added-goals">
+      @if (
+        addedGoalsCount !== 0 ||
+        editedGoalsCount !== 0 ||
+        deletedGoalsCount !== 0
+      ) {
+        <div class="tracking-counts">
+          <p class="pending">Pending Changes</p>
+          @if (addedGoalsCount !== 0) {
+            <span>Adding {{ addedGoalsCount }}</span>
+            @if (editedGoalsCount !== 0 || deletedGoalsCount !== 0) {
+              <span>, </span>
+            }
+          }
+          @if (editedGoalsCount !== 0) {
+            <span>Editing {{ editedGoalsCount }}</span>
+            @if (deletedGoalsCount !== 0) {
+              <span>, </span>
+            }
+          }
+          @if (deletedGoalsCount !== 0) {
+            <span>Deleting {{ deletedGoalsCount }}</span>
+          }
+        </div>
+      }
+    </div>
+    <div class="button">
+      <button class="save-button" (click)="save()" [disabled]="!quarterlyGoalsForm.valid">
+        Save
+      </button>
+    </div>
   </div>
 </div>

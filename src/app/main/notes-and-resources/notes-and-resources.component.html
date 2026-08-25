@@ -2,6 +2,8 @@
   @if (quarterlyGoal()) {
     <app-quarterly-goals-sidebar 
       [quarterlyGoal]="quarterlyGoal()"/>
+  @if (longTermGoals()) {
+    <app-long-term-goals-sidebar [ltg]="longTermGoals()"/>
   }
   <!--
   Some psuedocode logic to think through...

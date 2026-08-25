@@ -1,3 +1,4 @@
+// Add any extra data types you'll need here!
 import { Hashtag } from '../../core/store/hashtag/hashtag.model';
 import { WeeklyGoal } from '../../core/store/weekly-goal/weekly-goal.model';
 import { LongTermGoal } from '../../core/store/long-term-goal/long-term-goal.model';
@@ -21,5 +22,18 @@ export interface WeeklyGoalInForm {
   __weeklyGoalId?: string;
   originalOrder?: number;
   originalQuarterlyGoalId?: string;
+  _new: boolean;
+}
+
+export interface QuarterlyGoalInForm {
+  text: string;
+  hashtagName: string;
+  weeklyGoalsTotal: number;
+  _deleted: boolean;
+  __quarterlyGoalId?: string;
+  __hashtagId?: string;
+  originalOrder?: number;
+  originalText?: string;
+  originalHashtagName?: string;
   _new: boolean;
 }

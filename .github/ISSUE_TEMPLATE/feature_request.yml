@@ -1,0 +1,19 @@
+name: 'Feature Request'
+description: Suggest a feature for your app
+
+body:
+  - type: textarea
+    id: description
+    attributes:
+      label: Description
+
+
+  - type: textarea
+    id: proposed-solution
+    attributes:
+      label: Proposed solution
+
+  - type: textarea
+    id: alternatives-considered
+    attributes:
+      label: Alternatives considered

@@ -1,0 +1,89 @@
+# Validate the PR based on naming conventions
+name: 'PR Validator'
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened, edited, labeled, unlabeled]
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Validate Branch Name
+        shell: bash
+        env:
+          BRANCH_NAME: ${{ github.head_ref }}
+        run: |
+          EXPECTED_PATTERN="^(build|ci|docs|feat|fix|perf|refactor|style|test)\/[0-9]+-[a-zA-Z0-9-]+$"
+          if [[ ! "$BRANCH_NAME" =~ $EXPECTED_PATTERN ]]; then
+            echo "❌ ERROR: Invalid branch name: '$BRANCH_NAME'"
+            echo "Expected format: type/issue#-description"
+            echo "Example: feat/198-new-feature"
+            exit 1
+          fi
+          echo "✅ Branch name is valid."
+
+      - name: Validate PR Title
+        shell: bash
+        env:
+          TITLE: ${{ github.event.pull_request.title }}
+        run: |
+          INFRA="build|ci|docs"
+          STRICT="feat|fix|perf|refactor|style|test"
+          SCOPES="public|admin|core|main|practice|first-time|shared|packaging|changelog"
+          
+          # Infra: allows optional scope
+          # Strict: requires one or more of the specific scopes
+          INFRA_PATTERN="^($INFRA)(\([^)]*\))?: .+$"
+          STRICT_PATTERN="^($STRICT)\(([ ]*($SCOPES)[ ]*,?)+[ ]*\): .+$"
+
+          if [[ "$TITLE" =~ $INFRA_PATTERN ]]; then
+            echo "✅ Title matches infra format."
+          elif [[ "$TITLE" =~ $STRICT_PATTERN ]]; then
+            echo "✅ Title matches strict format."
+          else
+            echo "❌ ERROR: Invalid PR Title: '$TITLE'"
+            echo "-------------------------------------------------------"
+            echo "- For types [$INFRA], scope is optional."
+            echo "- For types [$STRICT], scope is REQUIRED."
+            echo "- Allowed scopes: ($SCOPES)"
+            echo "-------------------------------------------------------"
+            echo "Example: feat(core): add logging"
+            exit 1
+          fi
+      
+      - name: Validate Scope Order
+        shell: bash
+        env:
+          TITLE: ${{ github.event.pull_request.title }}
+        run: |
+          RAW_SCOPES=$(echo "$TITLE" | sed -n 's/^[^(]*(\([^)]*\)).*$/\1/p')
+          if [ -z "$RAW_SCOPES" ]; then
+            echo "✅ No scopes found to sort (or infra type). Skipping."
+            exit 0
+          fi
+          ORIGINAL=$(echo "$RAW_SCOPES" | tr ',' '\n' | sed 's/^[[:space:]]*//;s/[[:space:]]*$//')
+          SORTED=$(echo "$ORIGINAL" | sort)
+          if [ "$ORIGINAL" != "$SORTED" ]; then
+            echo "❌ ERROR: Scopes are not in alphabetical order!"
+            echo "-------------------------------------------------------"
+            echo "Current order:  $RAW_SCOPES"
+            echo "Expected order: $(echo "$SORTED" | paste -sd "," - | sed 's/,/, /g')"
+            echo "-------------------------------------------------------"
+            exit 1
+          fi
+          echo "✅ Scopes are correctly ordered alphabetically."
+
+      - name: Validate Issue Link in Description
+        shell: bash
+        env:
+          BODY: ${{ github.event.pull_request.body }}
+        run: |
+          EXPECTED_PATTERN="Issue Number: #[0-9]+"
+          if [[ ! "$BODY" =~ $EXPECTED_PATTERN ]]; then
+            echo "❌ ERROR: PR description is missing the required issue reference."
+            echo "Expected format: 'Issue Number: #123'"
+            exit 1
+          else
+            echo "✅ Found valid issue reference."
+          fi

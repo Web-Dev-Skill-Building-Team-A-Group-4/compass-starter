@@ -8,6 +8,9 @@ import { QuarterlyGoalStore } from '../../core/store/quarterly-goal/quarterly-go
 import { QuarterlyGoal } from '../../core/store/quarterly-goal/quarterly-goal.model';
 import { WeeklyGoalStore } from '../../core/store/weekly-goal/weekly-goal.store';
 import { Timestamp } from '@angular/fire/firestore';
+import { LongTermGoalsSidebarComponent } from './long-term-goals-sidebar/long-term-goals-sidebar.component';
+import { LongTermGoalStore } from '../../core/store/long-term-goal/long-term-goal.store';
+import { LongTermGoal } from '../../core/store/long-term-goal/long-term-goal.model';
 
 @Component({
   selector: 'app-notes-and-resources',
@@ -18,6 +21,7 @@ import { Timestamp } from '@angular/fire/firestore';
   standalone: true,
   imports: [
     QuarterlyGoalsSidebarComponent,
+    LongTermGoalsSidebarComponent,
   ],
 })
 
@@ -25,6 +29,7 @@ export class NotesAndResourcesComponent implements OnInit {
   readonly authStore = inject(AuthStore);
   readonly quarterlyGoalStore = inject(QuarterlyGoalStore);
   readonly weeklyGoalStore = inject(WeeklyGoalStore);
+  readonly longTermGoalStore = inject(LongTermGoalStore);
   // --------------- INPUTS AND OUTPUTS ------------------
 
   /** 
@@ -43,6 +48,13 @@ export class NotesAndResourcesComponent implements OnInit {
   /** Data for quarterly goals. */
   quarterlyGoal: Signal<QuarterlyGoal> = computed(() => {
     return this.quarterlyGoalStore.selectEntity(this.goalId());
+  });
+
+  /** data for long term goals. */
+  longTermGoals: Signal<LongTermGoal | undefined> = computed(() => {
+    return this.longTermGoalStore.selectFirst([
+      ['__userId', '==', this.currentUser()?.__id],
+    ], {});
   });
 
   // --------------- EVENT HANDLING ----------------------
@@ -67,6 +79,9 @@ export class NotesAndResourcesComponent implements OnInit {
     this.weeklyGoalStore.load([
       ['__userId', '==', this.currentUser()?.__id],
       ['__quarterlyGoalId', '==', this.goalId()],
+    //load long term goals
+    this.longTermGoalStore.load([
+      ['__userId', '==', this.currentUser()?.__id],
     ], {});
   }
 }

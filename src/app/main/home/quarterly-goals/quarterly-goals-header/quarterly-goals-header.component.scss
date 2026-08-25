@@ -3,7 +3,7 @@
   .quarterly-goals-header-container {
     display: flex;
     justify-content: space-between;
-    width: 387px;
+    width: 100%;
     background-color: white;
     padding: 10px;
   
@@ -37,8 +37,9 @@
       cursor: pointer;
       
       .pencil-icon{
-        width: 19.974px;
-        height: 19.992px;
+        display: flex;
+        width: 20px;
+        height: 20px;
       }
     }
   }
