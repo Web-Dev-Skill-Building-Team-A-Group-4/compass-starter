@@ -1,49 +1,55 @@
-<div class="onboard-weekly-goals-container">
-  <h1 class="title">Set some goals for this week.</h1>
-  <p class="subtitle">If applicable, link your weekly goals to your quarterly goals.</p>
+<div class="background-wrapper">
+  <app-navbar></app-navbar>
+  <app-progress-bar></app-progress-bar>
+  <div class="onboard-weekly-goals-container">
+    <h1 class="title">Set some goals for this week.</h1>
+    <p class="subtitle">If applicable, link your weekly goals to your quarterly goals.</p>
 
-  <form [formGroup]="weeklyGoalsForm">
-    <div formArrayName="allGoals" cdkDropList (cdkDropListDropped)="drop($event)">
-      @for (item of allGoals.controls; track item; let i = $index) {
-        <div class="goal-row" cdkDrag cdkDragPreviewContainer="parent" [formGroupName]="i">
-          <fieldset class="field-select">
-            <mat-icon cdkDragHandle>drag_indicator</mat-icon>
+    <form [formGroup]="weeklyGoalsForm">
+      <div formArrayName="allGoals" cdkDropList (cdkDropListDropped)="drop($event)">
+        @for (item of allGoals.controls; track item; let i = $index) {
+          @if (!item.get('_deleted')?.value) {
+            <div class="goal-row" cdkDrag cdkDragPreviewContainer="parent" [formGroupName]="i">
+              <fieldset class="field-select">
+                <mat-icon cdkDragHandle>drag_indicator</mat-icon>
 
-            <mat-form-field class="goal-input" subscriptSizing="dynamic">
-              <input matInput placeholder="Enter your goal..." formControlName="text" />
-            </mat-form-field>
+                <mat-form-field class="goal-input" subscriptSizing="dynamic">
+                  <input matInput placeholder="Enter your goal..." formControlName="text" />
+                </mat-form-field>
 
-            <mat-form-field
-              class="goal-dropdown"
-              subscriptSizing="dynamic"
-              [style.--underline-color]="getHashtag(item.get('__quarterlyGoalId')?.value)?.color || '#2dbdb1'">
-              <mat-select placeholder="Select hashtag..." formControlName="__quarterlyGoalId">
-                <mat-select-trigger>
-                  @if (getHashtag(item.get('__quarterlyGoalId')?.value); as hashtag) {
-                    <span [style.color]="hashtag.color">#{{ hashtag.name }}</span>
-                  }
-                </mat-select-trigger>
-                @for (qGoal of quarterlyGoals(); track qGoal.__id) {
-                  <mat-option [value]="qGoal.__id">
-                    @if (getHashtag(qGoal.__id); as hashtag) {
-                      <span [style.color]="hashtag.color">#{{ hashtag.name }}</span>
+                <mat-form-field
+                  class="goal-dropdown"
+                  subscriptSizing="dynamic"
+                  [style.--underline-color]="getHashtag(item.get('__quarterlyGoalId')?.value)?.color || '#2dbdb1'">
+                  <mat-select placeholder="Select hashtag..." formControlName="__quarterlyGoalId">
+                    <mat-select-trigger>
+                      @if (getHashtag(item.get('__quarterlyGoalId')?.value); as hashtag) {
+                        <span [style.color]="hashtag.color">#{{ hashtag.name }}</span>
+                      }
+                    </mat-select-trigger>
+                    @for (qGoal of quarterlyGoals(); track qGoal.__id) {
+                      <mat-option [value]="qGoal.__id">
+                        @if (getHashtag(qGoal.__id); as hashtag) {
+                          <span [style.color]="hashtag.color">#{{ hashtag.name }}</span>
+                        }
+                      </mat-option>
                     }
-                  </mat-option>
-                }
-              </mat-select>
-            </mat-form-field>
-          </fieldset>
+                  </mat-select>
+                </mat-form-field>
+              </fieldset>
 
-          <button type="button" class="remove-btn" (click)="removeGoal(i)">✕</button>
-        </div>
-      }
+              <button type="button" class="remove-btn" (click)="removeGoal(i)">✕</button>
+            </div>
+          }
+        }
+      </div>
+
+      <div class="add-goal" (click)="addGoal()">+ Add a weekly goal</div>
+    </form>
+
+    <div class="actions">
+      <button class="back-btn" routerLink="/onboarding">Back</button>
+      <button class="next-btn" (click)="save()" [disabled]="!weeklyGoalsForm.valid">Next</button>
     </div>
-
-    <div class="add-goal" (click)="addGoal()">+ Add a weekly goal</div>
-  </form>
-
-  <div class="actions">
-    <button class="back-btn" routerLink="/onboarding">Back</button>
-    <button class="next-btn" (click)="save()" [disabled]="!weeklyGoalsForm.valid">Next</button>
   </div>
 </div>

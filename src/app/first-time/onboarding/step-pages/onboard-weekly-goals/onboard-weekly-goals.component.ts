@@ -1,4 +1,4 @@
-import { Component, OnInit, ChangeDetectionStrategy, inject, Signal, Inject, Injector, computed } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy, inject, Signal, Inject, Injector, computed, effect } from '@angular/core';
 import { OnboardWeeklyGoalsAnimations } from './onboard-weekly-goals.animations';
 import { User } from 'src/app/core/store/user/user.model';
 import { AuthStore } from 'src/app/core/store/auth/auth.store';
@@ -16,6 +16,8 @@ import { MatOption } from '@angular/material/core';
 import { RouterLink } from '@angular/router';
 import { Router } from '@angular/router';
 import { QuarterlyGoalData } from 'src/app/main/home/home.model';
+import { ProgressBarComponent } from '../../progress-bar/progress-bar.component';
+import { NavbarComponent } from 'src/app/shared/navbar/navbar.component';
 
 @Component({
   selector: 'app-onboard-weekly-goals',
@@ -37,6 +39,8 @@ import { QuarterlyGoalData } from 'src/app/main/home/home.model';
     MatSelectTrigger,
     MatOption,
     RouterLink,
+    ProgressBarComponent,
+    NavbarComponent,
   ],
 })
 export class OnboardWeeklyGoalsComponent implements OnInit {
@@ -62,6 +66,9 @@ export class OnboardWeeklyGoalsComponent implements OnInit {
   get allGoals() {
     return this.weeklyGoalsForm.get('allGoals') as FormArray;
   }
+
+  /** Tracks whether the form has been seeded from the store already. */
+  private formSeeded = false;
 
   // --------------- COMPUTED DATA -----------------------
 
@@ -97,7 +104,15 @@ export class OnboardWeeklyGoalsComponent implements OnInit {
   }
 
   removeGoal(i: number) {
-    this.allGoals.removeAt(i);
+    const control = this.allGoals.at(i);
+    const isNew = control.get('_new')?.value;
+    if (isNew) {
+      // Brand-new row: just drop it from the array
+      this.allGoals.removeAt(i);
+    } else {
+      // Existing store goal: mark deleted so save() can call remove()
+      control.get('_deleted')?.setValue(true);
+    }
   }
 
   drop(event: CdkDragDrop<any[]>) {
@@ -112,20 +127,40 @@ export class OnboardWeeklyGoalsComponent implements OnInit {
           let i = 0;
           for (const control of this.allGoals.controls) {
             const val = control.value;
-            if (!val._deleted && val.text) {
-              await this.weeklyGoalStore.add(
-                {
-                  __userId: this.currentUser()?.__id,
-                  __quarterlyGoalId: val.__quarterlyGoalId || null,
-                  __hashtagId: this.quarterlyGoalStore.selectEntity(val.__quarterlyGoalId)?.__hashtagId || null,
-                  text: val.text,
-                  completed: false,
-                  order: i,
-                },
-                { batchConfig }
-              );
+            const hashtagId = this.quarterlyGoalStore.selectEntity(val.__quarterlyGoalId)?.__hashtagId || null;
+
+            if (val._deleted && !val._new && val.__id) {
+              // Existing goal marked for deletion
+              await this.weeklyGoalStore.remove(val.__id, { batchConfig });
+            } else if (!val._deleted && val.text) {
+              if (val._new) {
+                // New goal — create it
+                await this.weeklyGoalStore.add(
+                  {
+                    __userId: this.currentUser()?.__id,
+                    __quarterlyGoalId: val.__quarterlyGoalId || null,
+                    __hashtagId: hashtagId,
+                    text: val.text,
+                    completed: false,
+                    order: i,
+                  },
+                  { batchConfig }
+                );
+              } else {
+                // Existing goal — update it
+                await this.weeklyGoalStore.update(
+                  val.__id,
+                  {
+                    text: val.text,
+                    __quarterlyGoalId: val.__quarterlyGoalId || null,
+                    __hashtagId: hashtagId,
+                    order: i,
+                  },
+                  { batchConfig }
+                );
+              }
+              i++;
             }
-            i++;
           }
         },
         {
@@ -158,7 +193,43 @@ export class OnboardWeeklyGoalsComponent implements OnInit {
       {},
       (quarterlyGoal) => [LoadHashtag.create(this.hashtagStore, [['__id', '==', quarterlyGoal.__hashtagId]], {})]
     );
-    // Seed one blank row
+
+    // Load existing weekly goals from the store
+    this.weeklyGoalStore.load(
+      [['__userId', '==', this.currentUser()?.__id], ['completed', '==', false]],
+      { orderBy: ['order', 'asc'] },
+    );
+
+    // Use an effect so the form is populated reactively once the store data arrives
+    effect(() => {
+      if (this.formSeeded) return;
+
+      const existingGoals = this.weeklyGoalStore.selectEntities(
+        [['__userId', '==', this.currentUser()?.__id], ['completed', '==', false]],
+        {}
+      );
+
+      // Wait until the store has loaded at least one goal before seeding
+      if (existingGoals.length > 0) {
+        this.formSeeded = true;
+        // Clear any existing blank row
+        this.allGoals.clear();
+        const sorted = [...existingGoals].sort((a, b) => (a.order ?? 0) - (b.order ?? 0));
+        for (const goal of sorted) {
+          this.allGoals.push(
+            this.fb.group({
+              __id: [goal.__id],
+              text: [goal.text, Validators.required],
+              __quarterlyGoalId: [goal.__quarterlyGoalId || ''],
+              _deleted: [false],
+              _new: [false],
+            })
+          );
+        }
+      }
+    }, { injector: this.injector });
+
+    // Seed one blank row as a placeholder while data loads
     this.addGoal();
   }
 }
