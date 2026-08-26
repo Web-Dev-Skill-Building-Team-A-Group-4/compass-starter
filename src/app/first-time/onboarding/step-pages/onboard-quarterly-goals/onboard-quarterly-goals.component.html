@@ -7,7 +7,7 @@
 
     <form [formGroup]="quarterlyGoalsForm" class="goals-form">
       <div class="goals-list" cdkDropList (cdkDropListDropped)="drop($event)" formArrayName="allGoals">
-        @for (item of allGoals.controls; track item; let i = $index) {
+        @for (item of goalControls(); track item; let i = $index) {
           <div class="goal-row" cdkDrag [formGroupName]="i">
             <mat-icon cdkDragHandle class="drag-handle">drag_indicator</mat-icon>
             

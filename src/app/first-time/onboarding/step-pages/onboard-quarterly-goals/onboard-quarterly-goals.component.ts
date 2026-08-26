@@ -1,9 +1,9 @@
-import { Component, OnInit, ChangeDetectionStrategy, output, inject, WritableSignal, Signal, signal, Inject, Injector, effect, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy, output, inject, WritableSignal, Signal, signal, Inject, Injector, effect } from '@angular/core';
 import { OnboardQuarterlyGoalsAnimations } from './onboard-quarterly-goals.animations';
 import { User, OnboardingState } from 'src/app/core/store/user/user.model';
 import { AuthStore } from 'src/app/core/store/auth/auth.store';
 import { BatchWriteService, BATCH_WRITE_SERVICE } from 'src/app/core/store/batch-write.service';
-import { FormArray, FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { AbstractControl, FormArray, FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { CdkDragDrop, CdkDrag, CdkDragHandle, CdkDropList, moveItemInArray } from '@angular/cdk/drag-drop';
 import { MatIconModule } from '@angular/material/icon';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -36,7 +36,6 @@ export class OnboardQuarterlyGoalsComponent implements OnInit {
   readonly hashtagStore = inject(HashtagStore);
   readonly userStore = inject(UserStore);
   private fb = inject(FormBuilder);
-  private cdr = inject(ChangeDetectorRef);
 
   // --------------- INPUTS AND OUTPUTS ------------------
 
@@ -68,6 +67,9 @@ export class OnboardQuarterlyGoalsComponent implements OnInit {
     return this.quarterlyGoalsForm.get('allGoals') as FormArray;
   }
 
+  /** Signal holding the current form controls for template reactivity */
+  goalControls = signal<AbstractControl[]>(this.allGoals.controls);
+
   // --------------- COMPUTED DATA -----------------------
 
   /** Check if all goal inputs and hashtags are filled. */
@@ -80,10 +82,12 @@ export class OnboardQuarterlyGoalsComponent implements OnInit {
   drop(event: CdkDragDrop<any[]>): void {
     moveItemInArray(this.allGoals.controls, event.previousIndex, event.currentIndex);
     this.allGoals.updateValueAndValidity();
+    this.goalControls.set([...this.allGoals.controls]);
   }
 
   addEmptyGoalRow(index: number): void {
     this.allGoals.push(this.createGoalRow(index));
+    this.goalControls.set([...this.allGoals.controls]);
   }
 
   private createGoalRow(index: number, goal?: any, hashtag?: any): FormGroup {
@@ -253,7 +257,7 @@ export class OnboardQuarterlyGoalsComponent implements OnInit {
         const hashtag = this.hashtagStore.selectEntity(goal.__hashtagId);
         this.allGoals.push(this.createGoalRow(i, goal, hashtag));
       });
-      this.cdr.markForCheck();
+      this.goalControls.set([...this.allGoals.controls]);
     }
   }
 }
