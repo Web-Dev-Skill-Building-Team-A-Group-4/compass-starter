@@ -1,11 +1,6 @@
 :host {
   display: block;
   height: 100%;
-  font-family: Oxygen, sans-serif;
-
-  input, button {
-    font-family: inherit;
-  }
 
   .quarterly-goals-modal-container {
     background-color: white;
@@ -15,187 +10,207 @@
     display: flex;
     flex-direction: column;
     overflow-x: hidden;
-  }
 
-  .top {
-    display: flex;
-    justify-content: space-between;
-  }
-
-  .top-text {
-    display: flex;
-    flex-direction: column;
-    margin-bottom: 45px;
-  }
-
-  .top-title {
-    margin-top: 0;
-    color: #4B5853;
-    font-size: 30px;
-  }
-
-  .top-date {
-    margin-top: -10px;
-    color: #4B5853;
-    font-size: 25px;
-    font-weight: 700;
-  }
-
-  .close-button {
-    transform: scale(1.4);
-  }
-
-  .content-item {
-    display: flex;
-    flex-direction: column;
-  }
-
-  .goals-box {
-    display: flex;
-  }
-
-  .field-select {
-    border: 0;
-    display: flex;
-    align-items: center;
-    height: 44px;
-    margin-left: -5px;
-    padding: 0;
-    margin-bottom: 22px;
-    --mat-form-field-container-vertical-padding: 20px;
-    --mdc-filled-text-field-container-height: 5px;
-
-    mat-icon {
-      margin-right: 10px;
-      align-self: center;
-      height: 24px;
-      width: 24px;
-      font-size: 24px;
-      color: #2dbdb1;
-      cursor: pointer;
-    }
-  }
-
-  .goal-input {
-    flex: 1;
-    color: #4B5853;
-    width: 37vw;
-    font-size: 18px;
-    font-weight: 300;
-    --mdc-filled-text-field-container-color: transparent; 
-    --mdc-filled-text-field-focus-active-indicator-color: #2dbdb1;
-  }
-
-  .goal-hashtag {
-    margin-left: 30px;
-    width: 22vw;
-    --mdc-filled-text-field-active-indicator-color: var(--underline-color);
-    --mdc-filled-text-field-focus-active-indicator-color: var(--underline-color);
-    --mdc-filled-text-field-container-color: transparent;
-  }
-
-  .hashtag-input {
-    font-size: 18px;
-    font-weight: 300;
-  }
-
-  .trash-box {
-    display: flex;
-    padding: 10px 15px;
-    border: none;
-
-    &:disabled {
-      label {
-        cursor: not-allowed;
-      }
-      mat-icon {
-        color: gray;
-        opacity: 0.7;
-      }
-    }
-
-    mat-icon {
-      margin-right: 8px;
-      height: 30px;
-      font-size: 30px;
-      color: #2dbdb1;
-      margin-bottom: 4px;
-    }
-
-    input,
-    label {
-      cursor: pointer;
-    }
-
-    input[type="checkbox"]:checked + label .delete,
-    input[type="checkbox"] + label .restore {
-      display: none;
-    }
-
-    input[type="checkbox"]:checked + label .restore,
-    input[type="checkbox"] + label .delete {
+    .top {
       display: flex;
+      justify-content: space-between;
+
+      .top-text {
+        display: flex;
+        flex-direction: column;
+        margin-bottom: 45px;
+
+        .top-title {
+          margin-top: 0px;
+          color: #4B5853;
+          font-family: Oxygen;
+          font-size: 30px;
+          font-style: normal;
+          font-weight: 400;
+          line-height: normal;
+        }
+
+        .top-date {
+          margin-top: -10px;
+          color: #4B5853;
+          font-family: Oxygen;
+          font-size: 25px;
+          font-style: normal;
+          font-weight: 700;
+          line-height: normal;
+        }
+      }
+
+      .close-button {
+        transform: scale(1.4);
+      }
     }
 
-    input[type="checkbox"] {
-      display: none;
-      margin-left: 8px;
+    .content {
+      .content-item {
+        display: flex;
+        flex-direction: column;
+
+        .goals-box {
+          display: flex;
+
+          .field-select {
+            border: 0px;
+            display: flex;
+            align-items: center;
+            height: 44px;
+            margin-left: -5px;
+            padding: 0px;
+            margin-bottom: 22px;
+            --mat-form-field-container-vertical-padding: 20px;
+            --mdc-filled-text-field-container-height: 5px;
+
+            mat-icon {
+              margin-right: 10px;
+              align-self: center;
+              height: 24px;
+              width: 24px;
+              font-size: 24px;
+              color: #2dbdb1;
+              cursor: pointer;
+            }
+
+            .goal-input {
+              flex: 1;
+              color: #4B5853;
+              width: 37vw;
+              font-family: Oxygen;
+              font-size: 18px;
+              font-style: normal;
+              font-weight: 300;
+              line-height: normal;
+              --mdc-filled-text-field-container-color: transparent;
+              --mdc-filled-text-field-focus-active-indicator-color: #2dbdb1;
+            }
+
+            .goal-hashtag {
+              margin-left: 30px;
+              width: 22vw;
+              --mdc-filled-text-field-active-indicator-color: var(--underline-color);
+              --mdc-filled-text-field-focus-active-indicator-color: var(--underline-color);
+              --mdc-filled-text-field-container-color: transparent;
+
+              .hashtag-input {
+                font-family: Oxygen;
+                font-size: 18px;
+                font-style: normal;
+                font-weight: 300;
+                line-height: normal;
+              }
+            }
+          }
+
+          .trash-box {
+            display: flex;
+            padding: 10px 15px;
+            border: none;
+
+            &:disabled {
+              label {
+                cursor: not-allowed;
+              }
+
+              mat-icon {
+                color: gray;
+                opacity: 0.7;
+              }
+            }
+
+            mat-icon {
+              margin-right: 8px;
+              height: 30px;
+              font-size: 30px;
+              color: #2dbdb1;
+              margin-bottom: 4px;
+            }
+
+            input,
+            label {
+              cursor: pointer;
+            }
+
+            input[type="checkbox"]:checked+label .delete,
+            input[type="checkbox"]+label .restore {
+              display: none;
+            }
+
+            input[type="checkbox"]:checked+label .restore,
+            input[type="checkbox"]+label .delete {
+              display: flex;
+            }
+
+            input[type="checkbox"] {
+              display: none;
+              margin-left: 8px;
+            }
+          }
+        }
+      }
+
+      .add-goal-button {
+        cursor: pointer;
+        color: #4B5853;
+        font-family: Oxygen;
+        font-size: 18px;
+        font-weight: 300;
+        margin: 10px 0px;
+      }
     }
-  }
 
-  .add-goal-button {
-    cursor: pointer;
-    color: #4B5853;
-    font-size: 18px;
-    font-weight: 300;
-    margin: 10px 0;
-  }
+    .bottom {
+      display: flex;
+      justify-content: flex-end;
+      margin-top: auto;
+      align-items: flex-end;
 
-  .bottom {
-    display: flex;
-    justify-content: flex-end;
-    margin-top: auto;
-    align-items: flex-end;
-  }
+      .added-goals {
+        padding-right: 20px;
+        gap: 14px;
 
-  .added-goals {
-    padding-right: 20px;
-    gap: 14px;
-  }
+        .tracking-counts {
+          p {
+            color: #4b5853;
+            text-align: right;
+            font-size: 17px;
+            font-weight: bold;
+            margin-bottom: 0;
+          }
 
-  .tracking-counts {
-    p {
-      color: #4b5853;
-      text-align: right;
-      font-size: 17px;
-      font-weight: bold;
-      margin-bottom: 0;
-    }
+          span {
+            color: #4b5853;
+            font-size: 17px;
+            font-weight: 400;
+          }
+        }
+      }
 
-    span {
-      color: #4b5853;
-      font-size: 17px;
-    }
-  }
+      .save-button {
+        background: #2dbdb1;
+        color: #ffffff;
+        width: 138px;
+        height: 42px;
+        border: none;
+        border-radius: 12.5px;
+        cursor: pointer;
+        text-align: center;
+        font-family: Oxygen;
+        font-size: 22.5px;
+        font-weight: 400;
 
-  .save-button {
-    background: #2dbdb1;
-    color: #ffffff;
-    width: 138px;
-    height: 42px;
-    border: none;
-    border-radius: 12.5px;
-    cursor: pointer;
-    text-align: center;
-    font-size: 22.5px;
+        &:hover {
+          background: #1f9e91;
+        }
 
-    &:hover {
-      background: #1f9e91;
-    }
-
-    &[disabled] {
-      background-color: lightgray;
-      cursor: not-allowed;
+        &[disabled] {
+          background-color: lightgray;
+          cursor: not-allowed;
+        }
+      }
     }
   }
 }
