@@ -1,3 +1,5 @@
 <div class="onboarding-container">
-   <app-onboard-quarterly-goals></app-onboard-quarterly-goals>
+  @if (currentUser()?.onboardingState === OnboardingState.STEP_3) {
+    <app-onboard-quarterly-goals></app-onboard-quarterly-goals>
+  }
 </div>

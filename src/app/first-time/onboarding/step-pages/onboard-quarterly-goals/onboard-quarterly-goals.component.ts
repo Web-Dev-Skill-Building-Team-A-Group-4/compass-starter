@@ -1,9 +1,9 @@
-import { Component, OnInit, ChangeDetectionStrategy, output, inject, WritableSignal, Signal, signal, Inject, Injector, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy, output, inject, WritableSignal, Signal, signal, Inject, Injector, effect, ChangeDetectorRef } from '@angular/core';
 import { OnboardQuarterlyGoalsAnimations } from './onboard-quarterly-goals.animations';
 import { User, OnboardingState } from 'src/app/core/store/user/user.model';
 import { AuthStore } from 'src/app/core/store/auth/auth.store';
 import { BatchWriteService, BATCH_WRITE_SERVICE } from 'src/app/core/store/batch-write.service';
-import { FormArray, FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
+import { FormArray, FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { CdkDragDrop, CdkDrag, CdkDragHandle, CdkDropList, moveItemInArray } from '@angular/cdk/drag-drop';
 import { MatIconModule } from '@angular/material/icon';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -12,9 +12,6 @@ import { QuarterlyGoalStore } from 'src/app/core/store/quarterly-goal/quarterly-
 import { HashtagStore, LoadHashtag } from 'src/app/core/store/hashtag/hashtag.store';
 import { UserStore } from 'src/app/core/store/user/user.store';
 import { createId } from 'src/app/core/utils/rand.utils';
-import { toObservable } from '@angular/core/rxjs-interop';
-import { filter, switchMap, take } from 'rxjs/operators';
-import { from } from 'rxjs';
 
 @Component({
   selector: 'app-onboard-quarterly-goals',
@@ -46,8 +43,7 @@ export class OnboardQuarterlyGoalsComponent implements OnInit {
   /** The current signed in user. */
   currentUser: Signal<User> = this.authStore.user;
 
-  /** Navigation outputs for parent wizard */
-  readonly backClicked = output<void>();
+  /** Navigation output for parent wizard */
   readonly nextClicked = output<void>();
 
   // --------------- LOCAL UI STATE ----------------------
@@ -58,9 +54,13 @@ export class OnboardQuarterlyGoalsComponent implements OnInit {
   /** Hashtag colors. */
   readonly HASHTAG_COLORS = ['#EE8B72', '#2DBDB1', '#FFB987'];
 
-  /** FormControls for quarterly goals onboarding */
+  /** FormControls for quarterly goals onboarding initialized with 3 default rows */
   quarterlyGoalsForm = this.fb.group({
-    allGoals: this.fb.array([]),
+    allGoals: this.fb.array([
+      this.createGoalRow(0),
+      this.createGoalRow(1),
+      this.createGoalRow(2),
+    ]),
   });
 
   /** Getter for the form array with a type that allows use of controls. */
@@ -83,16 +83,18 @@ export class OnboardQuarterlyGoalsComponent implements OnInit {
   }
 
   addEmptyGoalRow(index: number): void {
-    this.allGoals.push(
-      this.fb.group({
-        __id: [null],
-        text: ['', Validators.required],
-        __hashtagId: [null],
-        hashtagName: ['', Validators.required],
-        hashtagColor: [this.HASHTAG_COLORS[index % this.HASHTAG_COLORS.length]],
-        _new: [true],
-      })
-    );
+    this.allGoals.push(this.createGoalRow(index));
+  }
+
+  private createGoalRow(index: number, goal?: any, hashtag?: any): FormGroup {
+    return this.fb.group({
+      __id: [goal?.__id ?? null],
+      text: [goal?.text ?? '', Validators.required],
+      __hashtagId: [goal?.__hashtagId ?? null],
+      hashtagName: [hashtag?.name ?? '', Validators.required],
+      hashtagColor: [hashtag?.color || this.HASHTAG_COLORS[index % this.HASHTAG_COLORS.length]],
+      _new: [!goal?.__id],
+    });
   }
 
   async goNext(): Promise<void> {
@@ -195,7 +197,6 @@ export class OnboardQuarterlyGoalsComponent implements OnInit {
       await this.userStore.update(userId, {
         onboardingState: OnboardingState.STEP_2, // Route back to long-term goals transition
       });
-      this.backClicked.emit();
     } catch (e) {
       console.error(e);
     } finally {
@@ -208,17 +209,13 @@ export class OnboardQuarterlyGoalsComponent implements OnInit {
   constructor(
     private injector: Injector,
     @Inject(BATCH_WRITE_SERVICE) private batchService: BatchWriteService,
-  ) {}
+  ) {
+    effect(async () => {
+      const user = this.currentUser();
+      if (!user?.__id) return;
 
-  // --------------- LOAD AND CLEANUP --------------------
-  
-  ngOnInit(): void {
-    // Wait for the currentUser to load, then fetch goals and populate the form array safely
-    toObservable(this.currentUser, { injector: this.injector }).pipe(
-      filter((user) => !!user),
-      take(1),
-      switchMap((user) => {
-        return from(this.quarterlyGoalStore.load(
+      try {
+        await this.quarterlyGoalStore.load(
           [
             ['__userId', '==', user.__id],
             ['completed', '==', false],
@@ -227,48 +224,36 @@ export class OnboardQuarterlyGoalsComponent implements OnInit {
           (goal) => [
             LoadHashtag.create(this.hashtagStore, [['__id', '==', goal.__hashtagId]], {})
           ]
-        ));
-      })
-    ).subscribe({
-      next: () => {
-        this.populateForm();
-      },
-      error: (err) => {
-        console.error(err);
-        this.populateForm();
+        );
+      } catch (e) {
+        console.error(e);
+      } finally {
+        this.populateForm(user.__id);
       }
     });
   }
 
-  private populateForm(): void {
+  // --------------- LOAD AND CLEANUP --------------------
+  
+  ngOnInit(): void {
+  }
+
+  private populateForm(userId: string): void {
     const goals = this.quarterlyGoalStore.selectEntities(
       [
-        ['__userId', '==', this.currentUser()?.__id],
+        ['__userId', '==', userId],
         ['completed', '==', false],
       ],
       { orderBy: 'order' }
     );
 
-    this.allGoals.clear();
-    if (goals.length > 0) {
-      goals.forEach((goal) => {
+    if (goals && goals.length > 0) {
+      this.allGoals.clear();
+      goals.forEach((goal, i) => {
         const hashtag = this.hashtagStore.selectEntity(goal.__hashtagId);
-        this.allGoals.push(
-          this.fb.group({
-            __id: [goal.__id],
-            text: [goal.text, Validators.required],
-            __hashtagId: [goal.__hashtagId],
-            hashtagName: [hashtag?.name ?? '', Validators.required],
-            hashtagColor: [hashtag?.color ?? ''],
-            _new: [false],
-          })
-        );
+        this.allGoals.push(this.createGoalRow(i, goal, hashtag));
       });
-    } else {
-      for (let i = 0; i < 3; i++) {
-        this.addEmptyGoalRow(i);
-      }
+      this.cdr.markForCheck();
     }
-    this.cdr.detectChanges(); // Trigger full layout sync and class evaluation
   }
 }
