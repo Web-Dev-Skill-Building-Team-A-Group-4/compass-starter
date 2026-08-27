@@ -8,6 +8,8 @@ import { CdkDragDrop, CdkDrag, CdkDragHandle, CdkDropList, moveItemInArray } fro
 import { MatIconModule } from '@angular/material/icon';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
+import { QuarterlyGoal } from 'src/app/core/store/quarterly-goal/quarterly-goal.model';
+import { Hashtag } from 'src/app/core/store/hashtag/hashtag.model';
 import { QuarterlyGoalStore } from 'src/app/core/store/quarterly-goal/quarterly-goal.store';
 import { HashtagStore, LoadHashtag } from 'src/app/core/store/hashtag/hashtag.store';
 import { UserStore } from 'src/app/core/store/user/user.store';
@@ -79,7 +81,7 @@ export class OnboardQuarterlyGoalsComponent implements OnInit {
 
   // --------------- EVENT HANDLING ----------------------
 
-  drop(event: CdkDragDrop<any[]>): void {
+  drop(event: CdkDragDrop<AbstractControl[]>): void {
     moveItemInArray(this.allGoals.controls, event.previousIndex, event.currentIndex);
     this.allGoals.updateValueAndValidity();
     this.goalControls.set([...this.allGoals.controls]);
@@ -90,7 +92,7 @@ export class OnboardQuarterlyGoalsComponent implements OnInit {
     this.goalControls.set([...this.allGoals.controls]);
   }
 
-  private createGoalRow(index: number, goal?: any, hashtag?: any): FormGroup {
+  private createGoalRow(index: number, goal?: Partial<QuarterlyGoal>, hashtag?: Partial<Hashtag>): FormGroup {
     return this.fb.group({
       __id: [goal?.__id ?? null],
       text: [goal?.text ?? '', Validators.required],
@@ -131,7 +133,7 @@ export class OnboardQuarterlyGoalsComponent implements OnInit {
                     name: cleanHashtag,
                     color: val.hashtagColor || this.HASHTAG_COLORS[i % this.HASHTAG_COLORS.length],
                   },
-                  { batchConfig }
+                  { batchConfig },
                 );
 
                 await this.quarterlyGoalStore.add(
@@ -142,7 +144,7 @@ export class OnboardQuarterlyGoalsComponent implements OnInit {
                     completed: false,
                     order: i + 1,
                   },
-                  { batchConfig }
+                  { batchConfig },
                 );
               } else {
                 // Update existing goal & hashtag
@@ -152,7 +154,7 @@ export class OnboardQuarterlyGoalsComponent implements OnInit {
                     text: val.text.trim(),
                     order: i + 1,
                   },
-                  { batchConfig }
+                  { batchConfig },
                 );
 
                 if (val.__hashtagId) {
@@ -161,18 +163,18 @@ export class OnboardQuarterlyGoalsComponent implements OnInit {
                     {
                       name: cleanHashtag,
                     },
-                    { batchConfig }
+                    { batchConfig },
                   );
                 }
               }
-            })
+            }),
           );
 
           // Update user onboarding state to STEP_4 (organize-quarterly-goals)
           await this.userStore.update(
             userId,
             { onboardingState: OnboardingState.STEP_4 },
-            { batchConfig }
+            { batchConfig },
           );
         },
         {
@@ -181,7 +183,7 @@ export class OnboardQuarterlyGoalsComponent implements OnInit {
             failureMessage: 'Failed to save quarterly goals',
             config: { duration: 3000 },
           },
-        }
+        },
       );
 
       this.nextClicked.emit();
@@ -229,7 +231,7 @@ export class OnboardQuarterlyGoalsComponent implements OnInit {
           ['__userId', '==', this.currentUser()?.__id],
           ['completed', '==', false],
         ],
-        { orderBy: 'order' }
+        { orderBy: 'order' },
       );
 
       if (goals && goals.length > 0) {

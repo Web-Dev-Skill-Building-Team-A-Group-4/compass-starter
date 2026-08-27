@@ -14,7 +14,7 @@ import { OnboardQuarterlyGoalsComponent } from './step-pages/onboard-quarterly-g
   animations: OnboardingAnimations,
   imports: [
     OnboardQuarterlyGoalsComponent,
-  ]
+  ],
 })
 export class OnboardingComponent implements OnInit {
   readonly authStore = inject(AuthStore);

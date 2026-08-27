@@ -38,7 +38,7 @@ export class OnboardLongTermTransitionComponent implements OnInit {
   ) { }
 
   // --------------- LOAD AND CLEANUP --------------------
-  
+
   ngOnInit(): void {
   }
 }

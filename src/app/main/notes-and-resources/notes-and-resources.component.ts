@@ -23,7 +23,7 @@ export class NotesAndResourcesComponent implements OnInit {
   readonly longTermGoalStore = inject(LongTermGoalStore);
   // --------------- INPUTS AND OUTPUTS ------------------
 
-  /** 
+  /**
    * Route parameter value representing what goal we're taking notes on.
    * IMPORTANT: This can be either an id for a long term goal or quarterly goal,
    * which will significantly impact the UI and your queries!
@@ -54,9 +54,9 @@ export class NotesAndResourcesComponent implements OnInit {
   ) { }
 
   // --------------- LOAD AND CLEANUP --------------------
-  
+
   ngOnInit(): void {
-    //load long term goals
+    // load long term goals
     this.longTermGoalStore.load([
       ['__userId', '==', this.currentUser()?.__id],
     ], {});

@@ -21,28 +21,28 @@ import { QuarterlyGoalsComponent } from './quarterly-goals/quarterly-goals.compo
   standalone: true,
   animations: HomeAnimations,
   imports: [
-    NavbarComponent, 
+    NavbarComponent,
     WeeklyGoalsComponent,
     WeeklyGoalsItemComponent,
     DateTimeComponent,
     LongTermGoalsComponent,
     QuarterlyGoalsComponent,
-  ]
+  ],
 })
 export class HomeComponent implements OnInit {
   authStore = inject(AuthStore);
-  
+
   // --------------- INPUTS AND OUTPUTS ------------------
 
   /** The currently signed in user. */
   currentUser: Signal<User> = this.authStore.user;
-  
-  curr_goal = (() => {
-    const rawGoalForExample = WEEKLYGOAL_DB.find(g => g.text === 'Apply to Microsoft');
-    if (!rawGoalForExample) return null;
-    const matchingHashtag = HASHTAG_DB.find(h => h.__id === rawGoalForExample.__hashtagId);
 
-  return {
+  curr_goal = (() => {
+    const rawGoalForExample = WEEKLYGOAL_DB.find((g) => g.text === 'Apply to Microsoft');
+    if (!rawGoalForExample) return null;
+    const matchingHashtag = HASHTAG_DB.find((h) => h.__id === rawGoalForExample.__hashtagId);
+
+    return {
       __id: rawGoalForExample.__id,
       __userId: rawGoalForExample.__userId,
       __quarterlyGoalId: rawGoalForExample.__quarterlyGoalId,
@@ -53,10 +53,10 @@ export class HomeComponent implements OnInit {
       _createdAt: rawGoalForExample._createdAt,
       _updatedAt: rawGoalForExample._updatedAt,
       _deleted: rawGoalForExample._deleted,
-      hashtag: matchingHashtag 
+      hashtag: matchingHashtag,
     };
   })();
-  
+
   // --------------- LOCAL UI STATE ----------------------
 
   // --------------- COMPUTED DATA -----------------------
@@ -72,7 +72,7 @@ export class HomeComponent implements OnInit {
   }
 
   // --------------- LOAD AND CLEANUP --------------------
-  
+
   ngOnInit() {
   }
 }

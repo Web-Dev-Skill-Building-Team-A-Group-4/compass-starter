@@ -14,7 +14,7 @@ import { DatePipe } from '@angular/common';
   changeDetection: ChangeDetectionStrategy.OnPush,
   animations: DateTimeAnimations,
   standalone: true,
-  imports: [ DatePipe, 
+  imports: [DatePipe,
   ],
 })
 export class DateTimeComponent implements OnInit {
@@ -31,11 +31,11 @@ export class DateTimeComponent implements OnInit {
   // --------------- COMPUTED DATA -----------------------
   time: Signal<Date> = toSignal(
     interval(1000).pipe(
-      map(() => new Date())
+      map(() => new Date()),
     ),
-    {initialValue: new Date() }
+    { initialValue: new Date() },
   );
-  dateSuffix: Signal<string> = computed (()=> {
+  dateSuffix: Signal<string> = computed(()=> {
     const currentDay = this.time().getDate();
     if (currentDay > 3 && currentDay < 21) return 'th';
     switch (currentDay % 10) {
@@ -43,11 +43,10 @@ export class DateTimeComponent implements OnInit {
       case 2: return 'nd';
       case 3: return 'rd';
       default: return 'th';
-        
     }
-  }
-    
-    )
+  },
+
+  );
 
   // --------------- EVENT HANDLING ----------------------
 
@@ -58,7 +57,7 @@ export class DateTimeComponent implements OnInit {
     @Inject(BATCH_WRITE_SERVICE) private batch: BatchWriteService,
   ) { }
   // --------------- LOAD AND CLEANUP --------------------
-  
+
   ngOnInit(): void {
   }
 }

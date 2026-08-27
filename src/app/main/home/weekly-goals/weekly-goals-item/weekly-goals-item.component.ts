@@ -19,20 +19,20 @@ export interface WeeklyGoalData extends WeeklyGoal {
   changeDetection: ChangeDetectionStrategy.OnPush,
   animations: WeeklyGoalsItemAnimations,
   standalone: true,
-  imports: [MatCheckboxModule
+  imports: [MatCheckboxModule,
   ],
 })
 export class WeeklyGoalsItemComponent implements OnInit {
   readonly authStore = inject(AuthStore);
   // --------------- INPUTS AND OUTPUTS ------------------
-  
+
 
   /** The current signed in user. */
   currentUser: Signal<User> = this.authStore.user;
 
-    /** goal object from parent */
+  /** goal object from parent */
   goal = input.required<WeeklyGoalData>();
-  
+
   // --------------- LOCAL UI STATE ----------------------
 
   /** Loading icon. */
@@ -43,7 +43,7 @@ export class WeeklyGoalsItemComponent implements OnInit {
 
   /** Whether goal is checked/complete */
   completed = computed(() => this.goal().completed);
-  
+
   /** The hashtag associated with goal */
   hashtag = computed(() => {
     const name = this.goal().hashtag?.name;
@@ -61,7 +61,7 @@ export class WeeklyGoalsItemComponent implements OnInit {
   ) { }
 
   // --------------- LOAD AND CLEANUP --------------------
-  
+
   ngOnInit(): void {
   }
 }

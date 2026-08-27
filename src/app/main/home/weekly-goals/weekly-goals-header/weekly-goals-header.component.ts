@@ -19,7 +19,7 @@ import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 })
 export class WeeklyGoalsHeaderComponent implements OnInit {
   readonly authStore = inject(AuthStore);
-  private snackBar = inject(MatSnackBar); 
+  private snackBar = inject(MatSnackBar);
   // --------------- INPUTS AND OUTPUTS ------------------
 
   /** The current signed in user. */
@@ -29,7 +29,7 @@ export class WeeklyGoalsHeaderComponent implements OnInit {
 
   startDate = startOfWeek;
   endDate = endOfWeek;
-  
+
   /** Loading icon. */
   loading: WritableSignal<boolean> = signal(false);
 
@@ -40,18 +40,18 @@ export class WeeklyGoalsHeaderComponent implements OnInit {
     this.snackBar.open('pencil clicked', 'Close', {
       duration: 3000, // Disappears after 3 seconds
       horizontalPosition: 'center',
-      verticalPosition: 'bottom'
+      verticalPosition: 'bottom',
     });
   }
   // --------------- OTHER -------------------------------
-  
+
   constructor(
     private injector: Injector,
     @Inject(BATCH_WRITE_SERVICE) private batch: BatchWriteService,
   ) { }
 
   // --------------- LOAD AND CLEANUP --------------------
-  
+
   ngOnInit(): void {
   }
 }

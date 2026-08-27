@@ -5,7 +5,7 @@ import { AuthStore } from 'src/app/core/store/auth/auth.store';
 import { BatchWriteService, BATCH_WRITE_SERVICE } from 'src/app/core/store/batch-write.service';
 import { CdkDragDrop, CdkDrag, CdkDragHandle, CdkDropList, moveItemInArray } from '@angular/cdk/drag-drop';
 import { QuarterlyGoal } from '../../../../core/store/quarterly-goal/quarterly-goal.model';
-import { QuarterlyGoalData, QuarterlyGoalInForm } from '../../home.model'; 
+import { QuarterlyGoalData, QuarterlyGoalInForm } from '../../home.model';
 import { QUARTERLYGOAL_DB } from '../../../../core/store/quarterly-goal/quarterly-goal.mock';
 import { Hashtag } from 'src/app/core/store/hashtag/hashtag.model';
 import { getQuarterAndYear } from '../../../../core/utils/time.utils';
@@ -44,7 +44,7 @@ import { FormArray, FormBuilder, FormControl, FormsModule, ReactiveFormsModule, 
 export class QuarterlyGoalsModalComponent implements OnInit {
   readonly authStore = inject(AuthStore);
   private dialogRef = inject(MatDialogRef<QuarterlyGoalsModalComponent>, { optional: true });
-  
+
   // --------------- INPUTS AND OUTPUTS ------------------
   currentUser: Signal<User> = this.authStore.user;
   closeModal = output<void>();
@@ -72,10 +72,10 @@ export class QuarterlyGoalsModalComponent implements OnInit {
   }
 
   // --------------- COMPUTED DATA -----------------------
-  
+
   getQuarterAndYear = getQuarterAndYear;
 
-    /**
+  /**
    * Get the count of newly added goals that are not marked for deletion.
    * A goal is considered newly added if its `_new` flag is true.
    */
@@ -117,7 +117,7 @@ export class QuarterlyGoalsModalComponent implements OnInit {
       this.dialogRef.close();
     }
   }
-  
+
   drop(event: CdkDragDrop<QuarterlyGoalData[]>) {
     moveItemInArray(this.allGoals.controls, event.previousIndex, event.currentIndex);
     this.allGoals.updateValueAndValidity();
@@ -154,7 +154,7 @@ export class QuarterlyGoalsModalComponent implements OnInit {
       );
     }
   }
-  
+
   async save() {
     await this.data.updateQuarterlyGoals(this.allGoals);
   }
@@ -172,11 +172,11 @@ export class QuarterlyGoalsModalComponent implements OnInit {
   constructor(
     private injector: Injector,
     @Inject(BATCH_WRITE_SERVICE) private batch: BatchWriteService,
-    @Inject(MAT_DIALOG_DATA) 
-    public data: { 
+    @Inject(MAT_DIALOG_DATA)
+    public data: {
       goals: QuarterlyGoalData[];
       hashtags: Hashtag[];
-      updateQuarterlyGoals: (quarterlyGoalsFormArray: FormArray) => void; 
+      updateQuarterlyGoals: (quarterlyGoalsFormArray: FormArray) => void;
     },
     private fb: FormBuilder,
   ) {
@@ -199,7 +199,7 @@ export class QuarterlyGoalsModalComponent implements OnInit {
             color: [goal.hashtag?.color],
           }),
           weeklyGoalsTotal: [goal.weeklyGoalsTotal],
-        })
+        }),
       );
     });
   }

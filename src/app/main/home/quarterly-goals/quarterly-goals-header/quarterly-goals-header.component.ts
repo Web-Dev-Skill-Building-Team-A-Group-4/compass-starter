@@ -10,8 +10,8 @@ import { MatSnackBar } from '@angular/material/snack-bar';
   selector: 'app-quarterly-goals-header',
   templateUrl: './quarterly-goals-header.component.html',
   styleUrls: ['./quarterly-goals-header.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush, 
-  animations: QuarterlyGoalsHeaderAnimations, 
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  animations: QuarterlyGoalsHeaderAnimations,
   standalone: true,
   imports: [
   ],
@@ -27,13 +27,13 @@ export class QuarterlyGoalsHeaderComponent implements OnInit {
   // --------------- LOCAL UI STATE ----------------------
   /** Loading icon. */
   loading: WritableSignal<boolean> = signal(false);
-  
+
   getQuarterAndYear = getQuarterAndYear;
 
   // --------------- COMPUTED DATA -----------------------
 
   // --------------- EVENT HANDLING ----------------------
-  editGoal(){
+  editGoal() {
     this.editClicked.emit(true);
   }
 
@@ -46,7 +46,7 @@ export class QuarterlyGoalsHeaderComponent implements OnInit {
   ) { }
 
   // --------------- LOAD AND CLEANUP --------------------
-  
+
   ngOnInit(): void {
   }
 }

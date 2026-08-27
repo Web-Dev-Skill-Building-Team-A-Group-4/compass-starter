@@ -35,7 +35,7 @@ const firebaseProviders = !environment.production && environment['mockDB'] ? [] 
   ] : []),
   provideAuth(() => getAuth()),
   provideFunctions(() => getFunctions()),
-  providePerformance(() => getPerformance())
+  providePerformance(() => getPerformance()),
 ];
 
 export const appConfig: ApplicationConfig = {

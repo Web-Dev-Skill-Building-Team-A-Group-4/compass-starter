@@ -37,7 +37,7 @@ export class WeeklyGoalsComponent implements OnInit {
   loading: WritableSignal<boolean> = signal(false);
 
   /** For storing the dialogRef in the opened modal. */
-  dialogRef: MatDialogRef<any>;
+  dialogRef: MatDialogRef<WeeklyGoalsModalComponent>;
 
   // --------------- COMPUTED DATA -----------------------
 
@@ -58,7 +58,7 @@ export class WeeklyGoalsComponent implements OnInit {
   ) { }
 
   // --------------- LOAD AND CLEANUP --------------------
-  
+
   ngOnInit(): void {
   }
 }
