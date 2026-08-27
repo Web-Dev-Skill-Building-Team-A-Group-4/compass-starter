@@ -54,12 +54,12 @@ body {
   border-width: 1.69px;
 }
 
-// Manipulate initial background color
-.mdc-text-field--filled:not(.mdc-text-field--disabled) {
-  background-color: white !important;
-}
 
-// Manipulate background color on hover and focus
-.mat-mdc-form-field-focus-overlay {
-  background-color: transparent !important;
+// ─── Onboard weekly goals: match field backgrounds to page on mobile ─────────
+@media (max-width: 430px) {
+  app-onboard-weekly-goals {
+    .mdc-text-field--filled:not(.mdc-text-field--disabled) {
+      background-color: #f2fffe !important;
+    }
+  }
 }

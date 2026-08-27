@@ -92,6 +92,7 @@ export class OnboardWeeklyGoalsComponent implements OnInit {
 
   // --------------- EVENT HANDLING ----------------------
 
+  /** Appends a new blank goal row to the form array. */
   addGoal() {
     this.allGoals.push(
       this.fb.group({
@@ -103,6 +104,11 @@ export class OnboardWeeklyGoalsComponent implements OnInit {
     );
   }
 
+  /**
+   * Removes a goal row at the given index. If the row was pre-existing in the
+   * store it is marked as deleted instead of being spliced out, so that
+   * `save()` can issue the corresponding remove call.
+   */
   removeGoal(i: number) {
     const control = this.allGoals.at(i);
     const isNew = control.get('_new')?.value;
@@ -115,17 +121,22 @@ export class OnboardWeeklyGoalsComponent implements OnInit {
     }
   }
 
+  /** Handles CDK drag-and-drop reordering of goal rows. */
   drop(event: CdkDragDrop<any[]>) {
     moveItemInArray(this.allGoals.controls, event.previousIndex, event.currentIndex);
     this.allGoals.updateValueAndValidity();
   }
 
+  /**
+   * Persists all goal rows to the store in a single batch write, then
+   * navigates to the home page on success.
+   */
   async save() {
     try {
       await this.batch.batchWrite(
         async (batchConfig) => {
-          let i = 0;
-          for (const control of this.allGoals.controls) {
+          for (let i = 0; i < this.allGoals.controls.length; i++) {
+            const control = this.allGoals.controls[i];
             const val = control.value;
             const hashtagId = this.quarterlyGoalStore.selectEntity(val.__quarterlyGoalId)?.__hashtagId || null;
 
@@ -159,7 +170,6 @@ export class OnboardWeeklyGoalsComponent implements OnInit {
                   { batchConfig }
                 );
               }
-              i++;
             }
           }
         },
