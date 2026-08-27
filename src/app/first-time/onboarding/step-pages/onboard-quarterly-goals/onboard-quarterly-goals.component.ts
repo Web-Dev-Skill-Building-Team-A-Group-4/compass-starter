@@ -1,4 +1,4 @@
-import { Component, OnInit, ChangeDetectionStrategy, output, inject, WritableSignal, Signal, signal, Inject, Injector, effect } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy, output, inject, WritableSignal, Signal, signal, Inject, Injector } from '@angular/core';
 import { OnboardQuarterlyGoalsAnimations } from './onboard-quarterly-goals.animations';
 import { User, OnboardingState } from 'src/app/core/store/user/user.model';
 import { AuthStore } from 'src/app/core/store/auth/auth.store';
@@ -213,51 +213,33 @@ export class OnboardQuarterlyGoalsComponent implements OnInit {
   constructor(
     private injector: Injector,
     @Inject(BATCH_WRITE_SERVICE) private batchService: BatchWriteService,
-  ) {
-    effect(async () => {
-      const user = this.currentUser();
-      if (!user?.__id) return;
-
-      try {
-        await this.quarterlyGoalStore.load(
-          [
-            ['__userId', '==', user.__id],
-            ['completed', '==', false],
-          ],
-          { orderBy: 'order' },
-          (goal) => [
-            LoadHashtag.create(this.hashtagStore, [['__id', '==', goal.__hashtagId]], {})
-          ]
-        );
-      } catch (e) {
-        console.error(e);
-      } finally {
-        this.populateForm(user.__id);
-      }
-    });
-  }
+  ) { }
 
   // --------------- LOAD AND CLEANUP --------------------
-  
+
   ngOnInit(): void {
-  }
+    this.quarterlyGoalStore.load([
+      ['__userId', '==', this.currentUser()?.__id],
+      ['completed', '==', false],
+    ], { orderBy: 'order' }, (quarterlyGoal) => [
+      LoadHashtag.create(this.hashtagStore, [['__id', '==', quarterlyGoal.__hashtagId]], {}),
+    ]).then(() => {
+      const goals = this.quarterlyGoalStore.selectEntities(
+        [
+          ['__userId', '==', this.currentUser()?.__id],
+          ['completed', '==', false],
+        ],
+        { orderBy: 'order' }
+      );
 
-  private populateForm(userId: string): void {
-    const goals = this.quarterlyGoalStore.selectEntities(
-      [
-        ['__userId', '==', userId],
-        ['completed', '==', false],
-      ],
-      { orderBy: 'order' }
-    );
-
-    if (goals && goals.length > 0) {
-      this.allGoals.clear();
-      goals.forEach((goal, i) => {
-        const hashtag = this.hashtagStore.selectEntity(goal.__hashtagId);
-        this.allGoals.push(this.createGoalRow(i, goal, hashtag));
-      });
-      this.goalControls.set([...this.allGoals.controls]);
-    }
+      if (goals && goals.length > 0) {
+        this.allGoals.clear();
+        goals.forEach((goal, i) => {
+          const hashtag = this.hashtagStore.selectEntity(goal.__hashtagId);
+          this.allGoals.push(this.createGoalRow(i, goal, hashtag));
+        });
+        this.goalControls.set([...this.allGoals.controls]);
+      }
+    });
   }
 }
