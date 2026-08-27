@@ -1,3 +1,38 @@
 <div class="onboard-long-term-goals-container">
-  onboard-long-term-goals works!
+  <h1 class="header">What are your long term goals?</h1>
+  <p class="subheader">Keep it short & sweet.</p>
+
+  <div class="field-wrap">
+    <p class="field-label">1 YEAR GOAL</p>
+    <input
+      class="goal-input"
+      type="text"
+      [placeholder]="onePlaceholder()"
+      [value]="oneYearGoal()"
+      (input)="oneYearGoal.set($any($event.target).value)"
+    />
+  </div>
+
+  <div class="field-wrap">
+    <p class="field-label">5 YEAR GOAL</p>
+    <div class="input-underline">
+      <textarea
+        class="goal-input goal-textarea"
+        [placeholder]="fivePlaceholder()"
+        [value]="fiveYearGoal()"
+        (input)="fiveYearGoal.set($any($event.target).value)"
+      ></textarea>
+    </div>
+  </div>
+
+  <div class="footer">
+    <button class="btn-back" type="button" (click)="onBack()">Back</button>
+    <!-- Disabled until both fields have content -->
+    <button
+      class="btn-next"
+      type="button"
+      (click)="onNext()"
+      [disabled]="!canProceed()"
+    >Next</button>
+  </div>
 </div>

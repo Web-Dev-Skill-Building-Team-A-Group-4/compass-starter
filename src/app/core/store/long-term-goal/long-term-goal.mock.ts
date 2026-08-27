@@ -9,14 +9,21 @@ export const LongTermGoalMockDB = signalStore(
   withEntitiesForMockDB<LongTermGoal>(),
 );
 
-export const LONGTERMGOAL_DB = [
-    {
+export const createMockLongTermGoal = (overrides?: Partial<LongTermGoal>): LongTermGoal => ({
+  __id: 'ltg-1',
+  __userId: '1',
+  oneYear: 'Secure SWE or UX Engineering Internship',
+  fiveYear: 'SWE with UX/Design/Animation oriented work',
+  _createdAt: Timestamp.now(),
+  _updatedAt: Timestamp.now(),
+  _deleted: false,
+  ...overrides,
+});
+
+export const LONGTERMGOAL_DB: LongTermGoal[] = [
+  createMockLongTermGoal({
     __id: 'ltg',
     __userId: USER_DB[0].__id,
-    oneYear: 'Secure SWE or UX Engineering Internship',
-    fiveYear: 'SWE with UX/Design/Animation oriented work',
-    _createdAt: Timestamp.now(),
-    _updatedAt: Timestamp.now(),
-    _deleted: false,
-  },
+  }),
 ];
+

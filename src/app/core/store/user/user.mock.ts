@@ -8,35 +8,41 @@ export const UserMockDB = signalStore(
   withEntitiesForMockDB<User>(),
 );
 
+export const createMockUser = (overrides?: Partial<User>): User => ({
+  __id: '1',
+  email: 'a@sample.com',
+  name: 'User A',
+  photoURL: '/images/tech4good-logo.png',
+  onboardingState: OnboardingState.DONE,
+  _createdAt: Timestamp.now(),
+  _updatedAt: Timestamp.now(),
+  _deleted: false,
+  ...overrides,
+});
+
 export const USER_DB: User[] = [
-  {
+  createMockUser({
     __id: '1',
     email: 'a@sample.com',
     name: 'User A',
-    photoURL: '/images/tech4good-logo.png',
     onboardingState: OnboardingState.DONE,
-    _createdAt: Timestamp.now(),
-    _updatedAt: Timestamp.now(),
-    _deleted: false,
-  },
-  {
+  }),
+  createMockUser({
     __id: '2',
     email: 'b@sample.com',
     name: 'User Bob',
-    photoURL: '/images/tech4good-logo.png',
     onboardingState: OnboardingState.DONE,
-    _createdAt: Timestamp.now(),
-    _updatedAt: Timestamp.now(),
-    _deleted: false,
-  },
-  {
+  }),
+  createMockUser({
     __id: '3',
     email: 'c@sample.com',
     name: 'User C',
-    photoURL: '/images/tech4good-logo.png',
     onboardingState: OnboardingState.DONE,
-    _createdAt: Timestamp.now(),
-    _updatedAt: Timestamp.now(),
-    _deleted: false,
-  },
+  }),
+  createMockUser({
+    __id: 'test-onboarding-user',
+    email: 'onboarding@sample.com',
+    name: 'Onboarding User',
+    onboardingState: OnboardingState.STEP_1,
+  }),
 ];
