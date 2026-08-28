@@ -1,7 +1,9 @@
 <div class="onboarding-container">
-  @switch (currentUser().onboardingState) {
-    @case ('step 6') {
-      <app-onboard-weekly-goals />
+  @if (currentUser()) {
+    @switch (currentUser().onboardingState) {
+      @case ('step 6') {
+        <app-onboard-weekly-goals />
+      }
     }
   }
 </div>
