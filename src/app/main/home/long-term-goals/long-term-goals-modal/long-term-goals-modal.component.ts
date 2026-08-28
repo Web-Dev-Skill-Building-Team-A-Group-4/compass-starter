@@ -34,7 +34,7 @@ export class LongTermGoalsModalComponent implements OnInit {
   /** Loading icon. */
   loading: WritableSignal<boolean> = signal(false);
   /** one year goal value received from parent component */
-  oneYearGoal = new FormControl(''); 
+  oneYearGoal = new FormControl('');
   /** five year goal value received from parent component */
   fiveYearGoal = new FormControl('');
 
@@ -59,7 +59,7 @@ export class LongTermGoalsModalComponent implements OnInit {
 
   constructor(
     private dialogRef: MatDialogRef<LongTermGoalsModalComponent>,
-    @Inject(MAT_DIALOG_DATA) 
+    @Inject(MAT_DIALOG_DATA)
     public data: {
       goals: LongTermGoal;
       updateGoal: (result: {
@@ -72,7 +72,7 @@ export class LongTermGoalsModalComponent implements OnInit {
   ) { }
 
   // --------------- LOAD AND CLEANUP --------------------
-  
+
   ngOnInit(): void {
     this.oneYearGoal.setValue(this.data.goals.oneYear);
     this.fiveYearGoal.setValue(this.data.goals.fiveYear);

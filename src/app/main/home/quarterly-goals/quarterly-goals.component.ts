@@ -53,7 +53,7 @@ export class QuarterlyGoalsComponent implements OnInit {
 
   // --------------- COMPUTED DATA -----------------------
 
-  getQuarterAndYear = getQuarterAndYear; 
+  getQuarterAndYear = getQuarterAndYear;
 
   /** Data for incomplete weekly goals. */
   incompleteQuarterlyGoals: Signal<QuarterlyGoalData[]> = computed(() => {
@@ -104,14 +104,14 @@ export class QuarterlyGoalsComponent implements OnInit {
       });
     });
   });
-  
+
   hashtags: Signal<Hashtag[]> = computed(() => {
     return this.hashtagStore.selectEntities([
-      ['__userId', '==', this.currentUser()?.__id]
+      ['__userId', '==', this.currentUser()?.__id],
     ], {});
   });
 
-  // --------------- EVENT HANDLING ----------------------  
+  // --------------- EVENT HANDLING ----------------------
 
   openModal(editClicked: boolean) {
     this.dialogRef = this.dialog.open(QuarterlyGoalsModalComponent, {
@@ -188,7 +188,7 @@ export class QuarterlyGoalsComponent implements OnInit {
   }
 
   async addNewGoal(controlValue, i, batchConfig) {
-    // Add a hashtag 
+    // Add a hashtag
     const hashtagId = createId();
     await this.hashtagStore.add(
       Object.assign({}, {
@@ -196,9 +196,9 @@ export class QuarterlyGoalsComponent implements OnInit {
         __id: hashtagId,
         name: controlValue.hashtagName,
         color: this.HASHTAG_COLORS[i % this.HASHTAG_COLORS.length],
-      }), { batchConfig }
+      }), { batchConfig },
     );
-    
+
     // Add a quarterly goal
     await this.quarterlyGoalStore.add(
       Object.assign({}, {
@@ -208,7 +208,7 @@ export class QuarterlyGoalsComponent implements OnInit {
         completed: false,
         order: i + 1,
         _deleted: controlValue._deleted,
-      }), { batchConfig }
+      }), { batchConfig },
     );
   }
 
@@ -218,7 +218,7 @@ export class QuarterlyGoalsComponent implements OnInit {
       batchConfig,
     });
   }
-  
+
   /** Updates some goal based off form values */
   async updateGoal(controlValue, i, batchConfig) {
     await this.quarterlyGoalStore.update(
@@ -245,20 +245,20 @@ export class QuarterlyGoalsComponent implements OnInit {
   ) { }
 
   // --------------- LOAD AND CLEANUP --------------------
-  
+
   ngOnInit(): void {
-    //load incomplete quarterly goals
+    // load incomplete quarterly goals
     this.quarterlyGoalStore.load([
-      ['__userId', '==', this.currentUser()?.__id], 
+      ['__userId', '==', this.currentUser()?.__id],
       ['completed', '==', false],
     ], { orderBy: 'order' }, (quarterlyGoal) => [
       LoadHashtag.create(this.hashtagStore, [['__id', '==', quarterlyGoal.__hashtagId]], {}),
       LoadWeeklyGoal.create(this.weeklyGoalStore, [['__quarterlyGoalId', '==', quarterlyGoal.__id]], {}),
     ]);
 
-    //load completed quarterly goals
+    // load completed quarterly goals
     this.quarterlyGoalStore.load([
-      ['__userId', '==', this.currentUser()?.__id], 
+      ['__userId', '==', this.currentUser()?.__id],
       ['completed', '==', true],
       ['endDate', '>=', Timestamp.fromDate(getStartAndEndDate()[0])],
     ], { orderBy: 'order' }, (quarterlyGoal) => [

@@ -23,22 +23,25 @@ import { endOfWeek, startOfWeek } from 'src/app/core/utils/time.utils';
   standalone: true,
   imports: [
     MatIconButton,
-    MatDialogClose,
     MatIcon,
-    FormsModule,
-    ReactiveFormsModule,
-    CdkDropList,
-    CdkDrag,
-    CdkDragHandle,
     MatFormField,
     MatInput,
     MatSelect,
     MatOption,
-    NgFor,
+    CdkDrag,
+    CdkDragHandle,
+    CdkDropList,
   ],
 })
 export class WeeklyGoalsModalComponent implements OnInit {
   // --------------- INPUTS AND OUTPUTS ------------------
+
+  /** The current signed in user. */
+  currentUser: Signal<User> = this.authStore.user;
+
+  onClose() {
+    this.dialogRef.close();
+  }
 
   // --------------- LOCAL UI STATE ----------------------
 
@@ -221,5 +224,6 @@ export class WeeklyGoalsModalComponent implements OnInit {
 
   // --------------- LOAD AND CLEANUP --------------------
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+  }
 }

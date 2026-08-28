@@ -1,4 +1,4 @@
-import { Component, OnInit, ChangeDetectionStrategy, WritableSignal, Signal, signal, computed, inject, Inject} from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy, WritableSignal, Signal, signal, computed, inject, Inject } from '@angular/core';
 import { LongTermGoalsAnimations } from './long-term-goals.animations';
 import { User } from 'src/app/core/store/user/user.model';
 import { AuthStore } from 'src/app/core/store/auth/auth.store';
@@ -16,16 +16,16 @@ import { BatchWriteService, BATCH_WRITE_SERVICE } from 'src/app/core/store/batch
   changeDetection: ChangeDetectionStrategy.OnPush,
   animations: LongTermGoalsAnimations,
   standalone: true,
-  imports: [ 
+  imports: [
     LongTermGoalsHeaderComponent,
-    LongTermGoalsModalComponent,    
+    LongTermGoalsModalComponent,
     LongTermGoalsItemComponent,
   ],
 })
 export class LongTermGoalsComponent implements OnInit {
   readonly authStore = inject(AuthStore);
   readonly longTermGoalStore = inject(LongTermGoalStore);
-  
+
   // --------------- INPUTS AND OUTPUTS ------------------
   /** The current signed in user. */
   currentUser: Signal<User> = this.authStore.user;
@@ -57,7 +57,7 @@ export class LongTermGoalsComponent implements OnInit {
       width: '90%',
       position: { bottom: '0' },
       panelClass: 'goal-modal-panel',
-      data: { 
+      data: {
         goals: goal,
         updateGoal: async (result:{
           oneYear: string;
@@ -100,7 +100,7 @@ export class LongTermGoalsComponent implements OnInit {
         },
       );
     } catch (e) {
-    console.error(e);
+      console.error(e);
     }
   }
   // --------------- OTHER -------------------------------
@@ -111,6 +111,6 @@ export class LongTermGoalsComponent implements OnInit {
 
   // --------------- LOAD AND CLEANUP --------------------
   ngOnInit() {
-      this.longTermGoalStore.load([['__userId', '==', this.currentUser()?.__id]], {});
+    this.longTermGoalStore.load([['__userId', '==', this.currentUser()?.__id]], {});
   }
 }

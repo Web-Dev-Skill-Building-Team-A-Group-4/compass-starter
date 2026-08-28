@@ -12,7 +12,7 @@ export const AuthMockDB = signalStore(
         email: USER_DB[0].email,
         displayName: USER_DB[0].name,
         photoURL: USER_DB[0].photoURL,
-        onboardingState: USER_DB[0].onboardingState
+        onboardingState: USER_DB[0].onboardingState,
       } });
     },
     logout() {
@@ -28,7 +28,7 @@ export const AuthLoggedInMockDB = signalStore(
     email: USER_DB[0].email,
     displayName: USER_DB[0].name,
     photoURL: USER_DB[0].photoURL,
-    onboardingState: USER_DB[0].onboardingState
+    onboardingState: USER_DB[0].onboardingState,
   } }),
   withMethods((store) => ({
     login() {
@@ -37,7 +37,7 @@ export const AuthLoggedInMockDB = signalStore(
         email: USER_DB[0].email,
         displayName: USER_DB[0].name,
         photoURL: USER_DB[0].photoURL,
-        onboardingState: USER_DB[0].onboardingState
+        onboardingState: USER_DB[0].onboardingState,
       } });
     },
     logout() {
