@@ -18,20 +18,17 @@ export class AppComponent implements OnInit {
 
   constructor() {
     this.router.events
-    .pipe(
-      filter(e => e instanceof NavigationEnd),
-      takeUntilDestroyed()
-    )
-    .subscribe((e: NavigationEnd) => {
-      window.parent.postMessage({ type: 'preview-route-changed', route: e.urlAfterRedirects }, '*');
-    });
+      .pipe(
+        filter(e => e instanceof NavigationEnd),
+        takeUntilDestroyed()
+      )
+      .subscribe((e: NavigationEnd) => {
+        window.parent.postMessage({ type: 'preview-route-changed', route: e.urlAfterRedirects }, '*');
+      });
   }
 
   async ngOnInit() {
     window.parent.postMessage({ type: 'angular-ready' }, '*');
-
-    // Automatically login to avoid landing page. Feel free to change.
-    await this.authStore.login('google.com', { doNotRoute: true });
     this.authStore.loadAuth();
   }
 }

@@ -1,5 +1,7 @@
 <div class="notes-and-resources-container">
-  notes-and-resources works!
+  @if (longTermGoals()) {
+    <app-long-term-goals-sidebar [ltg]="longTermGoals()"/>
+  }
   <!--
   Some psuedocode logic to think through...
 
