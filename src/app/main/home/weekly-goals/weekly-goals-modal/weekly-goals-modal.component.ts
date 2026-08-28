@@ -25,15 +25,15 @@ import { CdkDrag, CdkDragDrop, CdkDragHandle, CdkDropList, moveItemInArray } fro
   changeDetection: ChangeDetectionStrategy.OnPush,
   animations: WeeklyGoalsModalAnimations,
   standalone: true,
-  imports: [ MatIconButton,
-             MatIcon,
-             MatFormField,
-             MatInput,
-             MatSelect,
-             MatOption,
-             CdkDrag,
-             CdkDragHandle,
-             CdkDropList,
+  imports: [MatIconButton,
+    MatIcon,
+    MatFormField,
+    MatInput,
+    MatSelect,
+    MatOption,
+    CdkDrag,
+    CdkDragHandle,
+    CdkDropList,
   ],
 })
 export class WeeklyGoalsModalComponent implements OnInit {
@@ -42,7 +42,7 @@ export class WeeklyGoalsModalComponent implements OnInit {
 
   /** The current signed in user. */
   currentUser: Signal<User> = this.authStore.user;
-    
+
   onClose() {
     this.dialogRef.close();
   }
@@ -54,7 +54,7 @@ export class WeeklyGoalsModalComponent implements OnInit {
 
   /** weekly goal from mock.ts file. */
   task = signal<WeeklyGoal[]>(structuredClone(WEEKLYGOAL_DB));
-  
+
   /** hashtag from mock.ts file. */
   htg: Hashtag[] = HASHTAG_DB;
 
@@ -64,7 +64,7 @@ export class WeeklyGoalsModalComponent implements OnInit {
   );
 
   // --------------- COMPUTED DATA -----------------------
-  
+
   endOfWeek = endOfWeek; // import from time.utils.ts
   startOfWeek = startOfWeek; // import from time.utils.ts
 
@@ -75,19 +75,19 @@ export class WeeklyGoalsModalComponent implements OnInit {
   /** Support drag and drop of goals. */
   drop(event: CdkDragDrop<WeeklyGoal[]>) {
     this.task.update((tasks) => {
-    moveItemInArray(
-      tasks,
-      event.previousIndex,
-      event.currentIndex,
-    );
-    return tasks;
+      moveItemInArray(
+        tasks,
+        event.previousIndex,
+        event.currentIndex,
+      );
+      return tasks;
     });
   }
 
   save() {
     console.log(this.task());
   }
-  
+
   constructor(
     private dialogRef: MatDialogRef<WeeklyGoalsModalComponent>,
     private injector: Injector,
@@ -95,7 +95,7 @@ export class WeeklyGoalsModalComponent implements OnInit {
   ) { }
 
   // --------------- LOAD AND CLEANUP --------------------
-  
+
   ngOnInit(): void {
   }
 }

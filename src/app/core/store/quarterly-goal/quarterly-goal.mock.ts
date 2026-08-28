@@ -10,7 +10,7 @@ export const QuarterlyGoalMockDB = signalStore(
 );
 
 export const QUARTERLYGOAL_DB = [
-    {
+  {
     __id: 'qg1',
     __userId: USER_DB[0].__id,
     __hashtagId: 'ht1',

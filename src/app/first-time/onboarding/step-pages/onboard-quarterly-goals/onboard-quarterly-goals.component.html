@@ -1,3 +1,45 @@
 <div class="onboard-quarterly-goals-container">
-  onboard-quarterly-goals works!
+  <div class="goals-card">
+    <div class="goals-card-header">
+      <h1 class="title">Set some goals for this quarter.</h1>
+      <p class="subtitle">Add hashtags to link quarterly goals to weekly goals</p>
+    </div>
+
+    <form [formGroup]="quarterlyGoalsForm" class="goals-form">
+      <div class="goals-list" cdkDropList (cdkDropListDropped)="drop($event)" formArrayName="allGoals">
+        @for (item of goalControls(); track item; let i = $index) {
+          <div class="goal-row" cdkDrag [formGroupName]="i">
+            <mat-icon cdkDragHandle class="drag-handle">drag_indicator</mat-icon>
+            
+            <div class="inputs-container">
+              <mat-form-field class="goal-text-field" subscriptSizing="dynamic">
+                <input matInput
+                  placeholder="Enter your goal..."
+                  formControlName="text">
+              </mat-form-field>
+
+              <mat-form-field class="goal-hashtag-field" subscriptSizing="dynamic"
+                [style.--underline-color]="item.get('hashtagColor')?.value">
+                <span matTextPrefix class="hashtag-prefix" [style.color]="item.get('hashtagColor')?.value">#</span>
+                <input matInput
+                  class="hashtag-input"
+                  placeholder="hashtag..."
+                  formControlName="hashtagName"
+                  [style.color]="item.get('hashtagColor')?.value">
+              </mat-form-field>
+            </div>
+          </div>
+        }
+      </div>
+
+      <div class="actions">
+        <button type="button" class="btn-back" (click)="goBack()" [disabled]="loading()">
+          Back
+        </button>
+        <button type="button" class="btn-next" (click)="goNext()" [disabled]="!isValid || loading()">
+          Next
+        </button>
+      </div>
+    </form>
+  </div>
 </div>

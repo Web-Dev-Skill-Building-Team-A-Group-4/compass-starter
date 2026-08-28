@@ -19,8 +19,8 @@ export class AppComponent implements OnInit {
   constructor() {
     this.router.events
       .pipe(
-        filter(e => e instanceof NavigationEnd),
-        takeUntilDestroyed()
+        filter((e) => e instanceof NavigationEnd),
+        takeUntilDestroyed(),
       )
       .subscribe((e: NavigationEnd) => {
         window.parent.postMessage({ type: 'preview-route-changed', route: e.urlAfterRedirects }, '*');

@@ -14,7 +14,8 @@ export const USER_DB: User[] = [
     email: 'a@sample.com',
     name: 'User A',
     photoURL: '/images/tech4good-logo.png',
-    onboardingState: OnboardingState.WELCOME,
+    onboardingState: OnboardingState.STEP_3, // testing
+    // onboardingState: OnboardingState.WELCOME,
     _createdAt: Timestamp.now(),
     _updatedAt: Timestamp.now(),
     _deleted: false,

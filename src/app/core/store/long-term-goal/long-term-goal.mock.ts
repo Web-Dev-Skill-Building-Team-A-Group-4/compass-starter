@@ -10,7 +10,7 @@ export const LongTermGoalMockDB = signalStore(
 );
 
 export const LONGTERMGOAL_DB = [
-    {
+  {
     __id: 'ltg',
     __userId: USER_DB[0].__id,
     oneYear: 'Secure SWE or UX Engineering Internship',

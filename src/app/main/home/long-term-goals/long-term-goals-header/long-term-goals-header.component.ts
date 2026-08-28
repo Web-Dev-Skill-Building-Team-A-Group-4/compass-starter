@@ -36,12 +36,12 @@ export class LongTermGoalsHeaderComponent implements OnInit {
   }
 
   // --------------- OTHER -------------------------------
-  
+
   constructor(
   ) { }
 
   // --------------- LOAD AND CLEANUP --------------------
-  
+
   ngOnInit(): void {
   }
 }
