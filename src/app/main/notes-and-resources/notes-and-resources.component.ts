@@ -3,6 +3,11 @@ import { NotesAndResourcesAnimations } from './notes-and-resources.animations';
 import { User } from 'src/app/core/store/user/user.model';
 import { AuthStore } from 'src/app/core/store/auth/auth.store';
 import { BatchWriteService, BATCH_WRITE_SERVICE } from 'src/app/core/store/batch-write.service';
+import { QuarterlyGoalsSidebarComponent } from './quarterly-goals-sidebar/quarterly-goals-sidebar.component';
+import { QuarterlyGoalStore } from '../../core/store/quarterly-goal/quarterly-goal.store';
+import { QuarterlyGoal } from '../../core/store/quarterly-goal/quarterly-goal.model';
+import { WeeklyGoalStore } from '../../core/store/weekly-goal/weekly-goal.store';
+import { Timestamp } from '@angular/fire/firestore';
 import { LongTermGoalsSidebarComponent } from './long-term-goals-sidebar/long-term-goals-sidebar.component';
 import { LongTermGoalStore } from '../../core/store/long-term-goal/long-term-goal.store';
 import { LongTermGoal } from '../../core/store/long-term-goal/long-term-goal.model';
@@ -15,11 +20,15 @@ import { LongTermGoal } from '../../core/store/long-term-goal/long-term-goal.mod
   animations: NotesAndResourcesAnimations,
   standalone: true,
   imports: [
+    QuarterlyGoalsSidebarComponent,
     LongTermGoalsSidebarComponent,
   ],
 })
+
 export class NotesAndResourcesComponent implements OnInit {
   readonly authStore = inject(AuthStore);
+  readonly quarterlyGoalStore = inject(QuarterlyGoalStore);
+  readonly weeklyGoalStore = inject(WeeklyGoalStore);
   readonly longTermGoalStore = inject(LongTermGoalStore);
   // --------------- INPUTS AND OUTPUTS ------------------
 
@@ -36,6 +45,10 @@ export class NotesAndResourcesComponent implements OnInit {
   // --------------- LOCAL UI STATE ----------------------
 
   // --------------- COMPUTED DATA -----------------------
+  /** Data for quarterly goals. */
+  quarterlyGoal: Signal<QuarterlyGoal> = computed(() => {
+    return this.quarterlyGoalStore.selectEntity(this.goalId());
+  });
 
   /** data for long term goals. */
   longTermGoals: Signal<LongTermGoal | undefined> = computed(() => {
@@ -56,7 +69,19 @@ export class NotesAndResourcesComponent implements OnInit {
   // --------------- LOAD AND CLEANUP --------------------
 
   ngOnInit(): void {
-    // load long term goals
+    // load quarterly goals   
+    this.quarterlyGoalStore.load([
+      ['__userId', '==', this.currentUser()?.__id],
+      ['__id', '==', this.goalId()],
+    ], {});
+
+    // load weekly goals
+    this.weeklyGoalStore.load([
+      ['__userId', '==', this.currentUser()?.__id],
+      ['__quarterlyGoalId', '==', this.goalId()],
+    ], {});
+    
+    //load long term goals
     this.longTermGoalStore.load([
       ['__userId', '==', this.currentUser()?.__id],
     ], {});
