@@ -1,9 +1,9 @@
 <div class="notes-and-resources-container">
   @if (quarterlyGoal()) {
-    <app-quarterly-goals-sidebar 
-      [quarterlyGoal]="quarterlyGoal()"/>
+  <app-quarterly-goals-sidebar [quarterlyGoal]="quarterlyGoal()" />
+  }
   @if (longTermGoals()) {
-    <app-long-term-goals-sidebar [ltg]="longTermGoals()"/>
+  <app-long-term-goals-sidebar [ltg]="longTermGoals()" />
   }
   <!--
   Some psuedocode logic to think through...
@@ -15,4 +15,3 @@
   else:
     maybe you shouldn't be here... and show an error if so.
   -->
-</div>
