@@ -3,10 +3,8 @@
   
   .weekly-goals-modal-container {
     background-color: white;
-    width: 800px;
-    height: 630px; 
-    padding: 40px;
-    border-radius: 12.5px 12.5px 0 0;
+    padding: 70px;
+    border-radius: 12.5px;
     display: flex;
     flex-direction: column;
     
@@ -42,6 +40,7 @@
       
       .close-button{
         transform: scale(1.4);
+        transform-origin: right;
       }
     }
 
@@ -50,62 +49,147 @@
         display: flex;
         flex-direction: column;
         
-        .field-select{
-          border: 0px;
-          display: flex;
-          height: 70px;
-          margin-left: -5px;
-          padding: 0px;
-          margin-bottom: 10px;
-          cursor: pointer;
+          .goals-box {
+            display: flex;
 
-          mat-icon{
-            margin-right: 10px;
-            margin-top: 15px;
-            height: 30px;
-            font-size: 30px;
-            color: #2dbdb1;
-          }
-          
-          .goal-input{
-            padding: -10px;
-            color: #2dbdb1;
-            width: 423.75px;
-            color: #4B5853;
-            font-family: Oxygen;
-            font-size: 19.095px;
-            font-style: normal;
-            font-weight: 300;
-            line-height: normal;
-            margin-right: 40px;
-            --mdc-filled-text-field-focus-active-indicator-color: #2dbdb1;
-          }
+            .field-select {
+                border: 0px;
+                display: flex;
+                align-items: center;
+                height: 70px;
+                margin-left: -5px;
+                padding: 0px;
+                margin-bottom: 10px;
 
-          .goal-dropdown{
-            width: 210px;
-            --mdc-filled-text-field-active-indicator-color: var(--underline-color);
-            --mdc-filled-text-field-focus-active-indicator-color: var(--underline-color);
-            //--mdc-filled-text-field-hover-active-indicator-color: var(--underline-color);
+                .mat-icon[cdkDragHandle] {
+                  margin-right: 10px;
+                  align-self: center;
+                  height: 30px;
+                  width: 30px;
+                  font-size: 30px;
+                  color: #2dbdb1;
+                  cursor: pointer;
+                }
 
-            mat-select{
-              font-family: Oxygen;
-              font-size: 19.095px;
-              font-style: normal;
-              font-weight: 300;
-              line-height: normal;
+                .goal-input {
+                  width: 30vw;
+                  margin-right: 20px;
+                  --mdc-filled-text-field-container-color: transparent;
+                  --mdc-filled-text-field-focus-active-indicator-color: #2dbdb1;
+                  input {
+                    width: 100%;
+                    color: #4B5853;
+                    border: none;
+                    font-family: Oxygen, sans-serif;
+                    font-size: 19.095px;
+                    font-style: normal;
+                    font-weight: 300;
+                    line-height: normal;
+                  }
+                }
+
+                .goal-dropdown {
+                  width: 20vw;
+                  margin-right: 15px;
+                  --mdc-filled-text-field-active-indicator-color: var(--underline-color, #2dbdb1);
+                  --mdc-filled-text-field-focus-active-indicator-color: var(--underline-color, #2dbdb1);
+                  --mdc-filled-text-field-container-color: transparent;
+                  mat-select {
+                    font-family: Oxygen, sans-serif;
+                    font-size: 19.095px;
+                    font-style: normal;
+                    font-weight: 300;
+                    line-height: normal;
+                  }
+                }
+
+                .hashtag-pill {
+                  padding: 5px 10px;
+                  border-radius: 6px;
+                  color: #ffffff;
+                  font-family: Oxygen, sans-serif;
+                  font-size: 13px;
+                  font-weight: 400;
+                  white-space: nowrap;
+                  display: inline-flex;
+                  align-items: center;
+                }
+              }
+
+            .trash-box {
+              display: flex;
+              padding: 10px 15px;
+              border: none;
+
+              mat-icon {
+                margin-right: 8px;
+                height: 30px;
+                font-size: 30px;
+                color: #2dbdb1;
+                margin-bottom: 4px;
+              }
+
+              input,
+              label {
+                cursor: pointer;
+              }
+
+              input[type='checkbox']:checked + label .delete,
+              input[type='checkbox'] + label .restore {
+                display: none;
+              }
+
+              input[type='checkbox']:checked + label .restore,
+              input[type='checkbox'] + label .delete {
+                display: flex;
+              }
+
+              input[type='checkbox'] {
+                display: none;
+                margin-left: 8px;
+              }
             }
           }
         }
+
+      .add-goal-button {
+        cursor: pointer;
+        color: #4B5853;
+        font-family: Oxygen;
+        font-size: 18px;
+        font-weight: 300;
+        margin: 10px 0px;
       }
     }
-  
-    .button{
+
+    .bottom {
       display: flex;
       justify-content: flex-end;
       margin-top: auto;
       align-items: flex-end;
-    
-      .save-button{
+
+      .added-goals {
+        padding-right: 20px;
+        gap: 14px;
+
+        .tracking-counts {
+          p {
+            color: #4b5853;
+            text-align: right;
+            font-size: 17px;
+            font-weight: bold;
+            margin-bottom: 0;
+          }
+
+          span {
+            color: #4b5853;
+            font-size: 17px;
+            font-weight: 400;
+          }
+        }
+      }
+
+      .save-button {
         background: #2dbdb1;
         color: #ffffff;
         width: 138px;
@@ -116,10 +200,18 @@
         text-align: center;
         font-family: Oxygen;
         font-size: 22.5px;
-        font-style: normal;
         font-weight: 400;
-        line-height: normal;
+
+        &:hover {
+          background: #1f9e91;
+        }
+
+        &[disabled] {
+          background-color: lightgray;
+          cursor: not-allowed;
+        }
       }
     }
   }
 }
+

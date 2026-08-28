@@ -48,7 +48,7 @@ export class AuthGuard {
 
         // If logged in and trying to access landing, redirect to the homepage
         if (state.url === '/' || state.url === '/landing') {
-          this.router.navigate(['/home'], { queryParams: next.queryParams });
+          this.router.navigate(['/onboarding'], { queryParams: next.queryParams });
           return of(false);
         }
 

@@ -25,6 +25,9 @@ export class WeeklyGoalsHeaderComponent implements OnInit {
   /** The current signed in user. */
   currentUser: Signal<User> = this.authStore.user;
 
+  /** Output to see if edit was clicked */
+  editClicked = output<boolean>();
+
   // --------------- LOCAL UI STATE ----------------------
 
   startDate = startOfWeek;
@@ -36,13 +39,12 @@ export class WeeklyGoalsHeaderComponent implements OnInit {
   // --------------- COMPUTED DATA -----------------------
 
   // --------------- EVENT HANDLING ----------------------
-  onEditClicked() {
-    this.snackBar.open('pencil clicked', 'Close', {
-      duration: 3000, // Disappears after 3 seconds
-      horizontalPosition: 'center',
-      verticalPosition: 'bottom',
-    });
+
+  /** Handles the event when the edit icon is clicked. */
+  onEditClicked(): void {
+    this.editClicked.emit(true);
   }
+
   // --------------- OTHER -------------------------------
 
   constructor(
