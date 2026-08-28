@@ -1,9 +1,25 @@
 <div class="onboarding-container">
-  @if (currentUser()) {
-    @switch (currentUser().onboardingState) {
-      @case ('step 6') {
-        <app-onboard-weekly-goals />
-      }
+  @switch (currentUser()?.onboardingState) {
+    @case (OnboardingState.WELCOME) {
+      <app-initial-page></app-initial-page>
+    }
+    @case (OnboardingState.STEP_1) {
+      <app-onboard-long-term-goals></app-onboard-long-term-goals>
+    }
+    @case (OnboardingState.STEP_2) {
+      <app-onboard-long-term-transition></app-onboard-long-term-transition>
+    }
+    @case (OnboardingState.STEP_3) {
+      <app-onboard-quarterly-goals></app-onboard-quarterly-goals>
+    }
+    @case (OnboardingState.STEP_4) {
+      <app-organize-quarterly-goals></app-organize-quarterly-goals>
+    }
+    @case (OnboardingState.STEP_6) {
+      <app-onboard-weekly-goals></app-onboard-weekly-goals>
+    }
+    @case (OnboardingState.DONE) {
+      <app-final-page></app-final-page>
     }
   }
 </div>

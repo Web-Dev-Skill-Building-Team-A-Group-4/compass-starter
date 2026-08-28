@@ -38,7 +38,7 @@ export class ReflectTaskSidebarComponent implements OnInit {
   ) { }
 
   // --------------- LOAD AND CLEANUP --------------------
-  
+
   ngOnInit(): void {
   }
 }

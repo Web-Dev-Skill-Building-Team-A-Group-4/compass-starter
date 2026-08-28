@@ -29,12 +29,11 @@ export const LOG_SERVICE = new InjectionToken<LogService>('LogService');
   providedIn: 'root',
 })
 export class LogInDevService {
-
   /** Whether should log to the console in dev. */
   LOG_IN_DEV = true;
 
   constructor() { }
-  
+
   rawLog(data: LogData) {
     if (this.LOG_IN_DEV) {
       const logId = getLogId(data);
@@ -109,12 +108,10 @@ function reformatLogForBeacon(data: LogData, logType, logId) {
 }
 
 
-
 @Injectable({
   providedIn: 'root',
 })
 export class LogDBService {
-
   private log: Firestore;
 
   constructor(

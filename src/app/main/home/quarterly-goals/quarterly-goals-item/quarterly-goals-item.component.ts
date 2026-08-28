@@ -6,7 +6,7 @@ import { BatchWriteService, BATCH_WRITE_SERVICE } from 'src/app/core/store/batch
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { QuarterlyGoalData } from '../../home.model';
 import { MatDividerModule } from '@angular/material/divider';
-import {MatListModule} from '@angular/material/list';
+import { MatListModule } from '@angular/material/list';
 
 @Component({
   selector: 'app-quarterly-goals-item',
@@ -53,7 +53,7 @@ export class QuarterlyGoalsItemComponent implements OnInit {
   ) { }
 
   // --------------- LOAD AND CLEANUP --------------------
-  
+
   ngOnInit(): void {
   }
 }
