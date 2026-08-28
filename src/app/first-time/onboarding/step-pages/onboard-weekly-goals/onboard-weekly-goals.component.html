@@ -48,7 +48,7 @@
     </form>
 
     <div class="actions">
-      <button class="back-btn" routerLink="/onboarding">Back</button>
+      <button class="back-btn" (click)="goBack()">Back</button>
       <button class="next-btn" (click)="save()" [disabled]="!weeklyGoalsForm.valid">Next</button>
     </div>
   </div>

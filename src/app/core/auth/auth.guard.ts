@@ -1,6 +1,6 @@
 import { Inject, inject, Injectable } from '@angular/core';
 import { ActivatedRouteSnapshot, RouterStateSnapshot, Router } from '@angular/router';
-import { User } from '../store/user/user.model';
+import { OnboardingState, User } from '../store/user/user.model';
 import { AuthStore } from '../store/auth/auth.store';
 import { filter, switchMap, take } from 'rxjs/operators';
 import { of, Observable } from 'rxjs';

@@ -1,11 +1,12 @@
 import { Component, OnInit, ChangeDetectionStrategy, inject, Signal, Inject, Injector, computed, effect } from '@angular/core';
 import { OnboardWeeklyGoalsAnimations } from './onboard-weekly-goals.animations';
-import { User } from 'src/app/core/store/user/user.model';
+import { OnboardingState, User } from 'src/app/core/store/user/user.model';
 import { AuthStore } from 'src/app/core/store/auth/auth.store';
 import { BatchWriteService, BATCH_WRITE_SERVICE } from 'src/app/core/store/batch-write.service';
 import { WeeklyGoalStore } from 'src/app/core/store/weekly-goal/weekly-goal.store';
 import { QuarterlyGoalStore } from 'src/app/core/store/quarterly-goal/quarterly-goal.store';
 import { HashtagStore, LoadHashtag } from 'src/app/core/store/hashtag/hashtag.store';
+import { UserStore } from 'src/app/core/store/user/user.store';
 import { FormArray, FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { CdkDrag, CdkDragDrop, CdkDragHandle, CdkDropList, moveItemInArray } from '@angular/cdk/drag-drop';
 import { MatFormField } from '@angular/material/form-field';
@@ -13,8 +14,6 @@ import { MatInput } from '@angular/material/input';
 import { MatIcon } from '@angular/material/icon';
 import { MatSelect, MatSelectModule, MatSelectTrigger } from '@angular/material/select';
 import { MatOption } from '@angular/material/core';
-import { RouterLink } from '@angular/router';
-import { Router } from '@angular/router';
 import { QuarterlyGoalData } from 'src/app/main/home/home.model';
 import { ProgressBarComponent } from '../../progress-bar/progress-bar.component';
 import { NavbarComponent } from 'src/app/shared/navbar/navbar.component';
@@ -38,7 +37,6 @@ import { NavbarComponent } from 'src/app/shared/navbar/navbar.component';
     MatSelectModule,
     MatSelectTrigger,
     MatOption,
-    RouterLink,
     ProgressBarComponent,
     NavbarComponent,
   ],
@@ -48,8 +46,8 @@ export class OnboardWeeklyGoalsComponent implements OnInit {
   readonly weeklyGoalStore = inject(WeeklyGoalStore);
   readonly quarterlyGoalStore = inject(QuarterlyGoalStore);
   readonly hashtagStore = inject(HashtagStore);
+  readonly userStore = inject(UserStore);
   private fb = inject(FormBuilder);
-  private router = inject(Router);
 
   // --------------- INPUTS AND OUTPUTS ------------------
 
@@ -129,7 +127,7 @@ export class OnboardWeeklyGoalsComponent implements OnInit {
 
   /**
    * Persists all goal rows to the store in a single batch write, then
-   * navigates to the home page on success.
+   * advances the user's onboardingState to DONE.
    */
   async save() {
     try {
@@ -182,7 +180,23 @@ export class OnboardWeeklyGoalsComponent implements OnInit {
           },
         },
       );
-      this.router.navigate(['/home']);
+      // Advance the user past onboarding
+      await this.userStore.update(
+        this.currentUser().__id,
+        { onboardingState: OnboardingState.DONE },
+      );
+    } catch (e) {
+      console.error(e);
+    }
+  }
+
+  /** Reverts onboardingState to STEP_5 to navigate back within the onboarding shell. */
+  async goBack() {
+    try {
+      await this.userStore.update(
+        this.currentUser().__id,
+        { onboardingState: OnboardingState.STEP_5 },
+      );
     } catch (e) {
       console.error(e);
     }

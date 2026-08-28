@@ -1,3 +1,7 @@
 <div class="onboarding-container">
-   <button routerLink="/onboarding/weekly-goals">go to my weeklygoals</button>
+  @switch (currentUser().onboardingState) {
+    @case ('step 6') {
+      <app-onboard-weekly-goals />
+    }
+  }
 </div>

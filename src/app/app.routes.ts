@@ -11,10 +11,6 @@ export const routes: Routes = [
     path: 'onboarding', loadComponent: () => import('./first-time/onboarding/onboarding.component')
       .then((mod) => mod.OnboardingComponent), canActivate: [AuthGuard]
   },
-  {
-    path: 'onboarding/weekly-goals', loadComponent: () => import('./first-time/onboarding/step-pages/onboard-weekly-goals/onboard-weekly-goals.component')
-      .then((mod) => mod.OnboardWeeklyGoalsComponent), canActivate: [AuthGuard]
-  },
   // Main Routes
   {
     path: 'home', loadComponent: () => import('./main/home/home.component')
