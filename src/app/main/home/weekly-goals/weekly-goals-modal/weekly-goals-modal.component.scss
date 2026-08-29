@@ -30,6 +30,7 @@
       font-size: 22px;
     }
   }
+
   .goal-list {
     margin-bottom: 20px;
     overflow-y: auto;
@@ -64,13 +65,13 @@
             cursor: pointer !important;
           }
 
-          input[type="checkbox"]:checked + label .delete,
-          input[type="checkbox"] + label .restore {
+          input[type="checkbox"]:checked+label .delete,
+          input[type="checkbox"]+label .restore {
             display: none;
           }
 
-          input[type="checkbox"]:checked + label .restore,
-          input[type="checkbox"] + label .delete {
+          input[type="checkbox"]:checked+label .restore,
+          input[type="checkbox"]+label .delete {
             display: flex;
           }
 
@@ -106,6 +107,7 @@
       }
     }
   }
+
   .add-goal-button {
     cursor: pointer;
     display: flex;

@@ -44,7 +44,7 @@ export class QuarterlyGoalsSidebarComponent implements OnInit {
   dialogRef: MatDialogRef<WeeklyGoalsModalComponent>;
 
   // --------------- COMPUTED DATA -----------------------
-  
+
   /** Data for incomplete weekly goals. */
   incompleteWeeklyGoals: Signal<WeeklyGoalData[]> = computed(() => {
     const incompleteGoals = this.weeklyGoalStore.selectEntities([
@@ -87,7 +87,7 @@ export class QuarterlyGoalsSidebarComponent implements OnInit {
       [['__userId', '==', this.currentUser()?.__id]],
       { orderBy: 'order' },
     );
-    
+
     return allGoals.map((goal) => {
       return Object.assign({}, goal, {
         hashtag: this.hashtagStore.selectEntity(goal.__hashtagId),
@@ -225,11 +225,11 @@ export class QuarterlyGoalsSidebarComponent implements OnInit {
   // --------------- LOAD AND CLEANUP --------------------
 
   ngOnInit(): void {
-    // load all quarterly goals   
+    // load all quarterly goals
     this.quarterlyGoalStore.load([
       ['__userId', '==', this.currentUser()?.__id],
-        ], {}, (qg) => [
-      LoadHashtag.create(this.hashtagStore, [['__id', '==', qg.__hashtagId]], {})
+    ], {}, (qg) => [
+      LoadHashtag.create(this.hashtagStore, [['__id', '==', qg.__hashtagId]], {}),
     ]);
   }
 }

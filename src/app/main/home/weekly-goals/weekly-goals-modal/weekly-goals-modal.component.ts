@@ -1,4 +1,4 @@
-import { Component, OnInit,  ChangeDetectionStrategy, Inject, Injector } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy, Inject, Injector } from '@angular/core';
 import { WeeklyGoalsModalAnimations } from './weekly-goals-modal.animations';
 import { MAT_DIALOG_DATA, MatDialogClose, MatDialogRef } from '@angular/material/dialog';
 import { FormArray, FormBuilder, FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
@@ -10,7 +10,7 @@ import { MatFormField } from '@angular/material/form-field';
 import { MatOption } from '@angular/material/core';
 import { MatInput } from '@angular/material/input';
 import { MatSelect } from '@angular/material/select';
-import { CdkDrag, CdkDragDrop, CdkDragHandle, CdkDropList, moveItemInArray,} from '@angular/cdk/drag-drop';
+import { CdkDrag, CdkDragDrop, CdkDragHandle, CdkDropList, moveItemInArray } from '@angular/cdk/drag-drop';
 import { NgFor } from '@angular/common';
 import { endOfWeek, startOfWeek } from 'src/app/core/utils/time.utils';
 
@@ -23,25 +23,22 @@ import { endOfWeek, startOfWeek } from 'src/app/core/utils/time.utils';
   standalone: true,
   imports: [
     MatIconButton,
+    MatDialogClose,
     MatIcon,
+    FormsModule,
+    ReactiveFormsModule,
+    CdkDropList,
+    CdkDrag,
+    CdkDragHandle,
     MatFormField,
     MatInput,
     MatSelect,
     MatOption,
-    CdkDrag,
-    CdkDragHandle,
-    CdkDropList,
+    NgFor,
   ],
 })
 export class WeeklyGoalsModalComponent implements OnInit {
   // --------------- INPUTS AND OUTPUTS ------------------
-
-  /** The current signed in user. */
-  currentUser: Signal<User> = this.authStore.user;
-
-  onClose() {
-    this.dialogRef.close();
-  }
 
   // --------------- LOCAL UI STATE ----------------------
 
@@ -224,6 +221,5 @@ export class WeeklyGoalsModalComponent implements OnInit {
 
   // --------------- LOAD AND CLEANUP --------------------
 
-  ngOnInit(): void {
-  }
+  ngOnInit(): void { }
 }

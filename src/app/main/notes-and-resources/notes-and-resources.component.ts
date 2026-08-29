@@ -69,7 +69,7 @@ export class NotesAndResourcesComponent implements OnInit {
   // --------------- LOAD AND CLEANUP --------------------
 
   ngOnInit(): void {
-    // load quarterly goals   
+    // load quarterly goals
     this.quarterlyGoalStore.load([
       ['__userId', '==', this.currentUser()?.__id],
       ['__id', '==', this.goalId()],
@@ -80,8 +80,8 @@ export class NotesAndResourcesComponent implements OnInit {
       ['__userId', '==', this.currentUser()?.__id],
       ['__quarterlyGoalId', '==', this.goalId()],
     ], {});
-    
-    //load long term goals
+
+    // load long term goals
     this.longTermGoalStore.load([
       ['__userId', '==', this.currentUser()?.__id],
     ], {});

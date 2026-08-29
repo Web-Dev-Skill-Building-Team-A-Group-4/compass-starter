@@ -6,70 +6,35 @@
         <mat-icon>close</mat-icon>
       </button>
     </div>
-    <time class="date-range"
-      ><b>{{ startOfWeek() + " - " + endOfWeek() }}</b></time
-    >
+    <time class="date-range"><b>{{ startOfWeek() + " - " + endOfWeek() }}</b></time>
   </header>
   <form [formGroup]="weeklyGoalsForm" (ngSubmit)="saveGoals()">
     <section class="goal-list" cdkDropList (cdkDropListDropped)="drop($event)">
       <div class="goal-container" formArrayName="allGoals">
-        <div
-          *ngFor="let goal of allGoals.controls; let i = index"
-          class="goal-item"
-          cdkDrag
-          cdkDrag
-          cdkDragPreviewContainer="parent"
-        >
+        <div *ngFor="let goal of allGoals.controls; let i = index" class="goal-item" cdkDrag cdkDrag
+          cdkDragPreviewContainer="parent">
           <div class="goals-box" [formGroupName]="i">
             <mat-icon cdkDragHandle>drag_indicator</mat-icon>
             <!-- field set is used to disable these fields when a goal is set to be deleted -->
-            <fieldset
-              class="field-wrapper"
-              [disabled]="this.allGoals.at(i).value._deleted"
-            >
+            <fieldset class="field-wrapper" [disabled]="this.allGoals.at(i).value._deleted">
               <mat-form-field class="goal-input">
-                <input
-                  matInput
-                  placeholder="Enter your goal..."
-                  formControlName="text"
-                />
+                <input matInput placeholder="Enter your goal..." formControlName="text" />
               </mat-form-field>
               <mat-form-field class="goal-dropdown">
-                <mat-select
-                  placeholder="Select a hashtag"
-                  name="weekGoalHashtag"
-                  formControlName="__quarterlyGoalId"
-                >
+                <mat-select placeholder="Select a hashtag" name="weekGoalHashtag" formControlName="__quarterlyGoalId">
                   @for (entity of data.goalDatas; track entity.__id) {
-                    <mat-option
-                      [value]="entity.__id"
-                      [style.color]="entity.hashtag?.color"
-                      >#{{ entity.hashtag?.name }}</mat-option
-                    >
+                  <mat-option [value]="entity.__id" [style.color]="entity.hashtag?.color">#{{ entity.hashtag?.name
+                    }}</mat-option>
                   }
                 </mat-select>
               </mat-form-field>
             </fieldset>
-            <input
-              id="trash-{{ i }}"
-              type="checkbox"
-              [checked]="weeklyGoalsForm.get(['allGoals', i, '_deleted'])"
-              formControlName="_deleted"
-              (change)="fullDelete($event, i)"
-            />
+            <input id="trash-{{ i }}" type="checkbox" [checked]="weeklyGoalsForm.get(['allGoals', i, '_deleted'])"
+              formControlName="_deleted" (change)="fullDelete($event, i)" />
             <label for="trash-{{ i }}" class="trash-label">
-              <mat-icon
-                class="delete"
-                aria-hidden="false"
-                aria-label="trash icon"
-                fontIcon="delete"
-              ></mat-icon>
-              <mat-icon
-                class="restore"
-                aria-hidden="false"
-                aria-label="trash icon"
-                fontIcon="restore_from_trash"
-              ></mat-icon>
+              <mat-icon class="delete" aria-hidden="false" aria-label="trash icon" fontIcon="delete"></mat-icon>
+              <mat-icon class="restore" aria-hidden="false" aria-label="trash icon"
+                fontIcon="restore_from_trash"></mat-icon>
             </label>
           </div>
         </div>
@@ -83,34 +48,30 @@
     </div>
     <div class="added-goals">
       @if (
-        addedGoalsCount !== 0 ||
-        editedGoalsCount !== 0 ||
-        deletedGoalsCount !== 0
+      addedGoalsCount !== 0 ||
+      editedGoalsCount !== 0 ||
+      deletedGoalsCount !== 0
       ) {
-        <div class="tracking-counts">
-          <p class="pending">Pending Changes</p>
-          @if (addedGoalsCount !== 0) {
-            <span>Adding {{ addedGoalsCount }}</span>
-            @if (editedGoalsCount !== 0 || deletedGoalsCount !== 0) {
-              <span>, </span>
-            }
-          }
-          @if (editedGoalsCount !== 0) {
-            <span>Editing {{ editedGoalsCount }}</span>
-            @if (deletedGoalsCount !== 0) {
-              <span>, </span>
-            }
-          }
-          @if (deletedGoalsCount !== 0) {
-            <span>Deleting {{ deletedGoalsCount }}</span>
-          }
-        </div>
+      <div class="tracking-counts">
+        <p class="pending">Pending Changes</p>
+        @if (addedGoalsCount !== 0) {
+        <span>Adding {{ addedGoalsCount }}</span>
+        @if (editedGoalsCount !== 0 || deletedGoalsCount !== 0) {
+        <span>, </span>
+        }
+        }
+        @if (editedGoalsCount !== 0) {
+        <span>Editing {{ editedGoalsCount }}</span>
+        @if (deletedGoalsCount !== 0) {
+        <span>, </span>
+        }
+        }
+        @if (deletedGoalsCount !== 0) {
+        <span>Deleting {{ deletedGoalsCount }}</span>
+        }
+      </div>
       }
-      <button
-        class="save-button"
-        type="submit"
-        [disabled]="!weeklyGoalsForm.valid"
-      >
+      <button class="save-button" type="submit" [disabled]="!weeklyGoalsForm.valid">
         Save
       </button>
     </div>
